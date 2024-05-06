@@ -1,2 +1,9 @@
 # this is a .gitignore comment
+vgarcade/vgarcade.cache/*
+vgarcade/vgarcade.ip_user_files/*
+vgarcade/vgarcade.hw/*
+vgarcade/vgarcade.xpr
+
+
+
 
