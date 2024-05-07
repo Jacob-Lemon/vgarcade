@@ -1,16 +1,14 @@
-`timescale 1ns/1ps
-
-module toprx (
+module top (
     input clk,
     input rst,
     input rx,
     output tx,
-    output reg [3:0] led
+    output reg [7:0] led
 );
 
 // Instantiation template for UART
 
-/*
+/* 
  Top-level I/O ports:
  
   input    rx,
@@ -82,7 +80,7 @@ always @(posedge clk or negedge rst_n) begin
             // Notify UART that data has been collected
             rx_recv <= 1;
         end
-        led <= received_number[3:0];
+        led <= received_number;
     end
 end
 
