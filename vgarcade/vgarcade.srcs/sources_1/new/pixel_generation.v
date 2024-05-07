@@ -12,9 +12,9 @@ module pixel_generation(
     parameter Y_MAX = 479;                  // bottom border of display area
     parameter SQ_RGB = 12'h0FF;             // red & green = yellow for square
     parameter BG_RGB = 12'hF00;             // blue background
-    parameter SQUARE_SIZE = 64;             // width of square sides in pixels
-    parameter SQUARE_VELOCITY_POS = 2;      // set position change value for positive direction
-    parameter SQUARE_VELOCITY_NEG = -2;     // set position change value for negative direction  
+    parameter SQUARE_SIZE = 32;             // width of square sides in pixels
+    parameter SQUARE_VELOCITY_POS = 1;      // set position change value for positive direction
+    parameter SQUARE_VELOCITY_NEG = -1;     // set position change value for negative direction  
     
     // create a 60Hz refresh tick at the start of vsync 
     wire refresh_tick;
@@ -55,7 +55,33 @@ module pixel_generation(
     wire sq_on;
     assign sq_on = (sq_x_l <= x) && (x <= sq_x_r) &&
                    (sq_y_t <= y) && (y <= sq_y_b);
-                   
+    wire block_on;
+    
+    rectangle_boundary block_generator (
+        .x(x),
+        .y(y),
+        .block_on(block_on)
+    );
+    
+    /*
+    wire [9:0] block_left_bound, block_right_bound, block_up_bound, block_down_bound;
+    assign block_left_bound = 10;
+    assign block_right_bound = 20;
+    assign block_down_bound = 20;
+    assign block_up_bound = 10;
+    assign block_on = (block_left_bound <= x) && (x <= block_right_bound) &&
+                      (block_up_bound <= y) && (y <= block_down_bound);
+    */
+    /*
+    wire [31:0] block_left_bound = 10;
+    wire [31:0] block_right_bound = 20;
+    wire [31:0] block_down_bound = 20;
+    wire [31:0] block_up_bound = 10;
+
+    assign block_on = (x > block_left_bound) && (x < block_right_bound) &&
+                      (y > block_up_bound) && (y < block_down_bound);
+    */
+    
     // new square position
     assign sq_x_next = (refresh_tick) ? sq_x_reg + x_delta_reg : sq_x_reg;
     assign sq_y_next = (refresh_tick) ? sq_y_reg + y_delta_reg : sq_y_reg;
@@ -81,6 +107,8 @@ module pixel_generation(
         else
             if(sq_on)
                 rgb = SQ_RGB;       // yellow square
+            else if(block_on)
+                rgb = 12'hFFF;      // white block
             else
                 rgb = BG_RGB;       // blue background
     
