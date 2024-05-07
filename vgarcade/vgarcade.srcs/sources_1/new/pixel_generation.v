@@ -55,33 +55,20 @@ module pixel_generation(
     wire sq_on;
     assign sq_on = (sq_x_l <= x) && (x <= sq_x_r) &&
                    (sq_y_t <= y) && (y <= sq_y_b);
-    wire block_on;
     
+    
+    // my happy little block
+    wire block_on;
     rectangle_boundary block_generator (
         .x(x),
         .y(y),
+        .left(9'd10),
+        .right(9'd20),
+        .up(9'd10),
+        .down(9'd20),
         .block_on(block_on)
     );
-    
-    /*
-    wire [9:0] block_left_bound, block_right_bound, block_up_bound, block_down_bound;
-    assign block_left_bound = 10;
-    assign block_right_bound = 20;
-    assign block_down_bound = 20;
-    assign block_up_bound = 10;
-    assign block_on = (block_left_bound <= x) && (x <= block_right_bound) &&
-                      (block_up_bound <= y) && (y <= block_down_bound);
-    */
-    /*
-    wire [31:0] block_left_bound = 10;
-    wire [31:0] block_right_bound = 20;
-    wire [31:0] block_down_bound = 20;
-    wire [31:0] block_up_bound = 10;
 
-    assign block_on = (x > block_left_bound) && (x < block_right_bound) &&
-                      (y > block_up_bound) && (y < block_down_bound);
-    */
-    
     // new square position
     assign sq_x_next = (refresh_tick) ? sq_x_reg + x_delta_reg : sq_x_reg;
     assign sq_y_next = (refresh_tick) ? sq_y_reg + y_delta_reg : sq_y_reg;
@@ -100,6 +87,44 @@ module pixel_generation(
             x_delta_next = SQUARE_VELOCITY_NEG;     // change x direction(move left)
     end
     
+    // trying to draw a heart
+    
+    wire [4:0] row, col;
+    
+    wire [11:0] rom_heart1_data;
+    wire heart1_on;
+    wire [9:0] left_heart = 50;
+    wire [9:0] right_heart = 60;
+    wire [9:0] up_heart = 50;
+    wire [9:0] down_heart = 60;
+    
+    
+    assign col1 = x - left_heart;     // to obtain the column value, subtract rom left x position from x
+    assign row1 = y - up_heart;     // to obtain the row value, subtract rom top y position from y
+    
+    
+
+    assign heart1_on = (x > left_heart) && (x < right_heart) &&
+                      (y > up_heart) && (y < down_heart);
+    
+    heart_rom heart1(
+        .clk(clk),
+        .row(row),
+        .col(col),
+        .color_data(rom_heart1_data)
+    );
+    
+    /*
+    module heart_rom
+	(
+		input wire clk,
+		input wire [4:0] row,
+		input wire [4:0] col,
+		output reg [11:0] color_data
+	);
+    */
+    
+    
     // RGB control
     always @*
         if(~video_on)
@@ -109,6 +134,8 @@ module pixel_generation(
                 rgb = SQ_RGB;       // yellow square
             else if(block_on)
                 rgb = 12'hFFF;      // white block
+            else if (rom_heart1_data)
+                rgb = 12'hF00;
             else
                 rgb = BG_RGB;       // blue background
     
