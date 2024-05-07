@@ -1,4 +1,6 @@
-module top (
+`timescale 1ns/1ps
+
+module toprx (
     input clk,
     input rst,
     input rx,
