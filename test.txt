@@ -1,7 +1,0 @@
-this is some text written by jacob lemon, intially
-
-this is how i want it to be
-Jacob's test change
-easton
-
-end
