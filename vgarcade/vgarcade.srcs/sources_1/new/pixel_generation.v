@@ -91,6 +91,7 @@ module pixel_generation(
     * trying to draw a heart
     * 
     *************************************************************************/
+    /*
     wire [4:0] row, col;
     
     wire [11:0] rom_heart1_data;
@@ -100,12 +101,12 @@ module pixel_generation(
     wire [9:0] up_heart;
     wire [9:0] down_heart;
     
-    parameter HEART_SIZE = 20;
+    parameter HEART_SIZE = 25;
     
     assign left_heart = 50;
-    assign right_heart = 75;
+    assign right_heart = left_heart + HEART_SIZE;
     assign up_heart = 50;
-    assign down_heart = 75;
+    assign down_heart = up_heart + HEART_SIZE;
     
     assign col = x - left_heart;     // to obtain the column value, subtract rom left x position from x
     assign row = y - up_heart;     // to obtain the row value, subtract rom top y position from y
@@ -114,30 +115,31 @@ module pixel_generation(
 
     assign heart1_on = (x >= left_heart) && (x < right_heart) &&
                       (y >= up_heart) && (y < down_heart);
-    
-    heart_rom heart1(
-        .clk(clk),
-        .row(row),
-        .col(col),
-        .color_data(rom_heart1_data)
-    );
+
     
     wire [11:0] undo_endian_form_of_heart1;
     assign undo_endian_form_of_heart1[11:8] = rom_heart1_data[3:0];
     assign undo_endian_form_of_heart1[7:4] = rom_heart1_data[7:4];
     assign undo_endian_form_of_heart1[3:0] = rom_heart1_data[11:8];
-    
-    /*
-    module heart_rom
-	(
-		input wire clk,
-		input wire [4:0] row,
-		input wire [4:0] col,
-		output reg [11:0] color_data
-	);
     */
     
+    wire [9:0] heart1_x_location, heart1_y_location;
+    assign heart1_x_location = 100;
+    assign heart1_y_location = 200;
+    wire heart1_on;
+    wire [11:0] heart1_rgb_data;
     
+    heart_maker heart1(
+        .clk(clk),
+        .x(x),
+        .y(y),
+        .start_x(heart1_x_location),
+        .start_y(heart1_y_location),
+        .size(9'd25),
+        .heart_on(heart1_on),
+        .rgb_data(heart1_rgb_data)
+    );
+   
     // RGB control
     always @*
         if(~video_on)
@@ -148,12 +150,11 @@ module pixel_generation(
             else if(block_on)
                 rgb = 12'hFFF;      // white block
             else if (heart1_on)
-                if (&rom_heart1_data)
-                    // rgb = 12'h000;      // will be background color, is black for now
-                    rgb = BG_RGB;
+                if (&heart1_rgb_data)
+                    rgb = 12'h000;      // will be background color, is black for now
+                    // rgb = BG_RGB;
                 else
-                    // rgb = rom_heart1_data;
-                    rgb = undo_endian_form_of_heart1;
+                    rgb = heart1_rgb_data;
                     // rgb = 12'h00F;
             else
                 rgb = BG_RGB;       // blue background
