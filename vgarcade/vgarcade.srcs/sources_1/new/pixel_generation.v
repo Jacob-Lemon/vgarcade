@@ -87,25 +87,33 @@ module pixel_generation(
             x_delta_next = SQUARE_VELOCITY_NEG;     // change x direction(move left)
     end
     
-    // trying to draw a heart
-    
+    /*************************************************************************
+    * trying to draw a heart
+    * 
+    *************************************************************************/
     wire [4:0] row, col;
     
     wire [11:0] rom_heart1_data;
     wire heart1_on;
-    wire [9:0] left_heart = 50;
-    wire [9:0] right_heart = 60;
-    wire [9:0] up_heart = 50;
-    wire [9:0] down_heart = 60;
+    wire [9:0] left_heart;
+    wire [9:0] right_heart;
+    wire [9:0] up_heart;
+    wire [9:0] down_heart;
     
+    parameter HEART_SIZE = 20;
     
-    assign col1 = x - left_heart;     // to obtain the column value, subtract rom left x position from x
-    assign row1 = y - up_heart;     // to obtain the row value, subtract rom top y position from y
+    assign left_heart = 50;
+    assign right_heart = 75;
+    assign up_heart = 50;
+    assign down_heart = 75;
+    
+    assign col = x - left_heart;     // to obtain the column value, subtract rom left x position from x
+    assign row = y - up_heart;     // to obtain the row value, subtract rom top y position from y
     
     
 
-    assign heart1_on = (x > left_heart) && (x < right_heart) &&
-                      (y > up_heart) && (y < down_heart);
+    assign heart1_on = (x >= left_heart) && (x < right_heart) &&
+                      (y >= up_heart) && (y < down_heart);
     
     heart_rom heart1(
         .clk(clk),
@@ -113,6 +121,11 @@ module pixel_generation(
         .col(col),
         .color_data(rom_heart1_data)
     );
+    
+    wire [11:0] undo_endian_form_of_heart1;
+    assign undo_endian_form_of_heart1[11:8] = rom_heart1_data[3:0];
+    assign undo_endian_form_of_heart1[7:4] = rom_heart1_data[7:4];
+    assign undo_endian_form_of_heart1[3:0] = rom_heart1_data[11:8];
     
     /*
     module heart_rom
@@ -134,8 +147,14 @@ module pixel_generation(
                 rgb = SQ_RGB;       // yellow square
             else if(block_on)
                 rgb = 12'hFFF;      // white block
-            else if (rom_heart1_data)
-                rgb = 12'hF00;
+            else if (heart1_on)
+                if (&rom_heart1_data)
+                    // rgb = 12'h000;      // will be background color, is black for now
+                    rgb = BG_RGB;
+                else
+                    // rgb = rom_heart1_data;
+                    rgb = undo_endian_form_of_heart1;
+                    // rgb = 12'h00F;
             else
                 rgb = BG_RGB;       // blue background
     
