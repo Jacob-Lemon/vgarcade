@@ -2,7 +2,7 @@ import hid
 import serial
 from math import atan2, sqrt, degrees
 
-# basys3 board serial port settings2604*2
+# basys3 board serial port settings
 serial_port = 'COM4'
 baud_rate = 10000
 # Open the serial port
