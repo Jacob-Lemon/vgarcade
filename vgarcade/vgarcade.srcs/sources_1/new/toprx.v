@@ -1,4 +1,4 @@
-module top (
+module toprx (
     input clk,
     input rst,
     input rx,
