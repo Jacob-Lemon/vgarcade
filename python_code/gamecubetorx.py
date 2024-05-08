@@ -2,9 +2,9 @@ import hid
 import serial
 from math import atan2, sqrt, degrees
 
-# basys3 board serial port settings
+# basys3 board serial port settings2604*2
 serial_port = 'COM4'
-baud_rate = 9600
+baud_rate = 10000
 # Open the serial port
 ser = serial.Serial(serial_port, baud_rate)
 
@@ -14,6 +14,7 @@ gamepad.open(0x0079, 0x1843)
 gamepad.set_nonblocking(True)
 
 running = True
+send_again = False
 
 a_button = 0b000
 b_button = 0b000
@@ -24,8 +25,8 @@ joystick_bits = 0b00000
 prev_bin_to_send = None
 bin_to_send = 0b00000000
 
-# Constants for joystick deadzone and range divisions
-DEADZONE = 20
+# joystick deadzone
+DEADZONE = 40
 
 while running:
     report = gamepad.read(64)
@@ -75,12 +76,20 @@ while running:
 
     bin_to_send = (joystick_bits << 3) | button_bits
 
+
     if bin_to_send != prev_bin_to_send:
-        ser.write(bytes([bin_to_send]))  # Send data via serial
-        # print("Sending:", bin(bin_to_send))  # For testing, print the value to be sent
+        ser.write(bytes([bin_to_send]))
         prev_bin_to_send = bin_to_send
 
-    # print("Result:", bin(bin_to_send))
+
+    # Check how many bytes are available in the input buffer
+    bytes_to_read = ser.inWaiting()
+    if bytes_to_read:
+        # Read the available bytes from the serial port
+        received_data = ser.read(bytes_to_read)
+        if received_data != bytes([bin_to_send]):
+            ser.write(bytes([bin_to_send]))
+
 
 ser.close()
 gamepad.close()
