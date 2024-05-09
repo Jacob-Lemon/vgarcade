@@ -76,6 +76,35 @@ always @* begin
 end
 
 /**************************************************************************
+* this is where I am making a player character
+* with motion!!! :)
+**************************************************************************/
+
+wire player1_on;
+// position things
+wire [11:0] player1_rgb_data;
+wire [9:0] player1_x_position, player1_y_position;
+
+assign player1_x_position = 25;
+assign player1_y_position = 25;
+
+player_maker player1 (
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .x_position(player1_x_position),
+    .y_position(player1_y_position),
+    .size(9'd100), // from bitmap image, 100x100 pixels
+    .player_on(player1_on),
+    .rgb_data(player1_rgb_data)
+);
+
+
+
+
+
+
+/**************************************************************************
 * this is where I am making a bunch of rectangles
 **************************************************************************/
 
@@ -113,18 +142,27 @@ heart_maker heart1(
     .rgb_data(heart1_rgb_data)
 );
 
-// RGB control
+/******************************************************************************
+* RGB control
+* order of if-else cascade determines layering of visuals
+******************************************************************************/
 always @*
     if(~video_on)
         rgb = 12'h000;          // black(no value) outside display area
     else
-        if(sq_on)
+        if (player1_on)
+            rgb = player1_rgb_data;
+//            if (&player1_rgb_data)
+//                rgb = 12'h0F0;
+//            else
+//                rgb = player1_rgb_data;
+        else if(sq_on)
             rgb = SQ_RGB;       // yellow square
         else if(block_on)
             rgb = 12'hFFF;      // white block
         else if (heart1_on)
-            if (&heart1_rgb_data)
-                // rgb = 12'h000;      // will be background color, is black for now
+            if (&heart1_rgb_data) // if image is white &(1111_1111_1111)=1
+                // rgb = 12'h000; // will be background color, is black for now
                 rgb = BG_RGB;
             else
                 rgb = heart1_rgb_data;

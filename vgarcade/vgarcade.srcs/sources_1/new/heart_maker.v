@@ -11,8 +11,8 @@ module heart_maker(
 
 wire [4:0] row, col;
     
-wire [11:0] rom_heart1_data;
-wire heart1_on;
+wire [11:0] rom_heart_data;
+// boundaries
 wire [9:0] left_heart;
 wire [9:0] right_heart;
 wire [9:0] up_heart;
@@ -40,13 +40,13 @@ heart_rom heart1(
     .clk(clk),
     .row(row),
     .col(col),
-    .color_data(rom_heart1_data)
+    .color_data(rom_heart_data)
 );
 
 // this is to get rgb bits in the right order
 // they may originally be in little endian form 
-assign rgb_data[11:8] = rom_heart1_data[3:0];
-assign rgb_data[7:4] = rom_heart1_data[7:4];
-assign rgb_data[3:0] = rom_heart1_data[11:8];
+assign rgb_data[11:8] = rom_heart_data[3:0];
+assign rgb_data[7:4] = rom_heart_data[7:4];
+assign rgb_data[3:0] = rom_heart_data[11:8];
 
 endmodule
