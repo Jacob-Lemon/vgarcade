@@ -1,8 +1,9 @@
 import hid
 import serial
+import time
 from math import atan2, sqrt, degrees
 
-# basys3 board serial port settings
+# basys3 board serial port settings2604*2
 serial_port = 'COM4'
 baud_rate = 10000
 # Open the serial port
@@ -24,6 +25,9 @@ button_bits = 0b000
 joystick_bits = 0b00000
 prev_bin_to_send = None
 bin_to_send = 0b00000000
+
+between_send_and_receive = 0
+time_update = time.time()
 
 # joystick deadzone
 DEADZONE = 40
@@ -79,16 +83,25 @@ while running:
 
     if bin_to_send != prev_bin_to_send:
         ser.write(bytes([bin_to_send]))
+        time_update = time.time()
         prev_bin_to_send = bin_to_send
-
-
+        between_send_and_receive = 1
+    
     # Check how many bytes are available in the input buffer
     bytes_to_read = ser.inWaiting()
     if bytes_to_read:
         # Read the available bytes from the serial port
         received_data = ser.read(bytes_to_read)
+        time_update = time.time()
+        between_send_and_receive = 0
         if received_data != bytes([bin_to_send]):
             ser.write(bytes([bin_to_send]))
+    
+    
+   
+    if time.time() - time_update > .05 and between_send_and_receive:
+        ser.write(bytes([bin_to_send]))
+        time_update = time.time()
 
 
 ser.close()
