@@ -111,4 +111,4 @@ def generate(name, rem_x=-1, rem_y=-1):
 # generate rom from full bitmap image
 #generate("yoshi.bmp")      # original file in example on embeddedthoughts.com
 
-generate("python_code/player.bmp")     # <-- change your .bmp file name here
+generate("python_code/background.bmp")     # <-- change your .bmp file name here

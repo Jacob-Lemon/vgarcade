@@ -5,8 +5,13 @@ module pixel_generation(
     input reset,                    // btnC
     input video_on,                 // from VGA controller
     input [9:0] x, y,               // from VGA controller
-    output reg [11:0] rgb           // to DAC, to VGA controller
-    );
+    output reg [11:0] rgb,          // to DAC, to VGA controller
+    // gamecube input things
+    input a,
+    input b,
+    input start_pause,
+    input [3:0] joy_dir
+);
 
 parameter X_MAX = 639;              // right border of display area
 parameter Y_MAX = 479;              // bottom border of display area
@@ -86,7 +91,7 @@ wire [11:0] player1_rgb_data;
 wire [9:0] player1_x_position, player1_y_position;
 
 assign player1_x_position = 25;
-assign player1_y_position = 25;
+assign player1_y_position = 300;
 
 player_maker player1 (
     .clk(clk),
@@ -98,9 +103,6 @@ player_maker player1 (
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
-
-
-
 
 
 
@@ -143,6 +145,24 @@ heart_maker heart1(
 );
 
 /******************************************************************************
+* here is the background stuff
+******************************************************************************/
+/*
+wire [11:0] background_rom_data_endian;
+wire [11:0] background_rgb;
+background_rom background_getter (
+    .clk(clk),
+    .row(y),
+    .col(x),
+    .color_data(background_rom_data_endian)
+);
+
+assign background_rgb[11:8] = background_rom_data_endian[3:0];
+assign background_rgb[7:4] = background_rom_data_endian[7:4];
+assign background_rgb[3:0] = background_rom_data_endian[11:8];
+*/
+
+/******************************************************************************
 * RGB control
 * order of if-else cascade determines layering of visuals
 ******************************************************************************/
@@ -151,11 +171,11 @@ always @*
         rgb = 12'h000;          // black(no value) outside display area
     else
         if (player1_on)
-            rgb = player1_rgb_data;
-//            if (&player1_rgb_data)
-//                rgb = 12'h0F0;
-//            else
-//                rgb = player1_rgb_data;
+//            rgb = player1_rgb_data;
+            if (&player1_rgb_data)
+                rgb = 12'h0F0;
+            else
+                rgb = player1_rgb_data;
         else if(sq_on)
             rgb = SQ_RGB;       // yellow square
         else if(block_on)
@@ -164,10 +184,12 @@ always @*
             if (&heart1_rgb_data) // if image is white &(1111_1111_1111)=1
                 // rgb = 12'h000; // will be background color, is black for now
                 rgb = BG_RGB;
+                // rgb = background_rgb;
             else
                 rgb = heart1_rgb_data;
                 // rgb = 12'h00F;
         else
             rgb = BG_RGB;       // blue background
+            // rgb = background_rgb;
 
 endmodule
