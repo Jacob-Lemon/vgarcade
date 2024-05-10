@@ -34,7 +34,7 @@ assign test_flag_led = test_flag;
 
 gamecube controller
 (
-    .clk(clk),
+    .clk(clk_100MHz),
     .reset(reset),
     .rx(rx),
     .tx(tx),
