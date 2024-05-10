@@ -83,9 +83,11 @@ module gamecube (
     output a,
     output b,
     output start_pause,
-    output [3:0] joy_dir
+    output [3:0] joy_dir,
+    output test_flag
 );
-
+reg test_flag_reg;
+assign test_flag = test_flag_reg;
 // wire rst_n;
 // assign rst_n = ~reset;
 
@@ -175,11 +177,13 @@ end
 always @(posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         // Reset behavior
-        received_number <= 1; // was and should be zero!!!
+        received_number <= 0; // was and should be zero!!!
         d_out <= 0;
+        test_flag_reg <= 1;
     end
     else begin
         start <= 0;
+        test_flag_reg <= 0;
 
         // If uart says data is ready to be received
         if (d_ready) begin

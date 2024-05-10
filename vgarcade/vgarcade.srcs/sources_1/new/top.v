@@ -9,10 +9,12 @@ module top(
     // gamecube ports
      input rx,
      output tx,
+     // testing things
      output a_led,
      output b_led,
      output start_pause_led,
-     output [3:0] joy_dir_led
+     output [3:0] joy_dir_led,
+     output test_flag_led
     );
 
 /******************************************************************************
@@ -20,11 +22,13 @@ module top(
 ******************************************************************************/
 wire a, b, start_pause;
 wire [3:0] joy_dir;
+wire test_flag;
 
 assign a_led = a;
 assign b_led = b;
 assign start_pause_led = start_pause;
 assign joy_dir_led = joy_dir;
+assign test_flag_led = test_flag;
 
 wire rst_n;
 assign rst_n = ~reset;
@@ -38,7 +42,8 @@ gamecube controller
     .a(a),
     .b(b),
     .start_pause(start_pause),
-    .joy_dir(joy_dir)
+    .joy_dir(joy_dir),
+    .test_flag(test_flag)
 );
 
 
