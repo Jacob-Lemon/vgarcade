@@ -175,7 +175,7 @@ end
 always @(posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         // Reset behavior
-        received_number <= 0;
+        received_number <= 1; // was and should be zero!!!
         d_out <= 0;
     end
     else begin
