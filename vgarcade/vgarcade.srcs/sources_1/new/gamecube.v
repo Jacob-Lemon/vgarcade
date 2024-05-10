@@ -73,7 +73,7 @@
 
 module gamecube (
     input clk,
-    input reset,
+    input rst_n,
 
     //UART ports
     input rx,
@@ -86,8 +86,9 @@ module gamecube (
     output [3:0] joy_dir
 );
 
-wire rst_n;
-assign rst_n = ~reset;
+// wire rst_n;
+// assign rst_n = ~reset;
+
 //-------------------------------------------
 // UART Receiver and associated connections
 //-------------------------------------------

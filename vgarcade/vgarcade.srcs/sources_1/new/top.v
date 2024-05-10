@@ -26,12 +26,13 @@ assign b_led = b;
 assign start_pause_led = start_pause;
 assign joy_dir_led = joy_dir;
 
-
+wire rst_n;
+assign rst_n = ~reset;
 
 gamecube controller
 (
     .clk(clk),
-    .reset(reset),
+    .rst_n(rst_n),
     .rx(rx),
     .tx(tx),
     .a(a),
