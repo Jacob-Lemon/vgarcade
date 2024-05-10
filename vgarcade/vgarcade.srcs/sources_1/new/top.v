@@ -8,7 +8,11 @@ module top(
     output [11:0] rgb,       // to DAC, 3 bits to VGA port on Basys 3
     // gamecube ports
      input rx,
-     output tx
+     output tx,
+     output a_led,
+     output b_led,
+     output start_pause_led,
+     output [3:0] joy_dir_led
     );
 
 /******************************************************************************
@@ -17,11 +21,17 @@ module top(
 wire a, b, start_pause;
 wire [3:0] joy_dir;
 
+assign a_led = a;
+assign b_led = b;
+assign start_pause_led = start_pause;
+assign joy_dir_led = joy_dir;
+
+
 
 gamecube controller
 (
     .clk(clk),
-    .rst_n(rst_n),
+    .reset(reset),
     .rx(rx),
     .tx(tx),
     .a(a),

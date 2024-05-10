@@ -25,6 +25,10 @@ parameter SQUARE_VELOCITY_NEG = -1; // set position change value for negative di
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
+/******************************************************************************
+* this is the bouncing sqare signals 
+* and motion control
+******************************************************************************/
 // square boundaries and position
 wire [9:0] sq_x_l, sq_x_r;              // square left and right boundary
 wire [9:0] sq_y_t, sq_y_b;              // square top and bottom boundary
@@ -84,27 +88,46 @@ end
 * this is where I am making a player character
 * with motion!!! :)
 **************************************************************************/
-
 wire player1_on;
 // position things
 wire [11:0] player1_rgb_data;
-wire [9:0] player1_x_position, player1_y_position;
+wire [9:0] player1_x_wire;  //
+wire [9:0] player1_y_wire;  // ok
+reg  [9:0] player1_x_reg;   //
+initial player1_x_reg = 380;
+// reg  [9:0] player1_y_reg;   //
 
-assign player1_x_position = 25;
-assign player1_y_position = 300;
+// assign player1_x_wire = 25;
+assign player1_x_wire = player1_x_reg;
+assign player1_y_wire = 300;
+
+
+//// do motion
+always @(posedge refresh_tick) begin
+    // if left, move left
+    if (a && player1_x_reg > 10) begin
+    // if (joy_dir == 5 && player1_x_reg > 10) begin
+    // if (player1_x_reg > 10) begin
+        player1_x_reg <= player1_x_reg - 1;
+    end
+    else
+    // if right, move right
+    // if (joy_dir == 1 && player1_x_reg < 630) begin
+    if (b && player1_x_reg < 630) begin
+        player1_x_reg <= player1_x_reg + 1;
+    end
+end
 
 player_maker player1 (
     .clk(clk),
     .x(x),
     .y(y),
-    .x_position(player1_x_position),
-    .y_position(player1_y_position),
+    .x_position(player1_x_wire),
+    .y_position(player1_y_wire),
     .size(9'd100), // from bitmap image, 100x100 pixels
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
-
-
 
 /**************************************************************************
 * this is where I am making a bunch of rectangles
