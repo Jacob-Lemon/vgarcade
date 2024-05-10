@@ -89,6 +89,7 @@ module gamecube (
 reg test_flag_reg;
 assign test_flag = test_flag_reg;
 
+initial test_flag_reg = 0;
 
 //-------------------------------------------
 // UART Receiver and associated connections

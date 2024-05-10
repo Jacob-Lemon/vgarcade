@@ -14,9 +14,10 @@ module top(
      output b_led,
      output start_pause_led,
      output [3:0] joy_dir_led,
-     output test_flag_led
+     output test_flag_led,
+     output reset_flag_led
     );
-
+assign reset_flag_led = reset;
 /******************************************************************************
 * this is the gamecube input things
 ******************************************************************************/
