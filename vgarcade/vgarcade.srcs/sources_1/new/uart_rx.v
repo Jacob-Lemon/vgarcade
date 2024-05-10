@@ -3,7 +3,7 @@
 module uart_rx
  (
   input 	   clk,
-  input 	   rst_n,
+  input 	   reset,
   input 	   rx,
   input 	   ack,
   output reg 	   d_ready,
@@ -32,7 +32,7 @@ module uart_rx
 
    
    always @(posedge clk) begin
-      if (!rst_n) begin
+      if (reset) begin
 	 rx_d <= 0;
 	 clk_count <= 0;
 	 start <= 0;
@@ -68,7 +68,7 @@ module uart_rx
 
    
    always @(posedge clk) begin
-      if (!rst_n) begin
+      if (reset) begin
 	 // Reset behavior:
 	 state   <= WAIT;
 	 d_ready <= 0;

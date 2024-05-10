@@ -35,7 +35,7 @@
         gamecube controller
             (
                 .clk(clk),
-                .rst_n(rst_n),
+                .reset(reset),
                 .rx(rx),
                 .tx(tx),
                 .a(a),
@@ -73,7 +73,7 @@
 
 module gamecube (
     input clk,
-    input rst_n,
+    input reset,
 
     //UART ports
     input rx,
@@ -88,8 +88,7 @@ module gamecube (
 );
 reg test_flag_reg;
 assign test_flag = test_flag_reg;
-// wire rst_n;
-// assign rst_n = ~reset;
+
 
 //-------------------------------------------
 // UART Receiver and associated connections
@@ -105,7 +104,7 @@ reg [7:0] received_number;
 uart_rx testrx
     (
         .clk(clk),
-        .rst_n(rst_n),
+        .reset(reset),
         .rx(rx),
         .ack(ack),
         .d_ready(d_ready),
@@ -125,7 +124,7 @@ wire done;
 uart_tx testtx
      (
       .clk(clk),
-      .rst_n(rst_n),
+      .reset(reset),
       .d_out(d_out),
       .start(start),
       .done(done),
@@ -174,8 +173,8 @@ end
 // Receives and sends to python code and assigns register controller data
 //------------------------------------------------------------------------
 
-always @(posedge clk or negedge rst_n) begin
-    if (~rst_n) begin
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
         // Reset behavior
         received_number <= 0; // was and should be zero!!!
         d_out <= 0;

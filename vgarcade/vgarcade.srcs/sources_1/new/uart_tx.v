@@ -4,7 +4,7 @@
 module uart_tx 
 (
  input 	     clk,
- input 	     rst_n,
+ input 	     reset,
  input [7:0] d_out,
  input 	     start,
  output reg  done,
@@ -58,7 +58,7 @@ module uart_tx
    
    
    always @(posedge clk) begin
-      if (!rst_n) begin
+      if (reset) begin
 	 // Reset behavior:
 	 state <= WAIT;
 	 tx    <= 1;

@@ -30,13 +30,11 @@ assign start_pause_led = start_pause;
 assign joy_dir_led = joy_dir;
 assign test_flag_led = test_flag;
 
-wire rst_n;
-assign rst_n = ~reset;
 
 gamecube controller
 (
     .clk(clk),
-    .rst_n(rst_n),
+    .reset(reset),
     .rx(rx),
     .tx(tx),
     .a(a),
