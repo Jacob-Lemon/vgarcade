@@ -83,7 +83,6 @@ while running:
 
     if bin_to_send != prev_bin_to_send:
         ser.write(bytes([bin_to_send]))
-        print("first send")
         time_update = time.time()
         prev_bin_to_send = bin_to_send
         between_send_and_receive = 1
@@ -97,14 +96,11 @@ while running:
         between_send_and_receive = 0
         if received_data != bytes([bin_to_send]):
             ser.write(bytes([bin_to_send]))
-            print("second resend")
     
-    if between_send_and_receive:    
-        print(time.time() - time_update)
-    # if time.time() - time_update > .05 and between_send_and_receive:
-    #     ser.write(bytes([bin_to_send]))
-    #     print("third safety send")
-    #     time_update = time.time()
+
+    if time.time() - time_update > .05 and between_send_and_receive:
+        ser.write(bytes([bin_to_send]))
+        time_update = time.time()
 
 
 ser.close()
