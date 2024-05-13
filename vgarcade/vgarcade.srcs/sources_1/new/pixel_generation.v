@@ -170,7 +170,7 @@ heart_maker heart1(
 /******************************************************************************
 * here is the background stuff
 ******************************************************************************/
-/*
+
 wire [11:0] background_rom_data_endian;
 wire [11:0] background_rgb;
 background_rom background_getter (
@@ -183,7 +183,7 @@ background_rom background_getter (
 assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4] = background_rom_data_endian[7:4];
 assign background_rgb[3:0] = background_rom_data_endian[11:8];
-*/
+
 
 /******************************************************************************
 * RGB control
@@ -206,13 +206,13 @@ always @*
         else if (heart1_on)
             if (&heart1_rgb_data) // if image is white &(1111_1111_1111)=1
                 // rgb = 12'h000; // will be background color, is black for now
-                rgb = BG_RGB;
-                // rgb = background_rgb;
+//                rgb = BG_RGB;
+                 rgb = background_rgb;
             else
                 rgb = heart1_rgb_data;
                 // rgb = 12'h00F;
         else
-            rgb = BG_RGB;       // blue background
-            // rgb = background_rgb;
+//            rgb = BG_RGB;       // blue background
+             rgb = background_rgb;
 
 endmodule

@@ -16,7 +16,7 @@
 
 # import imageio
 
-import imageio			    # change1 to
+import imageio.v2 as imageio
 import math
 
 # returns string of 12-bit color at row x, column y of image
@@ -32,6 +32,7 @@ def get_color_bits(im, y, x):
     # return concatination of RGB bits
     return str(rx+gx+bx)
 
+# *****************************************************************************
 # write to file Verilog HDL
 # takes name of file, image array,P
 # pixel coordinates of background color to mask as 0
@@ -61,42 +62,69 @@ def rom_12_bit(name, im, mask=False, rem_x=-1, rem_y=-1):
     col_width = math.ceil(math.log(x_max-1,2))
 
     # write beginning part of module up to case statements
+    f.write("`timescale 1ns/1ps\n\n")
+    # port list
     f.write("module " + name.split('.')[0] + "_rom\n\t(\n\t\t")
     f.write("input wire clk,\n\t\tinput wire [" + str(row_width-1) + ":0] row,\n\t\t")
     f.write("input wire [" + str(col_width-1) + ":0] col,\n\t\t")
     f.write("output reg [11:0] color_data\n\t);\n\n\t")
+    # signal declaration things
     f.write("(* rom_style = \"block\" *)\n\n\t//signal declaration\n\t")
     f.write("reg [" + str(row_width-1) + ":0] row_reg;\n\t")
     f.write("reg [" + str(col_width-1) + ":0] col_reg;\n\n\t")
+
     f.write("always @(posedge clk)\n\t\tbegin\n\t\trow_reg <= row;\n\t\tcol_reg <= col;\n\t\tend\n\n\t")
-    f.write("always @*\n\tcase ({row_reg, col_reg})\n")
-    
+    # old code, case way
+    # f.write("always @*\n\tcase ({row_reg, col_reg})\n")
+
+    # my new if-else builder
+    f.write("always @*\n")
+        
+    print("y_max: " + str(y_max))
+    print("x_max: " + str(x_max))
+
 
     # loops through y rows and x columns
+
+    # *************************************************************************
+    # this is my code
+    # *************************************************************************
+    low_bound_place = 0
+    low_bound_color = 0
+    up_bound_place = 0
     for y in range(y_max):
         for x in range(x_max):
-            # write : color_data = 
-            case = format(y, 'b').zfill(row_width) + format(x, 'b').zfill(col_width)
-            f.write("\t\t" + str(row_width + col_width) + "'b" + case + ": color_data = " + str(12) + "'b")
+            current_place = int(str(y) + str(x))
 
-            # if mask is set to false, just write color data
-            if(mask == False):
-                f.write(get_color_bits(im, y, x))
-                f.write(";\n")
+            # initialize low_bound color
+            if current_place == 0:
+                low_bound_color = get_color_bits(im,y,x)
 
-            elif(get_color_bits(im, y, x) != a):
-                # write color bits to file
-                f.write(get_color_bits(im, y, x))
-                f.write(";\n")
-                
+            current_color = get_color_bits(im,y,x)
+            if (current_color == low_bound_color):
+                up_bound_place = current_place
             else:
-                f.write("000000000000;\n")
-                
-        f.write("\n")
-        
-    # write end of module
-    f.write("\t\tdefault: color_data = 12'b000000000000;\n\tendcase\nendmodule")
+                # print if else statement to file!!!!!
+                number = max(y_max, x_max)
 
+
+
+                fill_value = len(str(number)) + 1
+                # .zfill(fill_value)
+
+                f.write("if ( {row,col} >= " + str(low_bound_place))
+                f.write(" && {row,col} < " + str(up_bound_place) + ")")
+                f.write(" color_data = 12'b" + str(current_color) + ";")
+                f.write(" else\n")
+                low_bound_place = current_place
+                low_bound_color = get_color_bits(im,y,x)
+        # f.write("\n")
+
+
+    # write end of module
+    # f.write("\t\tdefault: color_data = 12'b000000000000;\n\tendcase\nendmodule")
+    f.write("color_data = 12'b000000000000;")
+    f.write("\nendmodule")
     # close file
     f.close()    
 
