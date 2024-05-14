@@ -16,7 +16,7 @@
 
 # import imageio
 
-import imageio			    # change1 to
+import imageio.v2 as imageio			    # change1 to
 import math
 
 # returns string of 12-bit color at row x, column y of image
@@ -111,4 +111,4 @@ def generate(name, rem_x=-1, rem_y=-1):
 # generate rom from full bitmap image
 #generate("yoshi.bmp")      # original file in example on embeddedthoughts.com
 
-generate("python_code/test.bmp")     # <-- change your .bmp file name here
+generate("python_code/heart.bmp")     # <-- change your .bmp file name here

@@ -16,7 +16,6 @@ module pixel_generation(
 parameter X_MAX = 639;              // right border of display area
 parameter Y_MAX = 479;              // bottom border of display area
 parameter SQ_RGB = 12'h0FF;         // red & green = yellow for square
-parameter BG_RGB = 12'hF00;         // blue background
 parameter SQUARE_SIZE = 32;         // width of square sides in pixels
 parameter SQUARE_VELOCITY_POS = 1;  // set position change value for positive direction
 parameter SQUARE_VELOCITY_NEG = -1; // set position change value for negative direction  
@@ -149,7 +148,7 @@ rectangle_boundary block_generator (
 * trying to draw a heart
 * 
 *************************************************************************/
-
+parameter HEART_SIZE = 25;
 wire [9:0] heart1_x_location, heart1_y_location;
 assign heart1_x_location = 100;
 assign heart1_y_location = 200;
@@ -162,17 +161,36 @@ heart_maker heart1(
     .y(y),
     .start_x(heart1_x_location),
     .start_y(heart1_y_location),
-    .size(9'd25), // from bitmap image!!! know its size!!!!!
+    .size(HEART_SIZE), // from bitmap image!!! know its size!!!!!
     .heart_on(heart1_on),
     .rgb_data(heart1_rgb_data)
 );
+/*
+wire [9:0] heart2_x_location, heart2_y_location;
+assign heart2_x_location = 200;
+assign heart2_y_location = 300;
+wire heart2_on;
+wire [11:0] heart2_rgb_data;
+
+heart_maker heart2(
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .start_x(heart2_x_location),
+    .start_y(heart2_y_location),
+    .size(HEART_SIZE), // from bitmap image!!! know its size!!!!!
+    .heart_on(heart2_on),
+    .rgb_data(heart2_rgb_data)
+);
+*/
 
 /******************************************************************************
 * here is the background stuff
 ******************************************************************************/
 
-wire [11:0] background_rom_data_endian;
+/*
 wire [11:0] background_rgb;
+wire [11:0] background_rom_data_endian;
 background_rom background_getter (
     .clk(clk),
     .row(y),
@@ -183,7 +201,9 @@ background_rom background_getter (
 assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4] = background_rom_data_endian[7:4];
 assign background_rgb[3:0] = background_rom_data_endian[11:8];
-
+*/
+wire [12:0] background_rgb;
+assign background_rgb = 12'hF00; // blue
 
 /******************************************************************************
 * RGB control
@@ -206,13 +226,16 @@ always @*
         else if (heart1_on)
             if (&heart1_rgb_data) // if image is white &(1111_1111_1111)=1
                 // rgb = 12'h000; // will be background color, is black for now
-//                rgb = BG_RGB;
-                 rgb = background_rgb;
+                rgb = background_rgb;
             else
                 rgb = heart1_rgb_data;
                 // rgb = 12'h00F;
+//        else if (heart2_on)
+//            if (&heart2_rgb_data)
+//                rgb = background_rgb;
+//            else
+//                rgb = heart2_rgb_data;
         else
-//            rgb = BG_RGB;       // blue background
-             rgb = background_rgb;
+            rgb = background_rgb;
 
 endmodule
