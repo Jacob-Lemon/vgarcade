@@ -15,7 +15,9 @@ module top(
      output start_pause_led,
      output [3:0] joy_dir_led,
      output test_flag_led,
-     output reset_flag_led
+     output reset_flag_led,
+     // switches
+     input [15:0] sw
     );
 assign reset_flag_led = reset;
 /******************************************************************************
@@ -68,7 +70,8 @@ pixel_generation pg (
     .a(a),
     .b(b),
     .start_pause(start_pause),
-    .joy_dir(joy_dir)
+    .joy_dir(joy_dir),
+    .sw(sw)
 );
 
 always @(posedge clk_100MHz)

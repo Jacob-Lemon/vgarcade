@@ -10,7 +10,9 @@ module pixel_generation(
     input a,
     input b,
     input start_pause,
-    input [3:0] joy_dir
+    input [3:0] joy_dir,
+    // switches for test purposes
+    input [15:0] sw
 );
 
 parameter X_MAX = 639;              // right border of display area
@@ -104,15 +106,15 @@ assign player1_y_wire = 300;
 //// do motion
 always @(posedge refresh_tick) begin
     // if left, move left
-    if (a && player1_x_reg > 10) begin
+    if ((a || sw[15]) && player1_x_reg > 10) begin          // this change caused 'input signal out of range' error
     // if (joy_dir == 5 && player1_x_reg > 10) begin
     // if (player1_x_reg > 10) begin
         player1_x_reg <= player1_x_reg - 1;
     end
     else
     // if right, move right
-    // if (joy_dir == 1 && player1_x_reg < 630) begin
-    if (b && player1_x_reg < 630) begin
+    // if (joy_dir == 1 && player1_x_reg < 530) begin
+    if ((b || sw[14]) && player1_x_reg < 530) begin
         player1_x_reg <= player1_x_reg + 1;
     end
 end
@@ -144,50 +146,41 @@ rectangle_boundary block_generator (
     .block_on(block_on)
 );
 
-/*************************************************************************
+/******************************************************************************
 * trying to draw a heart
-* 
-*************************************************************************/
+* doing lives by a generate block
+******************************************************************************/
+// data I need
+parameter MAX_LIVES = 3;
 parameter HEART_SIZE = 25;
-wire [9:0] heart1_x_location, heart1_y_location;
-assign heart1_x_location = 100;
-assign heart1_y_location = 200;
-wire heart1_on;
-wire [11:0] heart1_rgb_data;
 
-heart_maker heart1(
-    .clk(clk),
-    .x(x),
-    .y(y),
-    .start_x(heart1_x_location),
-    .start_y(heart1_y_location),
-    .size(HEART_SIZE), // from bitmap image!!! know its size!!!!!
-    .heart_on(heart1_on),
-    .rgb_data(heart1_rgb_data)
-);
-/*
-wire [9:0] heart2_x_location, heart2_y_location;
-assign heart2_x_location = 200;
-assign heart2_y_location = 300;
-wire heart2_on;
-wire [11:0] heart2_rgb_data;
+wire [9:0] health_bar_x_location, health_bar_y_location;
 
-heart_maker heart2(
-    .clk(clk),
-    .x(x),
-    .y(y),
-    .start_x(heart2_x_location),
-    .start_y(heart2_y_location),
-    .size(HEART_SIZE), // from bitmap image!!! know its size!!!!!
-    .heart_on(heart2_on),
-    .rgb_data(heart2_rgb_data)
-);
-*/
+assign health_bar_x_location = 100;
+assign health_bar_y_location = 300;
+
+wire [3:0] health_on;
+wire [11:0] health_rgb_data [11:0];
+
+genvar i;
+generate
+    for (i=0; i < MAX_LIVES; i = i + 1) begin
+        heart_maker display_lives (
+            .clk(clk),
+            .x(x),
+            .y(y),
+            .start_x(health_bar_x_location + i*25),
+            .start_y(health_bar_y_location),
+            .size(HEART_SIZE),
+            .heart_on(health_on[i]),
+            .rgb_data(health_rgb_data[i])
+        );
+    end
+endgenerate
 
 /******************************************************************************
 * here is the background stuff
 ******************************************************************************/
-
 wire [11:0] background_rgb;
 wire [11:0] background_rom_data_endian;
 background_rom background_getter (
@@ -201,14 +194,53 @@ assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4] = background_rom_data_endian[7:4];
 assign background_rgb[3:0] = background_rom_data_endian[11:8];
 
-/*
-wire [12:0] background_rgb;
-assign background_rgb = 12'hF00; // blue
-*/
+//wire [12:0] background_rgb;
+//assign background_rgb = 12'hF00; // blue
 /******************************************************************************
 * RGB control
 * order of if-else cascade determines layering of visuals
 ******************************************************************************/
+always @*
+    if(~video_on)
+        rgb = 12'h000;          // black(no value) outside display area
+    else
+        if (player1_on)
+            if (&player1_rgb_data) rgb = 12'h0F0;
+            else rgb = player1_rgb_data;
+        else if(sq_on)
+            rgb = SQ_RGB;       // yellow square
+        else if(block_on)
+            rgb = 12'hFFF;      // white block
+        
+        else if (health_on[0] && sw[2:0] >= 1)
+            // if image is white &(1111_1111_1111)=1
+            if (&health_rgb_data[0]) rgb = background_rgb;
+            else rgb = health_rgb_data[0];
+        else if (health_on[1] && sw[2:0] >= 2)
+            if (&health_rgb_data[1]) rgb = background_rgb;
+            else rgb = health_rgb_data[1];
+        else if (health_on[2] && sw[2:0] >= 3)
+            if (&health_rgb_data[2]) rgb = background_rgb;
+            else rgb = health_rgb_data[2];
+        else
+            rgb = background_rgb;
+
+endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+// old if-else rgb assignment thing
+/*
+
 always @*
     if(~video_on)
         rgb = 12'h000;          // black(no value) outside display area
@@ -225,17 +257,18 @@ always @*
             rgb = 12'hFFF;      // white block
         else if (heart1_on)
             if (&heart1_rgb_data) // if image is white &(1111_1111_1111)=1
-                // rgb = 12'h000; // will be background color, is black for now
                 rgb = background_rgb;
             else
                 rgb = heart1_rgb_data;
                 // rgb = 12'h00F;
-//        else if (heart2_on)
-//            if (&heart2_rgb_data)
-//                rgb = background_rgb;
-//            else
-//                rgb = heart2_rgb_data;
+        else if (heart2_on)
+            if (&heart2_rgb_data)
+                rgb = background_rgb;
+            else
+                rgb = heart2_rgb_data;
         else
             rgb = background_rgb;
 
 endmodule
+
+*/
