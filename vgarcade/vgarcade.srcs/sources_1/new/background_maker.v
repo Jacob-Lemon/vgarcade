@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module player_maker(
+module player2_maker(
     input clk,
     input [9:0] x, y,
     input [9:0] x_position, y_position,
