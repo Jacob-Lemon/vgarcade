@@ -1,114 +1,56 @@
-# *****************************************************************************
-# Created by embeddedthoughts.com
-# Edited by David J. Marion aka FPGA Dude
-# Editor's notes:
-#   - scipy misc.imread() is now a deprecated function
-#   - scipy library is no longer needed in this program 
-#       and is replaced with imageio library on line# 17
-#   - line# 105 shows the replacement code using imageio.imread() 
-#       for line# 103 with scipy.misc.imread()
-# *****************************************************************************
-
-# converts image to Verilog HDL that infers a ROM using Xilinx Block RAM
-# note: 12-bit color map word is r3, r2, r1, r0, g3, g2, g1, g0, b3, b2, b1, b0
-
-#from scipy import misc		# change1 from
-
-# import imageio
-
-import imageio.v2 as imageio			    # change1 to
+import imageio
 import math
 
-# returns string of 12-bit color at row x, column y of image
 def get_color_bits(im, y, x):
-    # convert color components to byte string and slice needed upper bits
-    b  = format(im[y][x][0], 'b').zfill(8)
-    rx = b[0:4]
-    b  = format(im[y][x][1], 'b').zfill(8)
-    gx = b[0:4]
-    b  = format(im[y][x][2], 'b').zfill(8)
-    bx = b[0:4]
+    # Convert color components to a 12-bit binary string using bitwise operations
+    r, g, b = im[y, x]
+    return ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4)
 
-    # return concatination of RGB bits
-    return str(rx+gx+bx)
+def generate_verilog_module(name, im):
+    y_max, x_max, _ = im.shape
+    total_pixels = y_max * x_max
+    row_width = math.ceil(math.log2(y_max))
+    col_width = math.ceil(math.log2(x_max))
+    max_index_width = len(str(total_pixels - 1))  # Width of the largest index as a string
 
-# write to file Verilog HDL
-# takes name of file, image array,P
-# pixel coordinates of background color to mask as 0
-def rom_12_bit(name, im, mask=False, rem_x=-1, rem_y=-1):
+    file_name = f"{name.split('.')[0]}_rom.v"
 
-    # get colorbyte of background color
-    # if coordinates left at default, map all data without masking
-    if rem_x == -1 or rem_y == -1:
-        a = "000000000000"
-        
-    # else set mask compare byte
-    else:
-        a = get_color_bits(im, rem_x, rem_y)
-
-    # make output filename from input
-    #file_name = name.split('.')[0] + "_12_bit_rom.v"	# changed from
-    file_name = name.split('.')[0] + "_rom.v"		    # changed to(editor's preference)
-
-    # open file
-    f = open(file_name, 'w')
-
-    # get image dimensions
-    y_max, x_max, z = im.shape
-
-    # get width of row and column case words
-    row_width = math.ceil(math.log(y_max-1,2))
-    col_width = math.ceil(math.log(x_max-1,2))
-
-    # write beginning part of module up to case statements
-    f.write("module " + name.split('.')[0] + "_rom\n\t(\n\t\t")
-    f.write("input wire clk,\n\t\tinput wire [" + str(row_width-1) + ":0] row,\n\t\t")
-    f.write("input wire [" + str(col_width-1) + ":0] col,\n\t\t")
-    f.write("output reg [11:0] color_data\n\t);\n\n\t")
-    f.write("(* rom_style = \"block\" *)\n\n\t//signal declaration\n\t")
-    f.write("reg [" + str(row_width-1) + ":0] row_reg;\n\t")
-    f.write("reg [" + str(col_width-1) + ":0] col_reg;\n\n\t")
-    f.write("always @(posedge clk)\n\t\tbegin\n\t\trow_reg <= row;\n\t\tcol_reg <= col;\n\t\tend\n\n\t")
-    f.write("always @*\n\tcase ({row_reg, col_reg})\n")
+    module_name_thing = f"{file_name.split('/')[1]}"
+    print(module_name_thing)
     
+    with open(file_name, 'w') as f:
+        f.write("`timescale 1ns / 1ps\n")
+        f.write(f"module {module_name_thing.split('.')[0]} (\n    input wire clk,\n")
+        f.write(f"    input wire [{row_width-1}:0] row,\n    input wire [{col_width-1}:0] col,\n")
+        f.write("    output reg [11:0] color_data\n);\n\n")
 
-    # loops through y rows and x columns
-    for y in range(y_max):
-        for x in range(x_max):
-            # write : color_data = 
-            case = format(y, 'b').zfill(row_width) + format(x, 'b').zfill(col_width)
-            f.write("\t\t" + str(row_width + col_width) + "'b" + case + ": color_data = " + str(12) + "'b")
-
-            # if mask is set to false, just write color data
-            if(mask == False):
-                f.write(get_color_bits(im, y, x))
-                f.write(";\n")
-
-            elif(get_color_bits(im, y, x) != a):
-                # write color bits to file
-                f.write(get_color_bits(im, y, x))
-                f.write(";\n")
-                
-            else:
-                f.write("000000000000;\n")
-                
-        f.write("\n")
+        f.write("    always @(posedge clk) begin\n")
         
-    # write end of module
-    f.write("\t\tdefault: color_data = 12'b000000000000;\n\tendcase\nendmodule")
+        # Initialize variables for range checking
+        previous_color = get_color_bits(im, 0, 0)
+        start_index = 0
 
-    # close file
-    f.close()    
+        # Process each pixel, assuming linear index from row and col inputs
+        for index in range(1, total_pixels):
+            y = index // x_max
+            x = index % x_max
+            current_color = get_color_bits(im, y, x)
 
-# driver function
-def generate(name, rem_x=-1, rem_y=-1):
-    #im = misc.imread(name, mode = 'RGB')	# change2 from    
+            # When color changes, write the previous range and color
+            if current_color != previous_color:
+                end_index = index - 1
+                f.write(f"        if ((row * {x_max} + col) >= {start_index} && (row * {x_max} + col) <= {end_index}) color_data <= 12'b{previous_color:012b}; else\n")
+                start_index = index
+                previous_color = current_color
 
-    im = imageio.imread(name)			    # change2 to     
-    print("width: " + str(im.shape[1]) + ", height: " + str(im.shape[0]))
-    rom_12_bit(name, im)
+        # Handle the last range
+        f.write(f"        if ((row * {x_max} + col) >= {start_index} && (row * {x_max} + col) < {total_pixels}) color_data <= 12'b{previous_color:012b}; else\n")
+        f.write("        color_data <= 12'b000000000000;\n")
+        f.write("    end\nendmodule\n")
 
-# generate rom from full bitmap image
-#generate("yoshi.bmp")      # original file in example on embeddedthoughts.com
+def generate(name):
+    im = imageio.imread(name)  # Load image
+    print(f"width: {im.shape[1]}, height: {im.shape[0]}")
+    generate_verilog_module(name, im)
 
-generate("python_code/heart.bmp")     # <-- change your .bmp file name here
+generate("python_code/background.bmp")  # Update the path to your bitmap file

@@ -188,7 +188,6 @@ heart_maker heart2(
 * here is the background stuff
 ******************************************************************************/
 
-/*
 wire [11:0] background_rgb;
 wire [11:0] background_rom_data_endian;
 background_rom background_getter (
@@ -201,10 +200,11 @@ background_rom background_getter (
 assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4] = background_rom_data_endian[7:4];
 assign background_rgb[3:0] = background_rom_data_endian[11:8];
-*/
+
+/*
 wire [12:0] background_rgb;
 assign background_rgb = 12'hF00; // blue
-
+*/
 /******************************************************************************
 * RGB control
 * order of if-else cascade determines layering of visuals
