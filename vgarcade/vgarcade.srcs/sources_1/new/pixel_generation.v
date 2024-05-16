@@ -106,14 +106,11 @@ assign player1_y_wire = 300;
 //// do motion
 always @(posedge refresh_tick) begin
     // if left, move left
-    if ((a || sw[15]) && player1_x_reg > 10) begin          // this change caused 'input signal out of range' error
-    // if (joy_dir == 5 && player1_x_reg > 10) begin
-    // if (player1_x_reg > 10) begin
+    if ((a || sw[15]) && player1_x_reg > 10) begin
         player1_x_reg <= player1_x_reg - 1;
     end
     else
     // if right, move right
-    // if (joy_dir == 1 && player1_x_reg < 530) begin
     if ((b || sw[14]) && player1_x_reg < 530) begin
         player1_x_reg <= player1_x_reg + 1;
     end
@@ -205,15 +202,15 @@ always @*
         rgb = 12'h000;          // black(no value) outside display area
     else
         if (player1_on)
-            if (&player1_rgb_data) rgb = 12'h0F0;
-            else rgb = player1_rgb_data;
+            // if image is not white ~&1111_1111_1111 == 0
+            if (~(&player1_rgb_data)) rgb = player1_rgb_data;       // this seems to be causing issues
+            // else rgb = player1_rgb_data;
         else if(sq_on)
             rgb = SQ_RGB;       // yellow square
         else if(block_on)
             rgb = 12'hFFF;      // white block
         
         else if (health_on[0] && sw[2:0] >= 1)
-            // if image is white &(1111_1111_1111)=1
             if (&health_rgb_data[0]) rgb = background_rgb;
             else rgb = health_rgb_data[0];
         else if (health_on[1] && sw[2:0] >= 2)
