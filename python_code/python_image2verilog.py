@@ -53,4 +53,4 @@ def generate(name):
     print(f"width: {im.shape[1]}, height: {im.shape[0]}")
     generate_verilog_module(name, im)
 
-generate("python_code/apple.bmp")  # Update the path to your bitmap file
+generate("python_code/player.bmp")  # Update the path to your bitmap file
