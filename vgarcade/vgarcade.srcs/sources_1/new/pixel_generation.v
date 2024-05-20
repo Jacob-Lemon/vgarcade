@@ -42,11 +42,13 @@ assign player1_y_wire = 300;
 always @(posedge refresh_tick) begin
     // if left, move left
     if ((a || sw[15]) && player1_x_reg > 10) begin
+    // if ((sw[15]) && player1_x_reg > 10) begin
         player1_x_reg <= player1_x_reg - 1;
     end
     else
     // if right, move right
     if ((b || sw[14]) && player1_x_reg < 530) begin
+    // if ((sw[14]) && player1_x_reg < 530) begin
         player1_x_reg <= player1_x_reg + 1;
     end
 end
@@ -144,6 +146,49 @@ assign background_rgb = 12'hF00; // blue
 * RGB control
 * order of if-else cascade determines layering of visuals
 ******************************************************************************/
+
+
+// Stage 1: Check if video is on
+reg video_active;
+always @(posedge clk or posedge reset) begin
+    if (reset)
+        video_active <= 1'b0;
+    else
+        video_active <= video_on;
+end
+
+// Stage 2: Determine intermediate RGB value
+reg [11:0] intermediate_rgb;
+always @(posedge clk or posedge reset) begin
+    if (reset)
+        intermediate_rgb <= 12'h000;
+    else if (~video_active)
+        intermediate_rgb <= 12'h000;
+    else if (player1_on && player1_rgb_data != 12'hFFF)
+        intermediate_rgb <= player1_rgb_data;
+    else if (health_on[0] && health_rgb_data[0] != 12'hFFF && sw[2:0] >= 1)
+        intermediate_rgb <= health_rgb_data[0];
+    else if (health_on[1] && health_rgb_data[1] != 12'hFFF && sw[2:0] >= 2)
+        intermediate_rgb <= health_rgb_data[1];
+    else if (health_on[2] && health_rgb_data[2] != 12'hFFF && sw[2:0] >= 3)
+        intermediate_rgb <= health_rgb_data[2];
+    else
+        intermediate_rgb <= background_rgb;
+end
+
+// Stage 3: Final assignment to RGB output
+always @(posedge clk or posedge reset) begin
+    if (reset)
+        rgb <= 12'h000;
+    else
+        rgb <= intermediate_rgb;
+end
+
+endmodule
+
+
+// this is the old, non-pipeline way
+/*
 always @*
     if(~video_on)
         rgb = 12'h000;          // black(no value) outside display area
@@ -167,3 +212,4 @@ always @*
             rgb = background_rgb;
 
 endmodule
+*/
