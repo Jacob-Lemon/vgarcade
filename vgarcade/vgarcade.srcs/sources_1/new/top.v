@@ -77,7 +77,7 @@ pixel_generation pg (
 always @(posedge clk_100MHz)
     if(w_p_tick)
         rgb_reg <= rgb_next;
-        
+
 assign rgb = rgb_reg;
 
 endmodule

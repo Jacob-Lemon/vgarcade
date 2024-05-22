@@ -16,6 +16,7 @@ module pixel_generation(
 );
 
 // create a 60Hz refresh tick at the start of vsync 
+// I think this is 4 clock cycles?
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
@@ -23,35 +24,43 @@ assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 /******************************************************************************
 * this is where I am making a player character
 * with motion!!! :)
+* pipelined to be better for timing things
 ******************************************************************************/
+
 wire player1_on;
 // position things
 wire [11:0] player1_rgb_data;
-wire [9:0] player1_x_wire;  //
-wire [9:0] player1_y_wire;  // ok
-reg  [9:0] player1_x_reg;   //
+wire [9:0] player1_x_wire;
+wire [9:0] player1_y_wire;
+reg  [9:0] player1_x_reg;
+reg  [9:0] player1_x_next; // pipeline register for x position
 initial player1_x_reg = 380;
-// reg  [9:0] player1_y_reg;   //
+initial player1_x_next = 380;
 
-// assign player1_x_wire = 25;
-assign player1_x_wire = player1_x_reg;
+// position y is constant in this example
 assign player1_y_wire = 300;
 
+// Pipeline stage for calculating next position
 
-//// do motion
 always @(posedge refresh_tick) begin
-    // if left, move left
-    if ((a || sw[15]) && player1_x_reg > 10) begin
-    // if ((sw[15]) && player1_x_reg > 10) begin
-        player1_x_reg <= player1_x_reg - 1;
-    end
-    else
-    // if right, move right
-    if ((b || sw[14]) && player1_x_reg < 530) begin
-    // if ((sw[14]) && player1_x_reg < 530) begin
-        player1_x_reg <= player1_x_reg + 1;
-    end
+    // if (refresh_tick) begin
+        // if left, move left
+        if ((a || sw[15]) && player1_x_next > 10) begin
+            player1_x_next <= player1_x_next - 1;
+        end
+        else if ((b || sw[14]) && player1_x_next < 530) begin
+            player1_x_next <= player1_x_next + 1;
+        end
+    /// end
 end
+
+// Pipeline stage for updating the position
+always @(posedge clk) begin
+    player1_x_reg <= player1_x_next;  // Update x position from pipeline register
+end
+
+// Assign the output wire to the updated register
+assign player1_x_wire = player1_x_reg;
 
 player_maker player1 (
     .clk(clk),
@@ -68,7 +77,7 @@ player_maker player1 (
 * drawing and handling fruits
 * 
 ******************************************************************************/
-
+/*
 parameter FRUIT_SIZE = 40;
 wire [9:0] fruit_x_location, fruit_y_location;
 
@@ -78,6 +87,14 @@ assign fruit_y_location = 400;
 wire [3:0] fruit_on;
 wire [11:0] fruit_rgb_data;
 
+wire [3:0] which_fruit_1;
+assign which_fruit_1 = sw[6:3];
+
+
+// localparam APPLE = 0;
+// localparam ORANGE = 1;
+
+
 fruit_maker (
     .clk(clk),
     .x(x),
@@ -85,10 +102,11 @@ fruit_maker (
     .x_position(fruit_x_location),
     .y_position(fruit_y_location),
     .size(FRUIT_SIZE),
+    .which_fruit(which_fruit_1),
     .fruit_on(fruit_on),
     .rgb_data(fruit_rgb_data)
 );
-
+*/
 
 /******************************************************************************
 * trying to draw a heart
@@ -125,7 +143,7 @@ endgenerate
 /******************************************************************************
 * here is the background stuff
 ******************************************************************************/
-
+/*
 wire [11:0] background_rgb;
 wire [11:0] background_rom_data_endian;
 background_rom background_getter (
@@ -138,10 +156,11 @@ background_rom background_getter (
 assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4] = background_rom_data_endian[7:4];
 assign background_rgb[3:0] = background_rom_data_endian[11:8];
-/*
+*/
+
 wire [12:0] background_rgb;
 assign background_rgb = 12'hF00; // blue
-*/
+
 /******************************************************************************
 * RGB control
 * order of if-else cascade determines layering of visuals
@@ -164,20 +183,20 @@ always @(posedge clk or posedge reset) begin
         intermediate_rgb <= 12'h000;
     else if (~video_active)
         intermediate_rgb <= 12'h000;
-    //--------------------fruit-----------------------
-    else if (fruit_on && fruit_rgb_data != 12'hFFF)
-        intermediate_rgb <= fruit_rgb_data;
-    //--------------------player-----------------------
-    else if (player1_on && player1_rgb_data != 12'hFFF)
+    //--------------------fruit------------------------------------------------
+//    else if (fruit_on && fruit_rgb_data != 12'hFFF)
+//        intermediate_rgb <= fruit_rgb_data;
+    //--------------------player-----------------------------------------------
+    else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
-    //--------------------health-----------------------
+    //--------------------health-----------------------------------------------
     else if (health_on[0] && health_rgb_data[0] != 12'hFFF && sw[2:0] >= 1)
         intermediate_rgb <= health_rgb_data[0];
     else if (health_on[1] && health_rgb_data[1] != 12'hFFF && sw[2:0] >= 2)
         intermediate_rgb <= health_rgb_data[1];
     else if (health_on[2] && health_rgb_data[2] != 12'hFFF && sw[2:0] >= 3)
         intermediate_rgb <= health_rgb_data[2];
-    //--------------------background-----------------------
+    //--------------------background-------------------------------------------
     else
         intermediate_rgb <= background_rgb;
 end
