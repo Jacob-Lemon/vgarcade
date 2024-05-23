@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-
+//required to keep line high when not driven (UART like protocol)
 (* PULLTYPE = "{PULLUP}" *)
 
 module gamecube (
@@ -69,7 +69,6 @@ assign C_STICK_X = reg_byte4;
 assign C_STICK_Y = reg_byte5;
 assign L_TRIGGER = reg_byte6;
 assign R_TRIGGER = reg_byte7;
-
 
 
 //flag so that basys board can't be sending and receiving at the same time
@@ -153,6 +152,7 @@ initial begin
 
     reg_cur <= 0;
     reg_prev <= 0;
+    
 end
 
 //sends request for controller data every 10ms
@@ -219,13 +219,13 @@ always @(posedge clk or posedge reset) begin
                     delay_counter <= 0;
                     console_send <= 1;
 
-                    //reset all controller data
+                    //reset all controller data when not connected
                     reg_byte0 <= 0;
                     reg_byte1 <= 0;
-                    reg_byte2 <= 0;
-                    reg_byte3 <= 0;
-                    reg_byte4 <= 0;
-                    reg_byte5 <= 0;
+                    reg_byte2 <= 128; //center joystick
+                    reg_byte3 <= 128; //center joystick
+                    reg_byte4 <= 128; //center C Stick
+                    reg_byte5 <= 128; //center C Stick
                     reg_byte6 <= 0;
                     reg_byte7 <= 0;
                 end
@@ -299,6 +299,7 @@ always @(posedge clk or posedge reset) begin
         end
     end
 end
+
 
 //bidirectional line logic
 assign data = (console_send && packet_interval) ? out_data : 1'bz;
