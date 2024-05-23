@@ -8,10 +8,7 @@ module top (
 );
 
 
-//--------------------------
-// Gamecube.v instantiation
-//--------------------------
-
+//wires to put in instantiation
 wire A;
 wire B;
 wire X;
@@ -31,8 +28,10 @@ wire [7:0] C_STICK_Y;
 wire [7:0] L_TRIGGER;
 wire [7:0] R_TRIGGER;
 
-wire [3:0] flag_led;
 
+//--------------------------
+// Gamecube.v instantiation
+//--------------------------
 
 gamecube controller
     (
@@ -56,8 +55,7 @@ gamecube controller
         .C_STICK_X(C_STICK_X),
         .C_STICK_Y(C_STICK_Y),
         .L_TRIGGER(L_TRIGGER),
-        .R_TRIGGER(R_TRIGGER),
-        .flag_led(flag_led)
+        .R_TRIGGER(R_TRIGGER)
     );
 
 
@@ -66,6 +64,7 @@ gamecube controller
 // Basic behavior to show buttons and joystick on leds
 //-----------------------------------------------------
 //doesn't include cstick movement
+
 assign button_data[0] = A;
 assign button_data[1] = B;
 assign button_data[2] = X;

@@ -24,11 +24,8 @@ module gamecube (
 			output [7:0] C_STICK_X,
 			output [7:0] C_STICK_Y,
 			output [7:0] L_TRIGGER,
-			output [7:0] R_TRIGGER,
-            output [3:0] flag_led
+			output [7:0] R_TRIGGER
 		);
-
-
 
 
 
@@ -43,7 +40,7 @@ localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A CHANGE
                 byte7 = 7;  //8 bit R_TRIGGER value
 
 
-//bytes from controller data
+//bytes for controller data
 reg [7:0] reg_byte0;
 reg [7:0] reg_byte1;
 reg [7:0] reg_byte2;
@@ -75,40 +72,52 @@ assign R_TRIGGER = reg_byte7;
 
 
 
-
-//------------------------------------------------------------------------
-//handshaking so can't do both at the same time
+//flag so that basys board can't be sending and receiving at the same time
 reg console_send;
 
+//microsecond timer to send data
+reg [9:0] us_timer;
 
-reg [9:0] us_timer; //microsecond timer to send data
-reg [19:0] packet_timer; //millisecond timer
-reg packet_interval; //whether to send a packet or not
+//millisecond timer
+reg [19:0] packet_timer;
 
-//sends data to data out
+//whether to send a packet or not
+reg packet_interval;
+
+//sends data on bidirectional line
 reg out_data;
 
-reg [24:0] send_packet;
-reg [4:0] index;
-
+//receives data on bidirectional line
 wire in_data;
 
+//value to send to the controller
+reg [24:0] send_packet;
 
-//reg [7:0] bit_buffer;
-//reg [3:0] buffer_bits_assigned;
-//reg read_buffer;
+//which part of the send_packet is being sent
+reg [4:0] index;
+
+//flag that says button data was stored correctly
 reg done_reading_buffer;
+
+//flag that says all controller data was stored
 reg last_byte_assigned;
+
+//flag that says the controller is currently sending data
 reg controller_sending;
+
+//which byte to store data indo
 reg [2:0] state_receive;
 
-reg [10:0] delay_counter;
-reg [8:0] zero_counter;
-
-reg [3:0] flag;
-
+//which index of current byte to assign data into
 reg [2:0] byte_index;
 
+//wait until controller is sending
+reg [10:0] delay_counter;
+
+//counts how long data line is low to interpret what the controller is sending
+reg [8:0] zero_counter;
+
+//registers to keep track of a negative edge within an always block
 reg reg_cur;
 reg reg_prev;
 
@@ -123,23 +132,21 @@ initial begin
     reg_byte5 <= 0;
     reg_byte6 <= 0;
     reg_byte7 <= 0;
-    byte_index <= 7; //since bits come in opposite (i couldn't get a shift register working)
+    byte_index <= 7; //since bits come in opposite direction
 
 
     us_timer <= 0;
     packet_timer <= 0;
-    console_send <= 1;  //on start up it sends data packet
-    packet_interval <= 1;
+    console_send <= 1;     //on start up it is able to send data packet
+    packet_interval <= 1;  //on start up it is able to send data packet
     out_data <= 0;
-    send_packet <= 25'b0100_0000_0000_0011_0001_0000_1;
-    index <= 25;
-
-    flag <= 0;
+    send_packet <= 25'b0100_0000_0000_0011_0001_0000_1; //packet that gets controller to send data
+    index <= 25; //work through it from the MSB
 
     done_reading_buffer <= 0;
     last_byte_assigned <= 0;
     controller_sending <= 0;
-    state_receive <= byte0;
+    state_receive <= byte0; //start putting data into first byte
 
     delay_counter <= 0;
     zero_counter <= 0;
@@ -150,7 +157,7 @@ end
 
 //sends request for controller data every 10ms
 always @(posedge clk) begin
-   if (packet_timer < 9800) begin //make this low when receieving, not very calculated (110 us)
+   if (packet_timer < 9800) begin //PWM where low when receiving
        packet_interval <= 1;
    end else begin
        packet_interval <= 0;
@@ -162,21 +169,24 @@ always @(posedge clk) begin
 end
 
 
-//sends data packet
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         index <= 25;
     end else begin
+
+
+        //sends data packet
         if (console_send && packet_interval) begin
+
             if (index - 1 == 0) begin   //if the stop bit
                 if (us_timer == 0)
                     out_data <= 0;
-            end else if (send_packet[index - 1]) begin   //if sending a 1
+            end else if (send_packet[index - 1]) begin   //if sending a 1 (1us low 3us high)
                 if (us_timer == 0)
                     out_data <= 0;
                 else if (us_timer == 100)
                     out_data <= 1;
-            end else begin     //if sending a 0 
+            end else begin     //if sending a 0 (3us low 1us high)
                 if (us_timer == 0)
                     out_data <= 0;
                 else if (us_timer == 300)
@@ -190,32 +200,45 @@ always @(posedge clk or posedge reset) begin
                 index <= index - 1;
             end
             
-            if ((index - 1) == 0 && us_timer == 100) begin //if sending the stop bit only need 1us then drive high impedance
+            if ((index - 1) == 0 && us_timer == 100) begin //if sending the stop bit only need low 1us then drive high impedance
                 us_timer <= 0;
                 index <= 25;
                 console_send <= 0;
             end
 
-        //loop for receiving controller data
+
+        //receives controller data
         end else if (!console_send) begin
 
             if (!controller_sending) begin
                 delay_counter <= delay_counter + 1;
-                if (delay_counter > 200 && !in_data) begin  //wait until low from console send finishes 
+                if (delay_counter > 200 && !in_data) begin  //wait until low from console send finishes then check for if line is low
                     controller_sending <= 1;
                     delay_counter <= 0;
-                    //flag <= 1;
                 end else if (delay_counter == 2000) begin //20us went by without receiving controller data (not connected)
                     delay_counter <= 0;
                     console_send <= 1;
+
+                    //reset all controller data
+                    reg_byte0 <= 0;
+                    reg_byte1 <= 0;
+                    reg_byte2 <= 0;
+                    reg_byte3 <= 0;
+                    reg_byte4 <= 0;
+                    reg_byte5 <= 0;
+                    reg_byte6 <= 0;
+                    reg_byte7 <= 0;
                 end
 
+            //line was pulled low so therefore controller is sending something
             end else if (controller_sending) begin
 
+                //counts how long a low lasts for
                 if (!in_data) begin
                     zero_counter <= zero_counter + 1;
                 end
 
+                //method for checking for edge changes
                 reg_cur <= in_data;
                 reg_prev <= reg_cur;
 
@@ -232,7 +255,6 @@ always @(posedge clk or posedge reset) begin
                             byte6: reg_byte6[byte_index] <= 0;
                             byte7: reg_byte7[byte_index] <= 0;
                         endcase
-                        //flag[0] <= 0;
                     end else begin //matches pattern of 1us low 3us high (1)
                         case (state_receive)
                             byte0: reg_byte0[byte_index] <= 1;
@@ -248,9 +270,9 @@ always @(posedge clk or posedge reset) begin
 
                     done_reading_buffer <= 1;
                     zero_counter <= 0;
-                    flag[0] <= !flag[0];
                 end
 
+                //logic for handling which byte to put data into
                 if (done_reading_buffer) begin
                     if (byte_index == 0) begin
                         byte_index <= 7;
@@ -265,13 +287,12 @@ always @(posedge clk or posedge reset) begin
                     done_reading_buffer <= 0;
                 end
 
-
+                //reset various things so that basys board is able to send again
                 if (last_byte_assigned) begin
                     console_send <= 1;
                     controller_sending <= 0;
                     delay_counter <= 0;
                     last_byte_assigned <= 0;
-                    //flag <= 0;
                 end
 
             end
@@ -279,14 +300,7 @@ always @(posedge clk or posedge reset) begin
     end
 end
 
-
-
-// assign flag_led[0] = flag[0];
-// assign flag_led[2:1] = flag[2:1];
-
-assign flag_led = flag;
-
-
+//bidirectional line logic
 assign data = (console_send && packet_interval) ? out_data : 1'bz;
 assign in_data = data;
 
