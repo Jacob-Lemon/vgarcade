@@ -1,5 +1,112 @@
 `timescale 1ns/1ps
 
+//----------------------------------------------------------------------------
+// This module handles Gamecube Controller inputs using the Gamecube Protocol
+//----------------------------------------------------------------------------
+
+// Usage template:
+
+/* 
+    XDC file: Include this line anywhere for pullup property:
+
+        ## Pull Up Resistor
+        set_property PULLTYPE PULLUP [get_ports data]
+    
+    XDC file: Include this line for the pmod connection, this uses JA pmod connection port P1 but
+    any can be used as long as the data line, 3.3v and ground are connected properly
+
+        ##Sch name = JA1
+        set_property PACKAGE_PIN J1 [get_ports {data}]					
+            set_property IOSTANDARD LVCMOS33 [get_ports {data}]
+
+
+    Top-level I/O port:
+ 
+        inout data,
+
+
+    Top-level Declared Signals and Instantiation:
+  
+      Signals:
+    
+        wire A;
+        wire B;
+        wire X;
+        wire Y;
+        wire start_pause;
+        wire L;
+        wire R;
+        wire Z;
+        wire D_UP;
+        wire D_DOWN;
+        wire D_RIGHT;
+        wire D_LEFT;
+        wire [7:0] JOY_X;
+        wire [7:0] JOY_Y;
+        wire [7:0] C_STICK_X;
+        wire [7:0] C_STICK_Y;
+        wire [7:0] L_TRIGGER;
+        wire [7:0] R_TRIGGER;
+
+      Instantiation:
+
+        gamecube controller
+            (
+                .clk(clk),
+                .reset(reset),
+                .data(data),
+                .A(A),
+                .B(B),
+                .X(X),
+                .Y(Y),
+                .start_pause(start_pause),
+                .L(L),
+                .R(R),
+                .Z(Z),
+                .D_UP(D_UP),
+                .D_DOWN(D_DOWN),
+                .D_RIGHT(D_RIGHT),
+                .D_LEFT(D_LEFT),
+                .JOY_X(JOY_X),
+                .JOY_Y(JOY_Y),
+                .C_STICK_X(C_STICK_X),
+                .C_STICK_Y(C_STICK_Y),
+                .L_TRIGGER(L_TRIGGER),
+                .R_TRIGGER(R_TRIGGER)
+            );
+ */
+
+// Description of Usage:
+
+/*
+    Buttons:
+        
+        Any button signal will be high as long as the button is being pressed on the controller
+        Ex: while A on the controller is being pressed A = 1, etc.
+
+        There is no button limit, all buttons can be pressed simultaneously and all will be read correctly
+
+    Joysticks:
+
+        Joysticks report an 8 bit number for the X direction and the Y direction, a perfect controller will
+        report 128, 128 for the center but individual controllers will vary. 
+            
+            For the X directions of the Joysticks holding left will be closer to 0 (about 30 realistically) and
+            holding right will be closer to 255 (about 230 realistically) 
+            
+            For the Y directions of the Joysticks holding down will be closer to 0 (about 30 realistically) and
+            holding up will be closer to 255 (about 230 realistically)
+
+    Triggers: 
+
+        The Triggers report an 8 bit number, when they are not pressed it is closer to 0 (about 30 realistically) and
+        fully pressing the trigger will report closer to 255 (about 230 realistically)
+        
+*/
+
+
+
+
 //required to keep line high when not driven (UART like protocol)
 (* PULLTYPE = "{PULLUP}" *)
 
