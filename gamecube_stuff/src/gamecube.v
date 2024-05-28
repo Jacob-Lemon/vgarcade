@@ -137,7 +137,7 @@ module gamecube (
 
 
 //parameters for case statements
-localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A CHANGE
+localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A   sometimes the first 3 bits are 0,0,1 not sure why
                 byte1 = 1,  //1,L,R,Z,D_UP,D_DOWN,D_RIGHT,D_LEFT
                 byte2 = 2,  //8 bit JOY_X value
                 byte3 = 3,  //8 bit JOY_Y value
