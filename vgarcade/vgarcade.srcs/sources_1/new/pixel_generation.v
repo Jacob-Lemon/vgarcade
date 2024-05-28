@@ -154,8 +154,8 @@ background_rom background_getter (
 );
 
 assign background_rgb[11:8] = background_rom_data_endian[3:0];
-assign background_rgb[7:4] = background_rom_data_endian[7:4];
-assign background_rgb[3:0] = background_rom_data_endian[11:8];
+assign background_rgb[7:4]  = background_rom_data_endian[7:4];
+assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 */
 
 wire [12:0] background_rgb;
@@ -176,6 +176,24 @@ always @(posedge clk or posedge reset) begin
         video_active <= video_on;
 end
 
+reg [11:0] intermediate_rgb;
+
+always @(posedge clk or posedge reset) begin
+    if (reset)
+        intermediate_rgb <= 12'h000;
+    else
+        intermediate_rgb <=
+            (~video_active) ? 12'h000 :
+//            (fruit_on) ? fruit_rgb_data :
+            (player1_on) ? player1_rgb_data :
+            (health_on[0] && sw[2:0] >= 1) ? health_rgb_data[0] :
+            (health_on[1] && sw[2:0] >= 2) ? health_rgb_data[1] :
+            (health_on[2] && sw[2:0] >= 3) ? health_rgb_data[2] :
+            background_rgb;
+end
+
+
+/*
 // Stage 2: Determine intermediate RGB value
 reg [11:0] intermediate_rgb;
 always @(posedge clk or posedge reset) begin
@@ -184,22 +202,23 @@ always @(posedge clk or posedge reset) begin
     else if (~video_active)
         intermediate_rgb <= 12'h000;
     //--------------------fruit------------------------------------------------
-//    else if (fruit_on && fruit_rgb_data != 12'hFFF)
-//        intermediate_rgb <= fruit_rgb_data;
+    else if (fruit_on)
+        intermediate_rgb <= fruit_rgb_data;
     //--------------------player-----------------------------------------------
     else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
     //--------------------health-----------------------------------------------
-    else if (health_on[0] && health_rgb_data[0] != 12'hFFF && sw[2:0] >= 1)
+    else if (health_on[0] && sw[2:0] >= 1)
         intermediate_rgb <= health_rgb_data[0];
-    else if (health_on[1] && health_rgb_data[1] != 12'hFFF && sw[2:0] >= 2)
+    else if (health_on[1] && sw[2:0] >= 2)
         intermediate_rgb <= health_rgb_data[1];
-    else if (health_on[2] && health_rgb_data[2] != 12'hFFF && sw[2:0] >= 3)
+    else if (health_on[2] && sw[2:0] >= 3)
         intermediate_rgb <= health_rgb_data[2];
     //--------------------background-------------------------------------------
     else
         intermediate_rgb <= background_rgb;
 end
+*/
 
 // Stage 3: Final assignment to RGB output
 always @(posedge clk or posedge reset) begin
@@ -210,31 +229,3 @@ always @(posedge clk or posedge reset) begin
 end
 
 endmodule
-
-
-// this is the old, non-pipeline way
-/*
-always @*
-    if(~video_on)
-        rgb = 12'h000;          // black(no value) outside display area
-    else
-        //--------------------player-----------------------
-        // if player1_on and rgb_data isn't white
-        if (player1_on && player1_rgb_data != 12'hFFF) 
-            rgb = player1_rgb_data;
-        //--------------------fruit------------------------
-//        else if (fruit_on && fruit_rgb_data != 12'hFFF)
-//            rgb = fruit_rgb_data;
-        //--------------------healthbar--------------------
-        else if (health_on[0] && health_rgb_data[0] != 12'hFFF && sw[2:0] >= 1)
-            rgb = health_rgb_data[0];
-        else if (health_on[1] && health_rgb_data[1] != 12'hFFF && sw[2:0] >= 2)
-            rgb = health_rgb_data[1];
-        else if (health_on[2] && health_rgb_data[2] != 12'hFFF && sw[2:0] >= 3)
-            rgb = health_rgb_data[2];
-        //--------------------background-------------------
-        else
-            rgb = background_rgb;
-
-endmodule
-*/

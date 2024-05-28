@@ -5,6 +5,8 @@ module player_rom (
     input wire [6:0] col,
     output reg [11:0] color_data
 );
+    
+    (* rom_style = "block" *)
 
     always @(posedge clk) begin
         if ((row * 100 + col) >= 0 && (row * 100 + col) <= 140) color_data <= 12'b111111111111; else

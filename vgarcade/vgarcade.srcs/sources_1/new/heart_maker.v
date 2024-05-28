@@ -34,7 +34,9 @@ assign row = y - up_heart;
 // determine whether we need to be writing heart data
 // based on whether we are in its rectangle
 assign heart_on = (x >= left_heart) && (x < right_heart) &&
-                  (y >= up_heart)   && (y < down_heart);
+                  (y >= up_heart)   && (y < down_heart) &&
+                  (rgb_data != 12'hFFF);
+
 
 heart_rom heart1(
     .clk(clk),
