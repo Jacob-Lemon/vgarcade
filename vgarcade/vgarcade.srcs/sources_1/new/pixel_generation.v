@@ -7,10 +7,10 @@ module pixel_generation(
     input [9:0] x, y,               // from VGA controller
     output reg [11:0] rgb,          // to DAC, to VGA controller
     // gamecube input things
-    input a,
-    input b,
+    input A,
+    input B,
     input start_pause,
-    input [3:0] joy_dir,
+    input [7:0] JOY_X,
     // switches for test purposes
     input [15:0] sw
 );
@@ -41,17 +41,18 @@ initial player1_x_next = 380;
 assign player1_y_wire = 300;
 
 // Pipeline stage for calculating next position
-
-always @(posedge refresh_tick) begin
-    // if (refresh_tick) begin
+localparam DEADZONE = 16;
+always @(posedge clk) begin
+    if (refresh_tick) begin
         // if left, move left
-        if ((a || sw[15]) && player1_x_next > 10) begin
+        // left is 0, middle is 128, right is higher: 256?
+        if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
             player1_x_next <= player1_x_next - 1;
         end
-        else if ((b || sw[14]) && player1_x_next < 530) begin
+        else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
             player1_x_next <= player1_x_next + 1;
         end
-    /// end
+    end
 end
 
 // Pipeline stage for updating the position
@@ -108,6 +109,7 @@ fruit_maker (
 );
 */
 
+
 /******************************************************************************
 * trying to draw a heart
 * doing lives by a generate block
@@ -143,7 +145,7 @@ endgenerate
 /******************************************************************************
 * here is the background stuff
 ******************************************************************************/
-/*
+
 wire [11:0] background_rgb;
 wire [11:0] background_rom_data_endian;
 background_rom background_getter (
@@ -156,10 +158,10 @@ background_rom background_getter (
 assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4]  = background_rom_data_endian[7:4];
 assign background_rgb[3:0]  = background_rom_data_endian[11:8];
-*/
 
-wire [12:0] background_rgb;
-assign background_rgb = 12'hF00; // blue
+
+//wire [12:0] background_rgb;
+//assign background_rgb = 12'hF00; // blue
 
 /******************************************************************************
 * RGB control
@@ -178,22 +180,6 @@ end
 
 reg [11:0] intermediate_rgb;
 
-always @(posedge clk or posedge reset) begin
-    if (reset)
-        intermediate_rgb <= 12'h000;
-    else
-        intermediate_rgb <=
-            (~video_active) ? 12'h000 :
-//            (fruit_on) ? fruit_rgb_data :
-            (player1_on) ? player1_rgb_data :
-            (health_on[0] && sw[2:0] >= 1) ? health_rgb_data[0] :
-            (health_on[1] && sw[2:0] >= 2) ? health_rgb_data[1] :
-            (health_on[2] && sw[2:0] >= 3) ? health_rgb_data[2] :
-            background_rgb;
-end
-
-
-/*
 // Stage 2: Determine intermediate RGB value
 reg [11:0] intermediate_rgb;
 always @(posedge clk or posedge reset) begin
@@ -202,8 +188,8 @@ always @(posedge clk or posedge reset) begin
     else if (~video_active)
         intermediate_rgb <= 12'h000;
     //--------------------fruit------------------------------------------------
-    else if (fruit_on)
-        intermediate_rgb <= fruit_rgb_data;
+//    else if (fruit_on)
+//        intermediate_rgb <= fruit_rgb_data;
     //--------------------player-----------------------------------------------
     else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
@@ -215,10 +201,12 @@ always @(posedge clk or posedge reset) begin
     else if (health_on[2] && sw[2:0] >= 3)
         intermediate_rgb <= health_rgb_data[2];
     //--------------------background-------------------------------------------
-    else
+    else begin
         intermediate_rgb <= background_rgb;
+//        intermediate_rgb <= 12'hF00;
+    end
 end
-*/
+
 
 // Stage 3: Final assignment to RGB output
 always @(posedge clk or posedge reset) begin
