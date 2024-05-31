@@ -373,7 +373,7 @@ module background_rom (
         if ((row * 640 + col) >= 76820 && (row * 640 + col) <= 77439) color_data <= 12'b000010101110; else
         if ((row * 640 + col) >= 77440 && (row * 640 + col) <= 77450) color_data <= 12'b111111110000; else
         if ((row * 640 + col) >= 77451 && (row * 640 + col) <= 202879) color_data <= 12'b000010101110; else
-        if ((row * 640 + col) >= 202880 && (row * 640 + col) <= 226559) color_data <= 12'b001010110100; else
+        if ((row * 640 + col) >= 202880 && (row * 640 + col) <= 226559) color_data <= 12'b001010110100; else // green?
         if ((row * 640 + col) >= 226560 && (row * 640 + col) <= 249364) color_data <= 12'b000000000000; else
         if ((row * 640 + col) >= 249365 && (row * 640 + col) <= 249407) color_data <= 12'b111111110000; else
         if ((row * 640 + col) >= 249408 && (row * 640 + col) <= 249515) color_data <= 12'b000000000000; else

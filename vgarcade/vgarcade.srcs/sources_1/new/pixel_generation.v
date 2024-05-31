@@ -21,6 +21,7 @@ wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
 
+
 /******************************************************************************
 * this is where I am making a player character
 * with motion!!! :)
@@ -78,7 +79,7 @@ player_maker player1 (
 * drawing and handling fruits
 * 
 ******************************************************************************/
-/*
+
 parameter FRUIT_SIZE = 40;
 wire [9:0] fruit_x_location, fruit_y_location;
 
@@ -107,7 +108,6 @@ fruit_maker (
     .fruit_on(fruit_on),
     .rgb_data(fruit_rgb_data)
 );
-*/
 
 
 /******************************************************************************
@@ -178,8 +178,6 @@ always @(posedge clk or posedge reset) begin
         video_active <= video_on;
 end
 
-reg [11:0] intermediate_rgb;
-
 // Stage 2: Determine intermediate RGB value
 reg [11:0] intermediate_rgb;
 always @(posedge clk or posedge reset) begin
@@ -188,8 +186,8 @@ always @(posedge clk or posedge reset) begin
     else if (~video_active)
         intermediate_rgb <= 12'h000;
     //--------------------fruit------------------------------------------------
-//    else if (fruit_on)
-//        intermediate_rgb <= fruit_rgb_data;
+    else if (fruit_on)
+        intermediate_rgb <= fruit_rgb_data;
     //--------------------player-----------------------------------------------
     else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
@@ -201,10 +199,13 @@ always @(posedge clk or posedge reset) begin
     else if (health_on[2] && sw[2:0] >= 3)
         intermediate_rgb <= health_rgb_data[2];
     //--------------------background-------------------------------------------
-    else begin
-        intermediate_rgb <= background_rgb;
-//        intermediate_rgb <= 12'hF00;
-    end
+    else if ((y >= 0) && (y <= 320))   intermediate_rgb <= 12'b1110_1010_0000; // blue sky
+    else if ((y >= 320) && (y <= 360)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
+    else if ((y >= 360) && (y <= 440)) intermediate_rgb <= 12'b0000_0000_0000; // black road
+    else if ((y >= 440) && (y <= 480)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
+//        intermediate_rgb <= background_rgb;
+    else
+        intermediate_rgb <= 12'hFFF; // white default case, shouldn't happen
 end
 
 

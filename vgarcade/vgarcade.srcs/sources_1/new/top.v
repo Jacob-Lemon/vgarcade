@@ -1,4 +1,3 @@
-
 module top(
     input clk_100MHz,       // from Basys 3
     input reset,            // btnC on Basys 3
@@ -11,7 +10,17 @@ module top(
     // switches
     input [15:0] sw
 );
-assign reset_flag_led = reset;
+
+/******************************************************************************
+* this is where I will make input/output delay things
+******************************************************************************/
+reg [15:0] sw_reg;
+always @ (posedge clk_100MHz) begin
+    sw_reg <= sw;
+end
+
+
+
 /******************************************************************************
 * clock divider
 ******************************************************************************/
@@ -126,7 +135,7 @@ pixel_generation pg (
     .B(B),
     .start_pause(start_pause),
     .JOY_X(JOY_X),
-    .sw(sw)
+    .sw(sw_reg)
 );
 
 // rgb buffer
