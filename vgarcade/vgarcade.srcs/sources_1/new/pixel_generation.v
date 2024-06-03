@@ -42,16 +42,18 @@ initial player1_x_next = 380;
 assign player1_y_wire = 300;
 
 // Pipeline stage for calculating next position
-localparam DEADZONE = 16;
+reg [2:0] player_speed;
+initial player_speed = 2;
+localparam DEADZONE = 32;
 always @(posedge clk) begin
     if (refresh_tick) begin
         // if left, move left
         // left is 0, middle is 128, right is higher: 256?
         if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
-            player1_x_next <= player1_x_next - 1;
+            player1_x_next <= player1_x_next - player_speed;
         end
         else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
-            player1_x_next <= player1_x_next + 1;
+            player1_x_next <= player1_x_next + player_speed;
         end
     end
 end
@@ -83,19 +85,22 @@ player_maker player1 (
 parameter FRUIT_SIZE = 40;
 wire [9:0] fruit_x_location, fruit_y_location;
 
-assign fruit_x_location = 400;
-assign fruit_y_location = 400;
+lfsr get_fruit_x_location (
+    .clk(clk),
+    .reset(reset),
+    .A(A),
+    .random_number(fruit_x_location)
+);
+
+
+// assign fruit_x_location = 400;
+assign fruit_y_location = 200;
 
 wire [3:0] fruit_on;
 wire [11:0] fruit_rgb_data;
 
 wire [3:0] which_fruit_1;
 assign which_fruit_1 = sw[6:3];
-
-
-// localparam APPLE = 0;
-// localparam ORANGE = 1;
-
 
 fruit_maker (
     .clk(clk),
@@ -108,7 +113,6 @@ fruit_maker (
     .fruit_on(fruit_on),
     .rgb_data(fruit_rgb_data)
 );
-
 
 /******************************************************************************
 * trying to draw a heart
