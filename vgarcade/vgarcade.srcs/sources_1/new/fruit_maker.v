@@ -29,7 +29,7 @@ assign down_bound  = y_position + size;
 assign col = x - left_bound;
 assign row = y - up_bound;     
 
-assign fruit_on = (x > left_bound) && (x < right_bound) &&
+assign fruit_on = (x > left_bound) && (x <= right_bound) &&
                   (y >= up_bound)   && (y < down_bound)  &&
                   (rgb_data != 12'hFFF);
 

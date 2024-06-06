@@ -84,23 +84,24 @@ gamecube controller (
     .L_TRIGGER(L_TRIGGER),
     .R_TRIGGER(R_TRIGGER)
 );
+
 // Section 1: Tests all buttons and some joystick movement
-assign button_data[0] = A;
-assign button_data[1] = B;
-assign button_data[2] = X;
-assign button_data[3] = Y;
-assign button_data[4] = start_pause;
-assign button_data[5] = L;
-assign button_data[6] = R;
-assign button_data[7] = Z;
-assign button_data[8] = D_UP;
-assign button_data[9] = D_DOWN;
-assign button_data[10] = D_RIGHT;
-assign button_data[11] = D_LEFT;
-assign button_data[12] = JOY_X[5];     //only tests for movement, not value
-assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
-assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
-assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
+//assign button_data[0] = A;
+//assign button_data[1] = B;
+//assign button_data[2] = X;
+//assign button_data[3] = Y;
+//assign button_data[4] = start_pause;
+//assign button_data[5] = L;
+//assign button_data[6] = R;
+//assign button_data[7] = Z;
+//assign button_data[8] = D_UP;
+//assign button_data[9] = D_DOWN;
+//assign button_data[10] = D_RIGHT;
+//assign button_data[11] = D_LEFT;
+//assign button_data[12] = JOY_X[5];     //only tests for movement, not value
+//assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
+//assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
+//assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
 
 
 
@@ -131,11 +132,13 @@ pixel_generation pg (
     .x(w_x),
     .y(w_y),
     .rgb(rgb_next),
+    // gamecube things
     .A(A),
     .B(B),
     .start_pause(start_pause),
     .JOY_X(JOY_X),
-    .sw(sw_reg)
+    .sw(sw_reg),
+    .score(button_data)
 );
 
 // rgb buffer

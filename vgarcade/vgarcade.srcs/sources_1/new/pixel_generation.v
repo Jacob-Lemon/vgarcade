@@ -12,9 +12,10 @@ module pixel_generation(
     input start_pause,
     input [7:0] JOY_X,
     // switches for test purposes
-    input [15:0] sw
+    input [15:0] sw,
+    output reg [15:0] score
 );
-
+initial score = 0;
 // create a 60Hz refresh tick at the start of vsync 
 // I think this is 4 clock cycles?
 wire refresh_tick;
@@ -43,7 +44,13 @@ assign player1_y_wire = 300;
 
 // Pipeline stage for calculating next position
 reg [2:0] player_speed;
-initial player_speed = 2;
+initial player_speed = 1;
+
+always @(posedge clk) begin
+    if (B) player_speed <= 2;
+    else player_speed <= 1;
+end
+
 localparam DEADZONE = 32;
 always @(posedge clk) begin
     if (refresh_tick) begin
@@ -83,33 +90,101 @@ player_maker player1 (
 ******************************************************************************/
 
 parameter FRUIT_SIZE = 40;
-wire [9:0] fruit_x_location, fruit_y_location;
+wire [9:0] fruit_x, fruit_y;
 
-lfsr get_fruit_x_location (
+reg [9:0] fruit_x_next_reg, fruit_y_next_reg;
+reg fruit_respawn;
+initial fruit_respawn = 0;
+
+//-----------------------lfsr for location---------------------------
+lfsr lfsr_to_get_fruit_x (
     .clk(clk),
     .reset(reset),
-    .A(A),
-    .random_number(fruit_x_location)
+    .condition(fruit_respawn),
+    .low_bound(10),
+    .up_bound(590),
+    .random_number(fruit_x)
 );
 
 
-// assign fruit_x_location = 400;
-assign fruit_y_location = 200;
 
+//-----------------------lfsr for which fruit------------------------
+
+wire [3:0] which_fruit;
+//assign which_fruit_1 = sw[6:3];
+
+lfsr lfsr_to_get_which_fruit (
+    .clk(clk),
+    .reset(reset),
+    .condition(fruit_respawn),
+    .low_bound(0),
+    .up_bound(3),
+    .random_number(which_fruit)
+);
+
+//-----------------------motion from gravity------------------------
+
+wire player_catching;
+wire [10:0] diff_x;
+wire [10:0] diff_y;
+
+// get centers
+wire [9:0] player1_x_center, player1_y_center;
+wire [9:0] fruit_x_center, fruit_y_center;
+// player centers
+assign player1_x_center = player1_x_wire + 50;
+assign player1_y_center = player1_y_wire + 50;
+// fruit centers
+assign fruit_x_center = fruit_x + 20;
+assign fruit_y_center = fruit_y + 20;
+// calculate the absolute value of the difference between centers
+assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
+assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
+
+// Compare differences to the threshold of 5
+assign player_catching = (diff_x <= 70) && (diff_y <= 70);
+
+always @(posedge clk) begin
+    if (refresh_tick) begin
+        // if hits ground, or is caught, respawn
+        if (fruit_y_next_reg >= 430 || (player_catching)) begin
+            // check score and powerups here
+            if (player_catching) begin
+                // have case for whichfruit to check for powerups here
+                score <= score + 1; 
+            end
+            // respawn
+            fruit_y_next_reg <= 0;
+            fruit_respawn <= 1;
+        end
+        else begin
+            // move down like normal
+            fruit_y_next_reg <= fruit_y_next_reg + 1; // adding moves down, jacob
+            fruit_respawn <= 0;
+        end
+    
+    end
+
+
+end
+
+
+
+assign fruit_x = fruit_x_next_reg;
+assign fruit_y = fruit_y_next_reg;
+
+//---------------------------------make the fruit------------------------------
 wire [3:0] fruit_on;
 wire [11:0] fruit_rgb_data;
-
-wire [3:0] which_fruit_1;
-assign which_fruit_1 = sw[6:3];
 
 fruit_maker (
     .clk(clk),
     .x(x),
     .y(y),
-    .x_position(fruit_x_location),
-    .y_position(fruit_y_location),
+    .x_position(fruit_x),
+    .y_position(fruit_y),
     .size(FRUIT_SIZE),
-    .which_fruit(which_fruit_1),
+    .which_fruit(which_fruit),
     .fruit_on(fruit_on),
     .rgb_data(fruit_rgb_data)
 );
@@ -203,13 +278,13 @@ always @(posedge clk or posedge reset) begin
     else if (health_on[2] && sw[2:0] >= 3)
         intermediate_rgb <= health_rgb_data[2];
     //--------------------background-------------------------------------------
-    else if ((y >= 0) && (y <= 320))   intermediate_rgb <= 12'b1110_1010_0000; // blue sky
-    else if ((y >= 320) && (y <= 360)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
-    else if ((y >= 360) && (y <= 440)) intermediate_rgb <= 12'b0000_0000_0000; // black road
-    else if ((y >= 440) && (y <= 480)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
+//    else if ((y >= 0) && (y <= 320))   intermediate_rgb <= 12'b1110_1010_0000; // blue sky
+//    else if ((y >= 320) && (y <= 360)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
+//    else if ((y >= 360) && (y <= 440)) intermediate_rgb <= 12'b0000_0000_0000; // black road
+//    else if ((y >= 440) && (y <= 480)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
 //        intermediate_rgb <= background_rgb;
     else
-        intermediate_rgb <= 12'hFFF; // white default case, shouldn't happen
+        intermediate_rgb <= background_rgb; // white default case, shouldn't happen
 end
 
 
