@@ -4,12 +4,13 @@ module lfsr (
     input wire condition,
     input wire [31:0] low_bound,
     input wire [31:0] up_bound,
+    input wire [7:0] seed,
     output reg [31:0] random_number
 );
 
 // Parameters for the LFSR - change width as needed
 parameter LFSR_WIDTH = 8;
-parameter SEED = 8'b1010_0101;  // Non-zero seed
+//parameter SEED = 8'b1010_0101;  // Non-zero seed
 reg [LFSR_WIDTH-1:0] lfsr_reg;
 wire feedback;
 
@@ -17,11 +18,13 @@ wire feedback;
 reg condition_prev;
 
 // Polynomial: x^8 + x^6 + x^5 + x^4 + 1 (example)
-assign feedback = (lfsr_reg[7] ^ lfsr_reg[5] ^ lfsr_reg[4] ^ lfsr_reg[3]);
+// number of taps must be even and co-prime
+// 3 5 7 8
+assign feedback = (lfsr_reg[7] ^ lfsr_reg[6] ^ lfsr_reg[4] ^ lfsr_reg[2]);
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
-        lfsr_reg <= SEED;
+        lfsr_reg <= seed;
         random_number <= 0;
         condition_prev <= 1'b0;  // Initialize previous condition state
     end else begin

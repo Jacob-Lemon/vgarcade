@@ -13,9 +13,8 @@ module pixel_generation(
     input [7:0] JOY_X,
     // switches for test purposes
     input [15:0] sw,
-    output reg [15:0] score
+    output [15:0] score
 );
-initial score = 0;
 // create a 60Hz refresh tick at the start of vsync 
 // I think this is 4 clock cycles?
 wire refresh_tick;
@@ -51,7 +50,7 @@ always @(posedge clk) begin
     else player_speed <= 1;
 end
 
-localparam DEADZONE = 32;
+localparam DEADZONE = 64;
 always @(posedge clk) begin
     if (refresh_tick) begin
         // if left, move left
@@ -83,111 +82,114 @@ player_maker player1 (
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
-
-/******************************************************************************
-* drawing and handling fruits
-* 
-******************************************************************************/
-
-parameter FRUIT_SIZE = 40;
-wire [9:0] fruit_x, fruit_y;
-
-reg [9:0] fruit_x_next_reg, fruit_y_next_reg;
-reg fruit_respawn;
-initial fruit_respawn = 0;
-
-//-----------------------lfsr for location---------------------------
-lfsr lfsr_to_get_fruit_x (
-    .clk(clk),
-    .reset(reset),
-    .condition(fruit_respawn),
-    .low_bound(10),
-    .up_bound(590),
-    .random_number(fruit_x)
-);
-
-
-
-//-----------------------lfsr for which fruit------------------------
-
-wire [3:0] which_fruit;
-//assign which_fruit_1 = sw[6:3];
-
-lfsr lfsr_to_get_which_fruit (
-    .clk(clk),
-    .reset(reset),
-    .condition(fruit_respawn),
-    .low_bound(0),
-    .up_bound(3),
-    .random_number(which_fruit)
-);
-
-//-----------------------motion from gravity------------------------
-
-wire player_catching;
-wire [10:0] diff_x;
-wire [10:0] diff_y;
-
-// get centers
+// more player data that is needed elsewhere
 wire [9:0] player1_x_center, player1_y_center;
-wire [9:0] fruit_x_center, fruit_y_center;
-// player centers
+
 assign player1_x_center = player1_x_wire + 50;
 assign player1_y_center = player1_y_wire + 50;
-// fruit centers
-assign fruit_x_center = fruit_x + 20;
-assign fruit_y_center = fruit_y + 20;
-// calculate the absolute value of the difference between centers
-assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
-assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
 
-// Compare differences to the threshold of 5
-assign player_catching = (diff_x <= 70) && (diff_y <= 70);
 
-always @(posedge clk) begin
-    if (refresh_tick) begin
-        // if hits ground, or is caught, respawn
-        if (fruit_y_next_reg >= 430 || (player_catching)) begin
-            // check score and powerups here
-            if (player_catching) begin
-                // have case for whichfruit to check for powerups here
-                score <= score + 1; 
-            end
-            // respawn
-            fruit_y_next_reg <= 0;
-            fruit_respawn <= 1;
-        end
-        else begin
-            // move down like normal
-            fruit_y_next_reg <= fruit_y_next_reg + 1; // adding moves down, jacob
-            fruit_respawn <= 0;
-        end
-    
+/**************************************************************************************************
+* Here lies the creation of multiple fruits
+* There shall be many fruits
+**************************************************************************************************/
+localparam FRUIT_SIZE = 40;
+localparam NUM_FRUITS = 2;  // Number of fruits
+
+// Array definitions for multiple fruits
+wire [9:0] fruit_x[NUM_FRUITS:0];
+wire [9:0] fruit_y[NUM_FRUITS:0];
+
+reg [9:0] fruit_x_next_reg[NUM_FRUITS:0];
+reg [9:0] fruit_y_next_reg[NUM_FRUITS:0];
+reg [NUM_FRUITS-1:0] fruit_respawn;
+
+wire [NUM_FRUITS:0] fruit_on;
+wire [11:0] fruit_rgb_data [NUM_FRUITS:0];
+wire [3:0] which_fruit[NUM_FRUITS:0];
+
+reg [15:0] score_array[NUM_FRUITS:0];
+
+// Initializations
+integer j;
+initial begin
+    for (j = 0; j < NUM_FRUITS; j = j + 1) begin
+        fruit_respawn[j] = 0;
+        fruit_y_next_reg[j] = 0;
     end
-
-
 end
 
+// LFSR and handling logic for each fruit
+genvar idx;
+generate
+//    genvar idx;
+    for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
+        lfsr_x_generation lfsr_to_get_fruit_x (
+            .clk(clk),
+            .reset(reset),
+            .condition(fruit_respawn[idx]),
+            .seed(10*idx+7),
+            .random_number(fruit_x[idx])
+        );
 
+        lfsr lfsr_to_get_which_fruit (
+            .clk(clk),
+            .reset(reset),
+            .condition(fruit_respawn[idx]),
+            .low_bound(0),
+            .up_bound(3),
+            .seed(idx+1),
+            .random_number(which_fruit[idx])
+        );
 
-assign fruit_x = fruit_x_next_reg;
-assign fruit_y = fruit_y_next_reg;
+        wire player_catching;
+        wire [10:0] diff_x, diff_y;
+        wire [9:0] fruit_x_center, fruit_y_center;
 
-//---------------------------------make the fruit------------------------------
-wire [3:0] fruit_on;
-wire [11:0] fruit_rgb_data;
+        assign fruit_x_center = fruit_x[idx] + 20;
+        assign fruit_y_center = fruit_y[idx] + 20;
+        assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
+        assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
+        assign player_catching = (diff_x <= 70) && (diff_y <= 70);
 
-fruit_maker (
-    .clk(clk),
-    .x(x),
-    .y(y),
-    .x_position(fruit_x),
-    .y_position(fruit_y),
-    .size(FRUIT_SIZE),
-    .which_fruit(which_fruit),
-    .fruit_on(fruit_on),
-    .rgb_data(fruit_rgb_data)
-);
+        always @(posedge clk) begin
+            if (refresh_tick) begin
+                if (fruit_y_next_reg[idx] >= 430 || player_catching) begin
+                    if (player_catching) begin
+                        score_array[idx] <= score_array[idx] + 1;
+                    end
+                    fruit_y_next_reg[idx] <= 0; // respawn value
+                    fruit_respawn[idx] <= 1;
+                end else begin
+                    fruit_y_next_reg[idx] <= fruit_y_next_reg[idx] + 1;
+                    fruit_respawn[idx] <= 0;
+                end
+            end
+        end
+
+        assign fruit_x[idx] = fruit_x_next_reg[idx];
+        assign fruit_y[idx] = fruit_y_next_reg[idx];
+
+        fruit_maker fruit_maker_inst (
+            .clk(clk),
+            .x(x),
+            .y(y),
+            .x_position(fruit_x[idx]),
+            .y_position(fruit_y[idx]),
+            .size(FRUIT_SIZE),
+            .which_fruit(which_fruit[idx]),
+            .fruit_on(fruit_on[idx]),
+            .rgb_data(fruit_rgb_data[idx])
+        );
+    end
+endgenerate
+
+// score thing
+assign score =  score_array[0] +
+                score_array[1];
+//                score_array[2] +
+//                score_array[3] +
+//                score_array[4];
 
 /******************************************************************************
 * trying to draw a heart
@@ -204,6 +206,7 @@ assign health_bar_y_location = 300;
 
 wire [3:0] health_on;
 wire [11:0] health_rgb_data [11:0];
+
 
 genvar i;
 generate
@@ -259,14 +262,24 @@ end
 
 // Stage 2: Determine intermediate RGB value
 reg [11:0] intermediate_rgb;
+integer k; // iterator
 always @(posedge clk or posedge reset) begin
     if (reset)
         intermediate_rgb <= 12'h000;
     else if (~video_active)
         intermediate_rgb <= 12'h000;
     //--------------------fruit------------------------------------------------
-    else if (fruit_on)
-        intermediate_rgb <= fruit_rgb_data;
+    else if (fruit_on[0])
+        intermediate_rgb <= fruit_rgb_data[0];
+    else if (fruit_on[1])
+        intermediate_rgb <= fruit_rgb_data[1];
+//    else if (fruit_on[2])
+//        intermediate_rgb <= fruit_rgb_data[2];
+//    else if (fruit_on[3])
+//        intermediate_rgb <= fruit_rgb_data[3];
+//    else if (fruit_on[4])
+//        intermediate_rgb <= fruit_rgb_data[4];
+    
     //--------------------player-----------------------------------------------
     else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
