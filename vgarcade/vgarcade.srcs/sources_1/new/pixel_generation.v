@@ -215,7 +215,7 @@ generate
             .clk(clk),
             .x(x),
             .y(y),
-            .start_x(health_bar_x_location + i*25),
+            .start_x(health_bar_x_location + i*HEART_SIZE),
             .start_y(health_bar_y_location),
             .size(HEART_SIZE),
             .heart_on(health_on[i]),
@@ -223,6 +223,52 @@ generate
         );
     end
 endgenerate
+
+/******************************************************************************
+* Score generation
+******************************************************************************/
+// data I need
+localparam DECIMAL_PLACES = 3;
+localparam NUMBER_WIDTH = 25;
+localparam NUMBER_HEIGHT = 30;
+
+wire [9:0] score_bar_x_location, score_bar_y_location;
+
+assign score_bar_x_location = 300;
+assign score_bar_y_location = 100;
+
+wire [3:0] number_on;
+wire [11:0] number_rgb_data [11:0];
+
+//----------get number data from score--------------
+
+wire [3:0] score_in_decimal [3:0];
+
+assign score_in_decimal[0] = score % 10;
+assign score_in_decimal[1] = (score / 10) % 10;
+assign score_in_decimal[2] = (score / 100) % 10;
+assign score_in_decimal[3] = (score / 1000) % 10;
+
+genvar iterator1;
+generate
+    for (iterator1=0; iterator1 < DECIMAL_PLACES; iterator1 = iterator1 + 1) begin
+        number_maker display_score (
+            .clk(clk),
+            .x(x),
+            .y(y),
+            .x_position(score_bar_x_location + iterator1*NUMBER_WIDTH),
+            .y_position(score_bar_y_location),
+            .size_x(NUMBER_WIDTH),
+            .size_y(NUMBER_HEIGHT),
+            .which_number(score_in_decimal[iterator1]),
+            .number_on(number_on[iterator1]),
+            .rgb_data(number_rgb_data[iterator1])
+        );
+    end
+endgenerate
+
+localparam test = 3**3;
+
 
 /******************************************************************************
 * here is the background stuff
@@ -290,6 +336,13 @@ always @(posedge clk or posedge reset) begin
         intermediate_rgb <= health_rgb_data[1];
     else if (health_on[2] && sw[2:0] >= 3)
         intermediate_rgb <= health_rgb_data[2];
+    //--------------------score display------------------
+    else if (number_on[0])
+        intermediate_rgb <= number_rgb_data[0];
+    else if (number_on[1])
+        intermediate_rgb <= number_rgb_data[1];
+    else if (number_on[2])
+        intermediate_rgb <= number_rgb_data[2];
     //--------------------background-------------------------------------------
 //    else if ((y >= 0) && (y <= 320))   intermediate_rgb <= 12'b1110_1010_0000; // blue sky
 //    else if ((y >= 320) && (y <= 360)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
