@@ -46,8 +46,8 @@ reg [2:0] player_speed;
 initial player_speed = 1;
 
 always @(posedge clk) begin
-    if (B) player_speed <= 2;
-    else player_speed <= 1;
+    if (B) player_speed <= 3;
+    else player_speed <= 2;
 end
 
 localparam DEADZONE = 64;
@@ -260,14 +260,13 @@ generate
             .y_position(score_bar_y_location),
             .size_x(NUMBER_WIDTH),
             .size_y(NUMBER_HEIGHT),
-            .which_number(score_in_decimal[iterator1]),
+            .which_number(score_in_decimal[(DECIMAL_PLACES -1) - iterator1]),
             .number_on(number_on[iterator1]),
             .rgb_data(number_rgb_data[iterator1])
         );
     end
 endgenerate
 
-localparam test = 3**3;
 
 
 /******************************************************************************
@@ -352,7 +351,6 @@ always @(posedge clk or posedge reset) begin
     else
         intermediate_rgb <= background_rgb; // white default case, shouldn't happen
 end
-
 
 // Stage 3: Final assignment to RGB output
 always @(posedge clk or posedge reset) begin
