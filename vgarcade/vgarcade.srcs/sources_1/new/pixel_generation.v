@@ -130,7 +130,7 @@ reg [NUM_FRUITS-1:0] fruit_respawn;
 
 wire [NUM_FRUITS:0] fruit_on;
 wire [11:0] fruit_rgb_data [NUM_FRUITS:0];
-wire [3:0] which_fruit[NUM_FRUITS:0];
+wire [7:0] which_fruit[NUM_FRUITS:0];
 
 reg [15:0] score_array[NUM_FRUITS:0];
 
@@ -166,8 +166,8 @@ generate
             .reset(reset),
             .condition(fruit_respawn[idx]),
             .low_bound(0),
-            .up_bound(3),
-            .seed(idx+1),
+            .up_bound(99),
+            .seed(563+256*idx),
             .random_number(which_fruit[idx])
         );
 
@@ -186,12 +186,15 @@ generate
                 // if hits the ground or is caught
                 if (fruit_y_next_reg[idx] >= 440 || player_catching) begin
                     if (player_catching) begin
-                        case (which_fruit[idx])
-                            APPLE   : score_array[idx] <= score_array[idx] + 1;
-                            ORANGE  : score_array[idx] <= score_array[idx] + 2;
-                            PUMPKIN : score_array[idx] <= score_array[idx] + 3;
-                            default : score_array[idx] <= score_array[idx] + 1;
-                        endcase
+                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 50)
+                            // apple
+                            score_array[idx] <= score_array[idx] + 1;
+                        else if (which_fruit[idx] >= 50 && which_fruit[idx] < 80)
+                            // orange
+                            score_array[idx] <= score_array[idx] + 2;
+                        else
+                            // pumpkin
+                            score_array[idx] <= score_array[idx] + 3;
                     end
                     fruit_y_next_reg[idx] <= 0; // respawn value
                     fruit_respawn[idx] <= 1;

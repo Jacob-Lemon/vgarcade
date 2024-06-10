@@ -5,7 +5,7 @@ module fruit_maker(
     input [9:0] x, y,
     input [9:0] x_position, y_position,
     input [9:0] size,
-    input [3:0] which_fruit,
+    input [7:0] which_fruit,
     output fruit_on,
     output [11:0] rgb_data
 );
@@ -74,12 +74,16 @@ pumpkin_rom pumpkin(
 reg [11:0] intermediate_rom_fruit_data;
 
 always @(posedge clk) begin
-    case (which_fruit)
-        APPLE   : intermediate_rom_fruit_data <= rom_apple_data;
-        ORANGE  : intermediate_rom_fruit_data <= rom_orange_data;
-        PUMPKIN : intermediate_rom_fruit_data <= rom_pumpkin_data;
-        default: intermediate_rom_fruit_data <= rom_apple_data;
-    endcase
+    if (which_fruit >= 0 && which_fruit < 50)
+        // apple
+        intermediate_rom_fruit_data <= rom_apple_data;
+    else if (which_fruit >= 50 && which_fruit < 80)
+        // orange
+        intermediate_rom_fruit_data <= rom_orange_data;
+    else
+        // pumpkin
+        intermediate_rom_fruit_data <= rom_pumpkin_data;
+        
 end
 
 assign rom_fruit_data = intermediate_rom_fruit_data;
