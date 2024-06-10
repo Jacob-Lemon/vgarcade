@@ -157,7 +157,7 @@ generate
             .clk(clk),
             .reset(reset),
             .condition(fruit_respawn[idx]),
-            .seed(10*idx+7),
+            .seed(283*idx+727),
             .random_number(fruit_x[idx])
         );
 
@@ -202,7 +202,7 @@ generate
             end
         end
 
-        assign fruit_x[idx] = fruit_x_next_reg[idx];
+//        assign fruit_x[idx] = fruit_x_next_reg[idx];
         assign fruit_y[idx] = fruit_y_next_reg[idx];
 
         fruit_maker fruit_maker_inst (
