@@ -31,35 +31,57 @@ assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 wire player1_on;
 // position things
 wire [11:0] player1_rgb_data;
+
 wire [9:0] player1_x_wire;
-wire [9:0] player1_y_wire;
 reg  [9:0] player1_x_reg;
 reg  [9:0] player1_x_next; // pipeline register for x position
-initial player1_x_reg = 380;
-initial player1_x_next = 380;
+
+wire [9:0] player1_y_wire;
+reg  [9:0] player1_y_reg;
+reg  [9:0] player1_y_next; // pipeline register for y position
+
+initial begin
+    player1_x_reg = 380;
+    player1_x_next = 380;
+    player1_y_reg = 300;
+    player1_y_next = 300;
+end
 
 // position y is constant in this example
-assign player1_y_wire = 300;
+//assign player1_y_wire = 300;
 
 // Pipeline stage for calculating next position
-reg [2:0] player_speed;
-initial player_speed = 1;
+reg [2:0] player_x_speed;
+initial player_x_speed = 1;
 
 always @(posedge clk) begin
-    if (B) player_speed <= 3;
-    else player_speed <= 2;
+    if (B) player_x_speed <= 3;
+    else player_x_speed <= 2;
 end
+
+reg player_jumping;
+initial player_jumping = 0;
 
 localparam DEADZONE = 64;
 always @(posedge clk) begin
     if (refresh_tick) begin
+        // if jumping and touching the ground, casue jumping
+        if (A && player1_y_next >= 300 && !player_jumping) begin
+            player_jumping <= 1;
+        end else
+        if (player_jumping) begin
+            player1_y_next <= player1_y_next - 1; // go up
+            if (~A) player_jumping <= 0;
+        end else
+            if (player1_y_next <= 300) player1_y_next <= player1_y_next + 1; // go down
+        
         // if left, move left
         // left is 0, middle is 128, right is higher: 256?
         if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
-            player1_x_next <= player1_x_next - player_speed;
+            player1_x_next <= player1_x_next - player_x_speed;
         end
         else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
-            player1_x_next <= player1_x_next + player_speed;
+            player1_x_next <= player1_x_next + player_x_speed;
         end
     end
 end
@@ -67,10 +89,12 @@ end
 // Pipeline stage for updating the position
 always @(posedge clk) begin
     player1_x_reg <= player1_x_next;  // Update x position from pipeline register
+    player1_y_reg <= player1_y_next;
 end
 
 // Assign the output wire to the updated register
 assign player1_x_wire = player1_x_reg;
+assign player1_y_wire = player1_y_reg;
 
 player_maker player1 (
     .clk(clk),
@@ -119,6 +143,11 @@ initial begin
     end
 end
 
+
+localparam APPLE   = 0;
+localparam ORANGE  = 1;
+localparam PUMPKIN = 2;
+
 // LFSR and handling logic for each fruit
 genvar idx;
 generate
@@ -154,9 +183,15 @@ generate
 
         always @(posedge clk) begin
             if (refresh_tick) begin
-                if (fruit_y_next_reg[idx] >= 430 || player_catching) begin
+                // if hits the ground or is caught
+                if (fruit_y_next_reg[idx] >= 440 || player_catching) begin
                     if (player_catching) begin
-                        score_array[idx] <= score_array[idx] + 1;
+                        case (which_fruit[idx])
+                            APPLE   : score_array[idx] <= score_array[idx] + 1;
+                            ORANGE  : score_array[idx] <= score_array[idx] + 2;
+                            PUMPKIN : score_array[idx] <= score_array[idx] + 3;
+                            default : score_array[idx] <= score_array[idx] + 1;
+                        endcase
                     end
                     fruit_y_next_reg[idx] <= 0; // respawn value
                     fruit_respawn[idx] <= 1;
@@ -225,7 +260,7 @@ generate
 endgenerate
 
 /******************************************************************************
-* Score generation
+* Score board display generation
 ******************************************************************************/
 // data I need
 localparam DECIMAL_PLACES = 3;
@@ -234,8 +269,8 @@ localparam NUMBER_HEIGHT = 30;
 
 wire [9:0] score_bar_x_location, score_bar_y_location;
 
-assign score_bar_x_location = 300;
-assign score_bar_y_location = 100;
+assign score_bar_x_location = 320;
+assign score_bar_y_location = 50;
 
 wire [3:0] number_on;
 wire [11:0] number_rgb_data [11:0];
