@@ -17,8 +17,8 @@ wire feedback;
 // Register to detect rising edge of condition
 reg condition_prev;
 
-// assign feedback = (lfsr_reg[9] ^ lfsr_reg[6]);
-assign feedback = (lfsr_reg[3] ^ lfsr_reg[0]);
+assign feedback = (lfsr_reg[9] ^ lfsr_reg[6]);
+//assign feedback = (lfsr_reg[3] ^ lfsr_reg[0]);
 
 // reg keep_generating;
 
