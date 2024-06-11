@@ -153,10 +153,12 @@ genvar idx;
 generate
 //    genvar idx;
     for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
-        lfsr_x_generation lfsr_to_get_fruit_x (
+        lfsr lfsr_to_get_fruit_x (
             .clk(clk),
             .reset(reset),
             .condition(fruit_respawn[idx]),
+            .low_bound(10),
+            .up_bound(590),
             .seed(283*idx+727),
             .random_number(fruit_x[idx])
         );
@@ -304,6 +306,11 @@ generate
         );
     end
 endgenerate
+
+/******************************************************************************
+* here is the car
+******************************************************************************/
+
 
 
 
