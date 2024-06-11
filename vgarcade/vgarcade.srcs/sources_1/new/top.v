@@ -1,9 +1,11 @@
 module top(
-    input clk_100MHz,       // from Basys 3
-    input reset,            // btnC on Basys 3
-    output hsync,           // VGA port on Basys 3
-    output vsync,           // VGA port on Basys 3
-    output [11:0] rgb,       // to DAC, 3 bits to VGA port on Basys 3
+    // system
+    input clk_100MHz,   // clock
+    input reset,        // btnC on Basys 3
+    // vga ports
+    output hsync,       // VGA port on Basys 3
+    output vsync,       // VGA port on Basys 3
+    output [11:0] rgb,  // to DAC, 3 bits to VGA port on Basys 3
     // gamecube ports
     inout data,
     output [15:0] button_data,

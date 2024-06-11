@@ -20,12 +20,11 @@ reg condition_prev;
 // assign feedback = (lfsr_reg[9] ^ lfsr_reg[6]);
 assign feedback = (lfsr_reg[3] ^ lfsr_reg[0]);
 
-reg keep_generating;
-// set generate flag
-always @(posedge clk) begin
-    if (condition && !condition_prev) 
-        keep_generating <= 1;
-end
+// reg keep_generating;
+
+wire keep_generating;
+// we keep generating when event happens or we are not in range
+assign keep_generating = ( (condition && !condition_prev) || ~(lfsr_reg >= low_bound && lfsr_reg <= up_bound) );
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -35,15 +34,19 @@ always @(posedge clk or posedge reset) begin
     end else begin
         condition_prev <= condition;  // Update previous condition state
         // Check for rising edge of condition
+        // if in range, stop generating
+        // else keep generating
+        
         if (keep_generating) begin
-            // generate
             lfsr_reg <= {lfsr_reg[LFSR_WIDTH-2:0], feedback};
         end
-        if (lfsr_reg >= low_bound && lfsr_reg <= up_bound) begin
-            keep_generating <= 0;
+        else begin
             random_number <= lfsr_reg;
         end
+        
+
     end
 end
+
 
 endmodule

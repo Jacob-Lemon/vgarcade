@@ -144,9 +144,6 @@ initial begin
 end
 
 
-localparam APPLE   = 0;
-localparam ORANGE  = 1;
-localparam PUMPKIN = 2;
 
 // LFSR and handling logic for each fruit
 genvar idx;
@@ -167,8 +164,8 @@ generate
             .clk(clk),
             .reset(reset),
             .condition(fruit_respawn[idx]),
-            .low_bound(0),
-            .up_bound(99),
+            .low_bound(1),
+            .up_bound(100),
             .seed(563+256*idx),
             .random_number(which_fruit[idx])
         );
