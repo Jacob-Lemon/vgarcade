@@ -52,7 +52,7 @@ end
 
 // Pipeline stage for calculating next position
 reg [2:0] player_x_speed;
-initial player_x_speed = 1;
+initial player_x_speed = 2;
 
 always @(posedge clk) begin
     if (B) player_x_speed <= 3;
@@ -65,6 +65,7 @@ initial player_jumping = 0;
 localparam DEADZONE = 64;
 always @(posedge clk) begin
     if (refresh_tick) begin
+    //--------------------vertical motion--------------------
         // if jumping and touching the ground, casue jumping
         if (A && player1_y_next >= 300 && !player_jumping) begin
             player_jumping <= 1;
@@ -74,7 +75,7 @@ always @(posedge clk) begin
             if (~A) player_jumping <= 0;
         end else
             if (player1_y_next <= 300) player1_y_next <= player1_y_next + 1; // go down
-        
+    //--------------------horizontal motion--------------------
         // if left, move left
         // left is 0, middle is 128, right is higher: 256?
         if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
@@ -307,8 +308,94 @@ endgenerate
 /******************************************************************************
 * here is the car
 ******************************************************************************/
+// data I need
+
+//vga data
+wire car_on;
+wire [11:0] car_rgb_data;
+
+parameter CAR_WIDTH = 150;
+parameter CAR_HEIGHT = 75;
+
+// position and motion data
+wire [9:0] car_y_wire;
+assign car_y_wire = 325;
+
+wire [9:0] car_x_wire;
+reg [9:0] car_x_reg, car_x_next;
+
+initial begin
+    car_x_reg = 400;
+    car_x_next = 400;
+end
 
 
+// Pipeline stage for calculating next position
+// car speed is constant in this design
+reg [2:0] car_x_speed;
+initial car_x_speed = 1;
+
+// signals for the moving of the car.
+wire car_going;
+reg car_respawn, car_respawn_prev;
+wire car_in_x_range; //checks whether the car is on screen or not
+
+assign car_going = (car_respawn && ~ car_respawn_prev) || (car_in_x_range);
+assign car_in_x_range = (car_x_wire >= 0 && car_x_wire <= 640);
+
+integer car_frame_timer = 0;
+always @(posedge clk) begin
+    if (refresh_tick) begin
+        if (car_frame_timer < 599) begin
+            car_frame_timer <= car_frame_timer + 1;
+            car_respawn <= 0;
+        end
+        else begin
+            car_frame_timer <= 0;
+            car_respawn <= 1;
+        end
+    end
+end
+
+always @(posedge clk) begin
+    car_respawn_prev <= car_respawn;
+    if (refresh_tick) begin
+    //--------------------horizontal motion--------------------
+        //
+        if (car_going) begin
+            // if on screen, keep moving left
+            // move left
+            car_x_next <= car_x_next - car_x_speed;
+            // else reset location to 641 and stop moving until next time
+        end
+        else begin
+            car_x_next <= 641;
+        end
+    end
+end
+
+
+
+
+// Pipeline stage for updating the position
+always @(posedge clk) begin
+    car_x_reg <= car_x_next;  // Update x position from pipeline register
+end
+
+// Assign the output wire to the updated register
+assign car_x_wire = car_x_reg;
+
+car_maker car (
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .x_position(car_x_wire),
+    .y_position(car_y_wire),
+    .size_x(CAR_WIDTH),
+    .size_y(CAR_HEIGHT),
+    .car_on(car_on),
+    .rgb_data(car_rgb_data)
+);
 
 
 /******************************************************************************
@@ -366,7 +453,9 @@ always @(posedge clk or posedge reset) begin
 //        intermediate_rgb <= fruit_rgb_data[3];
 //    else if (fruit_on[4])
 //        intermediate_rgb <= fruit_rgb_data[4];
-    
+    //--------------------car--------------------------------------------------
+    else if (car_on)
+        intermediate_rgb <= car_rgb_data;
     //--------------------player-----------------------------------------------
     else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
