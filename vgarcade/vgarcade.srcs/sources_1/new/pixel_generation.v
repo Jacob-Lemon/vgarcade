@@ -68,10 +68,12 @@ always @(posedge clk) begin
             player_jumping <= 1;
         end else
         if (player_jumping) begin
-            player1_y_next <= player1_y_next - 1; // go up
-            if (~A) player_jumping <= 0;
+            if (player1_y_next >= 100) begin
+                player1_y_next <= player1_y_next - 2; // go up
+            end
+            if (~A || player1_y_next <= 100) player_jumping <= 0;
         end else
-            if (player1_y_next <= 300) player1_y_next <= player1_y_next + 1; // go down
+            if (player1_y_next <= 300) player1_y_next <= player1_y_next + 2; // go down
     //--------------------horizontal motion--------------------
         // if left, move left
         // left is 0, middle is 128, right is higher: 256?
@@ -242,6 +244,8 @@ assign health_bar_y_location = 300;
 wire [3:0] health_on;
 wire [11:0] health_rgb_data [11:0];
 
+// actual player lives
+reg [3:0] player1_lives = 3;
 
 genvar i;
 generate
@@ -333,8 +337,10 @@ initial car_x_speed = 1;
 
 // signals for the moving of the car.
 wire car_going;
-reg car_respawn, car_respawn_prev;
+reg car_respawn;
 wire car_in_x_range; //checks whether the car is on screen or not
+// car hit detection
+reg fresh_car;
 
 assign car_going = (car_respawn) || (car_in_x_range);
 assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
@@ -346,21 +352,36 @@ always @(posedge clk) begin
         if (car_frame_timer < (car_time-1)) begin
             car_frame_timer <= car_frame_timer + 1;
             car_respawn <= 0;
+            fresh_car <= 0;
         end
         else
         if (car_frame_timer >= car_time && car_frame_timer <= (car_time+10)) begin
             car_frame_timer <= car_frame_timer + 1;
             car_respawn <= 1;
+            fresh_car <= 0;
         end
         else begin
             car_frame_timer <= 0;
             car_respawn <= 1;
+            fresh_car <= 1;
         end
     end
 end
 
+// player-car collision detection
+wire [9:0] car_center_x, car_center_y;
+assign car_center_x = car_x_wire + (CAR_WIDTH / 2);
+assign car_center_y = car_y_wire + (CAR_HEIGHT / 2);
+
+assign car_player_diff_x = player1_x_center >= car_center_x ? player1_x_center - car_center_x : car_center_x - player1_x_center;
+assign car_player_diff_y = player1_y_center >= car_center_y ? player1_y_center - car_center_y : car_center_y - player1_y_center;
+
+// assign player_catching = (diff_x <= 85) && (diff_y <= 125);
+reg car_player_collision, prev_car_player_collision;
+
+
+
 always @(posedge clk) begin
-    car_respawn_prev <= car_respawn;
     if (refresh_tick) begin
     //--------------------horizontal motion--------------------
         //
@@ -369,9 +390,7 @@ always @(posedge clk) begin
         end else
         if (car_in_x_range) begin
             // if on screen, keep moving left
-            // move left
             car_x_next <= car_x_next - car_x_speed;
-            // else reset location to 641 and stop moving until next time
         end
         else begin
             car_x_next <= 700;
@@ -379,6 +398,21 @@ always @(posedge clk) begin
     end
 end
 
+always @(posedge clk) begin
+    if (refresh_tick) begin
+        prev_car_player_collision <= car_player_collision;
+        car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
+    end
+end
+
+always @(posedge clk) begin
+    if (refresh_tick) begin
+        // positive edge of collision
+        if ((car_player_collision & ~prev_car_player_collision) && player1_lives > 0) begin
+            player1_lives <= player1_lives - 1;
+        end
+    end
+end
 
 
 
@@ -465,11 +499,11 @@ always @(posedge clk or posedge reset) begin
     else if (player1_on)
         intermediate_rgb <= player1_rgb_data;
     //--------------------health-----------------------------------------------
-    else if (health_on[0] && sw[2:0] >= 1)
+    else if (health_on[0] && player1_lives >= 1)
         intermediate_rgb <= health_rgb_data[0];
-    else if (health_on[1] && sw[2:0] >= 2)
+    else if (health_on[1] && player1_lives >= 2)
         intermediate_rgb <= health_rgb_data[1];
-    else if (health_on[2] && sw[2:0] >= 3)
+    else if (health_on[2] && player1_lives >= 3)
         intermediate_rgb <= health_rgb_data[2];
     //--------------------score display------------------
     else if (number_on[0])
