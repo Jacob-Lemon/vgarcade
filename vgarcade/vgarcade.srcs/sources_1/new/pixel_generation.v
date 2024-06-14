@@ -16,11 +16,8 @@ module pixel_generation(
     output [15:0] score
 );
 // create a 60Hz refresh tick at the start of vsync 
-// I think this is 4 clock cycles?
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
-
-
 
 /******************************************************************************
 * this is where I am making a player character
@@ -325,10 +322,9 @@ wire [9:0] car_x_wire;
 reg [9:0] car_x_reg, car_x_next;
 
 initial begin
-    car_x_reg = 400;
-    car_x_next = 400;
+    car_x_reg = 700;
+    car_x_next = 700;
 end
-
 
 // Pipeline stage for calculating next position
 // car speed is constant in this design
@@ -340,15 +336,21 @@ wire car_going;
 reg car_respawn, car_respawn_prev;
 wire car_in_x_range; //checks whether the car is on screen or not
 
-assign car_going = (car_respawn && ~ car_respawn_prev) || (car_in_x_range);
-assign car_in_x_range = (car_x_wire >= 0 && car_x_wire <= 640);
+assign car_going = (car_respawn) || (car_in_x_range);
+assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 
 integer car_frame_timer = 0;
+localparam car_time = 2_000;
 always @(posedge clk) begin
     if (refresh_tick) begin
-        if (car_frame_timer < 599) begin
+        if (car_frame_timer < (car_time-1)) begin
             car_frame_timer <= car_frame_timer + 1;
             car_respawn <= 0;
+        end
+        else
+        if (car_frame_timer >= car_time && car_frame_timer <= (car_time+10)) begin
+            car_frame_timer <= car_frame_timer + 1;
+            car_respawn <= 1;
         end
         else begin
             car_frame_timer <= 0;
@@ -362,14 +364,17 @@ always @(posedge clk) begin
     if (refresh_tick) begin
     //--------------------horizontal motion--------------------
         //
-        if (car_going) begin
+        if (car_respawn) begin
+            car_x_next <= 645;
+        end else
+        if (car_in_x_range) begin
             // if on screen, keep moving left
             // move left
             car_x_next <= car_x_next - car_x_speed;
             // else reset location to 641 and stop moving until next time
         end
         else begin
-            car_x_next <= 641;
+            car_x_next <= 700;
         end
     end
 end
@@ -416,7 +421,7 @@ assign background_rgb[7:4]  = background_rom_data_endian[7:4];
 assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 
 
-//wire [12:0] background_rgb;
+//wire [11:0] background_rgb;
 //assign background_rgb = 12'hF00; // blue
 
 /******************************************************************************
