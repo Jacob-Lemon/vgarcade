@@ -87,23 +87,34 @@ gamecube controller (
 );
 
 // Section 1: Tests all buttons and some joystick movement
-assign button_data[0] = A;
-assign button_data[1] = B;
-assign button_data[2] = X;
-assign button_data[3] = Y;
-assign button_data[4] = start_pause;
-assign button_data[5] = L;
-assign button_data[6] = R;
-assign button_data[7] = Z;
-assign button_data[8] = D_UP;
-assign button_data[9] = D_DOWN;
-assign button_data[10] = D_RIGHT;
-assign button_data[11] = D_LEFT;
-assign button_data[12] = JOY_X[5];     //only tests for movement, not value
-assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
-assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
-assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
+//assign button_data[0] = A;
+//assign button_data[1] = B;
+//assign button_data[2] = X;
+//assign button_data[3] = Y;
+//assign button_data[4] = start_pause;
+//assign button_data[5] = L;
+//assign button_data[6] = R;
+//assign button_data[7] = Z;
+//assign button_data[8] = D_UP;
+//assign button_data[9] = D_DOWN;
+//assign button_data[10] = D_RIGHT;
+//assign button_data[11] = D_LEFT;
+//assign button_data[12] = JOY_X[5];     //only tests for movement, not value
+//assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
+//assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
+//assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
 
+//Section 2: Shows the specific values of the main Joystick
+assign button_data[7:0] = JOY_X;
+assign button_data[15:8] = JOY_Y;
+
+//Section 3: Shows the specific values of the C Stick
+//assign button_data[7:0] = C_STICK_X;
+//assign button_data[15:8] = C_STICK_Y;
+
+//Section 4: Shows the analog values of the Triggers
+//assign button_data[7:0] = R_TRIGGER;
+//assign button_data[15:8] = L_TRIGGER;
 
 
 /******************************************************************************
@@ -140,6 +151,7 @@ pixel_generation pg (
     .JOY_X(JOY_X),
     .sw(sw_reg),
     .score(score)
+    // test
 );
 
 // rgb buffer

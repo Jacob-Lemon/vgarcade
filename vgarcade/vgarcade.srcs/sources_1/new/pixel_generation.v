@@ -339,32 +339,26 @@ initial car_x_speed = 1;
 wire car_going;
 reg car_respawn;
 wire car_in_x_range; //checks whether the car is on screen or not
-// car hit detection
-reg fresh_car;
 
 assign car_going = (car_respawn) || (car_in_x_range);
 assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 
 integer car_frame_timer = 0;
-localparam car_time = 2_000;
-always @(posedge clk) begin
-    if (refresh_tick) begin
-        if (car_frame_timer < (car_time-1)) begin
-            car_frame_timer <= car_frame_timer + 1;
-            car_respawn <= 0;
-            fresh_car <= 0;
-        end
-        else
-        if (car_frame_timer >= car_time && car_frame_timer <= (car_time+10)) begin
-            car_frame_timer <= car_frame_timer + 1;
-            car_respawn <= 1;
-            fresh_car <= 0;
-        end
-        else begin
-            car_frame_timer <= 0;
-            car_respawn <= 1;
-            fresh_car <= 1;
-        end
+localparam car_time = 600; // 10 seconds, 600 frames = 10s * 60Hz
+// always @(posedge clk) begin
+always @(posedge refresh_tick) begin
+    if (car_frame_timer < (car_time-1)) begin
+        car_frame_timer <= car_frame_timer + 1;
+        car_respawn <= 0;
+    end
+    else
+    if (car_frame_timer >= car_time && car_frame_timer <= (car_time+10)) begin
+        car_frame_timer <= car_frame_timer + 1;
+        car_respawn <= 1;
+    end
+    else begin
+        car_frame_timer <= 0;
+        car_respawn <= 1;
     end
 end
 
@@ -372,6 +366,8 @@ end
 wire [9:0] car_center_x, car_center_y;
 assign car_center_x = car_x_wire + (CAR_WIDTH / 2);
 assign car_center_y = car_y_wire + (CAR_HEIGHT / 2);
+
+wire [9:0] car_player_diff_x, car_player_diff_y;
 
 assign car_player_diff_x = player1_x_center >= car_center_x ? player1_x_center - car_center_x : car_center_x - player1_x_center;
 assign car_player_diff_y = player1_y_center >= car_center_y ? player1_y_center - car_center_y : car_center_y - player1_y_center;
@@ -398,22 +394,16 @@ always @(posedge clk) begin
     end
 end
 
+// upon positive edge of collision, decrement lives
 always @(posedge clk) begin
     if (refresh_tick) begin
         prev_car_player_collision <= car_player_collision;
         car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
-    end
-end
-
-always @(posedge clk) begin
-    if (refresh_tick) begin
-        // positive edge of collision
-        if ((car_player_collision & ~prev_car_player_collision) && player1_lives > 0) begin
+        if ((car_player_collision && ~prev_car_player_collision) && player1_lives > 0) begin
             player1_lives <= player1_lives - 1;
         end
     end
 end
-
 
 
 // Pipeline stage for updating the position
