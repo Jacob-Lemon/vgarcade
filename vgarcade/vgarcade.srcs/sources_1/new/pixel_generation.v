@@ -13,7 +13,10 @@ module pixel_generation(
     input [7:0] JOY_X,
     // switches for test purposes
     input [15:0] sw,
-    output [15:0] score
+    output [15:0] score,
+    //
+    output boosting,
+    output speed_boost_available
 );
 // create a 60Hz refresh tick at the start of vsync 
 wire refresh_tick;
@@ -26,7 +29,7 @@ assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 ******************************************************************************/
 
 wire player1_on;
-// position things
+//------------------------------position things------------------------------
 wire [11:0] player1_rgb_data;
 
 wire [9:0] player1_x_wire;
@@ -36,6 +39,57 @@ reg  [9:0] player1_x_next; // pipeline register for x position
 wire [9:0] player1_y_wire;
 reg  [9:0] player1_y_reg;
 reg  [9:0] player1_y_next; // pipeline register for y position
+
+//------------------------------powerup things------------------------------
+// speed boost signals
+reg speed_boost_available;
+reg start_boosting;
+// powerup signals,
+reg pumpkin_caught = 0;
+
+
+//reg boosting;
+//wire boosting;
+initial begin
+    speed_boost_available = 0;
+    start_boosting = 0;
+//    boosting = 0;
+end
+
+// always block to handle speed boost powerup
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        speed_boost_available <= 0;
+        start_boosting <= 0;
+//        boosting <= 0;
+    end
+    else if (refresh_tick) begin
+        if (speed_boost_available == 0) begin
+            speed_boost_available <= pumpkin_caught; // whether or not we have caught a 
+//            start_boosting <= 0;
+        end
+        else if (speed_boost_available == 1) begin
+            if (B) begin
+                speed_boost_available <= 0; // use boost powerup
+                start_boosting <= 1;
+            end
+            else begin
+                speed_boost_available <= 1;
+                start_boosting <= 0;
+            end
+        end
+    end
+end
+
+
+down_counter speed_boost_timer (
+    .clk(clk),             // using refresh_tick as the clock to count down each 60Hz frame
+    .reset(reset),                  // game reset
+    .powerup_start(start_boosting), // signal to control the start of the down counter
+    .frames_to_count_for(960),      // 4 seconds = 240 frames @ 60Hz, 4 counts per frame
+    .powerup_on(boosting)           // signal that determines if boost is active
+);
+
 
 initial begin
     player1_x_reg = 380;
@@ -49,10 +103,14 @@ end
 
 // Pipeline stage for calculating next position
 reg [2:0] player_x_speed;
-initial player_x_speed = 2;
+reg [2:0] player_y_speed;
+initial begin
+    player_x_speed = 2;
+    player_y_speed = 2;
+end
 
 always @(posedge clk) begin
-    if (B) player_x_speed <= 3;
+    if (boosting) player_x_speed <= 4;
     else player_x_speed <= 2;
 end
 
@@ -173,6 +231,7 @@ generate
         wire player_catching;
         wire [10:0] diff_x, diff_y;
         wire [9:0] fruit_x_center, fruit_y_center;
+        
 
         assign fruit_x_center = fruit_x[idx] + 20;
         assign fruit_y_center = fruit_y[idx] + 20;
@@ -183,17 +242,22 @@ generate
         always @(posedge clk) begin
             if (refresh_tick) begin
                 // if hits the ground or is caught
+//                pumpkin_caught <= 0; //default to not caught
                 if (fruit_y_next_reg[idx] >= 440 || player_catching) begin
                     if (player_catching) begin
-                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 50)
+                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 50) begin
                             // apple
                             score_array[idx] <= score_array[idx] + 1;
-                        else if (which_fruit[idx] >= 50 && which_fruit[idx] < 80)
+                        end
+                        else if (which_fruit[idx] >= 50 && which_fruit[idx] < 80) begin
                             // orange
                             score_array[idx] <= score_array[idx] + 2;
-                        else
+                        end
+                        else begin
                             // pumpkin
                             score_array[idx] <= score_array[idx] + 3;
+                            pumpkin_caught <= ~pumpkin_caught;
+                        end
                     end
                     fruit_y_next_reg[idx] <= 0; // respawn value
                     fruit_respawn[idx] <= 1;
@@ -465,7 +529,6 @@ end
 
 // Stage 2: Determine intermediate RGB value
 reg [11:0] intermediate_rgb;
-integer k; // iterator
 always @(posedge clk or posedge reset) begin
     if (reset)
         intermediate_rgb <= 12'h000;
@@ -521,3 +584,6 @@ always @(posedge clk or posedge reset) begin
 end
 
 endmodule
+
+// Easton's guess for # of lines is 700
+// Jacob's guess is 800

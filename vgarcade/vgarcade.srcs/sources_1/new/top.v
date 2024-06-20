@@ -105,8 +105,8 @@ gamecube controller (
 //assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
 
 //Section 2: Shows the specific values of the main Joystick
-assign button_data[7:0] = JOY_X;
-assign button_data[15:8] = JOY_Y;
+//assign button_data[7:0] = JOY_X;
+//assign button_data[15:8] = JOY_Y;
 
 //Section 3: Shows the specific values of the C Stick
 //assign button_data[7:0] = C_STICK_X;
@@ -150,9 +150,12 @@ pixel_generation pg (
     .start_pause(start_pause),
     .JOY_X(JOY_X),
     .sw(sw_reg),
-    .score(score)
+    //.score(score),
     // test
+    .boosting(button_data[1]),
+    .speed_boost_available(button_data[0])
 );
+
 
 // rgb buffer
 always @(posedge clk_100MHz)
