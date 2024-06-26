@@ -152,8 +152,8 @@ pixel_generation pg (
     .sw(sw_reg),
     //.score(score),
     // test
-    .boosting(button_data[1]),
-    .speed_boost_available(button_data[0])
+    .speed_boost_on(button_data[0]),
+    .shield_boost_on(button_data[1])
 );
 
 

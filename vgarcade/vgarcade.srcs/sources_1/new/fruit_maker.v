@@ -34,12 +34,7 @@ assign fruit_on = (x > left_bound) && (x <= right_bound) &&
                   (rgb_data != 12'hFFF);
 
 
-/******************************************************************************
-* these are the fruit things
-******************************************************************************/
-localparam APPLE   = 0;
-localparam ORANGE  = 1;
-localparam PUMPKIN = 2;
+
 /******************************************************************************
 * instantiating fruit roms
 * selecting which fruit to display based on which fruit it is
@@ -62,7 +57,6 @@ orange_rom orange(
     .color_data(rom_orange_data)
 );
 //-----------------pumpkin-----------------
-
 wire [11:0] rom_pumpkin_data;
 pumpkin_rom pumpkin(
     .clk(clk),
@@ -70,19 +64,41 @@ pumpkin_rom pumpkin(
     .col(col),
     .color_data(rom_pumpkin_data)
 );
+//-----------------speed-----------------
+wire [11:0] rom_speed_data;
+speed_rom speed (
+    .clk(clk),
+    .row(row),
+    .col(col),
+    .color_data(rom_speed_data)
+);
+//-----------------shield-----------------
+wire [11:0] rom_shield_data;
+shield_rom shield (
+    .clk(clk),
+    .row(row),
+    .col(col),
+    .color_data(rom_shield_data)
+);
 
+//-----------------selecting the rom data-----------------
 reg [11:0] intermediate_rom_fruit_data;
 
 always @(posedge clk) begin
-    if (which_fruit >= 0 && which_fruit < 50)
-        // apple
+    if (which_fruit >= 0 && which_fruit < 40)           // apple
         intermediate_rom_fruit_data <= rom_apple_data;
-    else if (which_fruit >= 50 && which_fruit < 80)
-        // orange
+
+    else if (which_fruit >= 40 && which_fruit < 70)     // orange
         intermediate_rom_fruit_data <= rom_orange_data;
-    else
-        // pumpkin
+    
+    else if (which_fruit >= 70 && which_fruit < 80)     // pumpkin
         intermediate_rom_fruit_data <= rom_pumpkin_data;
+    
+    else if (which_fruit >= 80 && which_fruit < 95)     // speed
+        intermediate_rom_fruit_data <= rom_speed_data;
+    
+    else if (which_fruit >= 95 && which_fruit <= 100)     // shield
+        intermediate_rom_fruit_data <= rom_shield_data;
         
 end
 

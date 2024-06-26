@@ -7,30 +7,90 @@ module pixel_generation(
     input [9:0] x, y,               // from VGA controller
     output reg [11:0] rgb,          // to DAC, to VGA controller
     // gamecube input things
-    input A,
-    input B,
-    input start_pause,
-    input [7:0] JOY_X,
+    input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
+    input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
-    input [15:0] sw,
-    output [15:0] score,
-    //
-    output boosting,
-    output speed_boost_available
+    input [15:0] sw, 
+    // output [15:0] score,
+    output speed_boost_on,
+    output shield_boost_on
 );
 // create a 60Hz refresh tick at the start of vsync 
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
-/******************************************************************************
+/**************************************************************************************************
+* game_state state machine
+**************************************************************************************************/
+localparam START_SCREEN  = 0;
+localparam INPUT_DISPLAY = 1;
+localparam INSTRUCTIONS  = 2;
+localparam GAMEPLAY      = 3;
+localparam KILL_SCREEN   = 4;
+
+reg [3:0] game_state;
+
+wire player_dead;
+wire not_playing;
+assign not_playing = (game_state == START_SCREEN || game_state == INPUT_DISPLAY || game_state == INSTRUCTIONS || game_state == KILL_SCREEN);
+
+
+// state control
+always @(posedge clk) begin
+    if (reset) begin
+        // reset behavior of state machine
+        game_state <= START_SCREEN;
+    end
+    else
+    case (game_state)
+        START_SCREEN: begin
+            if (start_pause | A)
+                game_state <= GAMEPLAY;
+            else if (Z)
+                game_state <= INSTRUCTIONS;
+            else
+                game_state <= START_SCREEN;
+        end
+        INPUT_DISPLAY: begin
+            if (L & R)
+                game_state <= START_SCREEN;
+            else
+                game_state <= INPUT_DISPLAY;
+        end
+        INSTRUCTIONS: begin
+            if (L & R)
+                game_state <= START_SCREEN;
+            else
+                game_state <= INPUT_DISPLAY;
+        end
+        GAMEPLAY: begin
+            if (player_dead)
+                game_state <= KILL_SCREEN;
+            else
+                game_state <= GAMEPLAY;
+        end
+        KILL_SCREEN: begin
+            if (L & R)
+                game_state <= START_SCREEN;
+            else
+                game_state <= KILL_SCREEN;
+        end
+        default: begin
+            game_state <= START_SCREEN;
+        end
+    endcase
+end
+
+
+
+/**************************************************************************************************
 * this is where I am making a player character
 * with motion!!! :)
-* pipelined to be better for timing things
-******************************************************************************/
-
+**************************************************************************************************/
+// necessary signals
 wire player1_on;
-//------------------------------position things------------------------------
 wire [11:0] player1_rgb_data;
+//------------------------------position things------------------------------
 
 wire [9:0] player1_x_wire;
 reg  [9:0] player1_x_reg;
@@ -42,54 +102,38 @@ reg  [9:0] player1_y_next; // pipeline register for y position
 
 //------------------------------powerup things------------------------------
 // speed boost signals
-reg speed_boost_available;
-reg start_boosting;
-// powerup signals,
-reg pumpkin_caught = 0;
+reg [3:0] speed_caught;
+reg [3:0] shield_caught;
+//wire speed_boost_on;
+// wire shield_boost_on;
 
+// shield signals
 
-//reg boosting;
-//wire boosting;
-initial begin
-    speed_boost_available = 0;
-    start_boosting = 0;
-//    boosting = 0;
-end
+wire posedge_shield_car_player_collision;
 
-// always block to handle speed boost powerup
-always @(posedge clk or posedge reset) begin
-    if (reset) begin
-        speed_boost_available <= 0;
-        start_boosting <= 0;
-//        boosting <= 0;
-    end
-    else if (refresh_tick) begin
-        if (speed_boost_available == 0) begin
-            speed_boost_available <= pumpkin_caught; // whether or not we have caught a 
-//            start_boosting <= 0;
-        end
-        else if (speed_boost_available == 1) begin
-            if (B) begin
-                speed_boost_available <= 0; // use boost powerup
-                start_boosting <= 1;
-            end
-            else begin
-                speed_boost_available <= 1;
-                start_boosting <= 0;
-            end
-        end
-    end
-end
-
-
-down_counter speed_boost_timer (
-    .clk(clk),             // using refresh_tick as the clock to count down each 60Hz frame
-    .reset(reset),                  // game reset
-    .powerup_start(start_boosting), // signal to control the start of the down counter
-    .frames_to_count_for(960),      // 4 seconds = 240 frames @ 60Hz, 4 counts per frame
-    .powerup_on(boosting)           // signal that determines if boost is active
+player_powerups get_powers (
+    // system inputs
+    .clk(clk),
+    .reset(reset),
+    .refresh_tick(refresh_tick),
+    // gamecube inputs
+    .A(A), .B(B), .X(X), .Y(Y), .start_pause(start_pause), .L(L), .R(R), .Z(Z),
+    .D_UP(D_UP), .D_DOWN(D_DOWN), .D_RIGHT(D_RIGHT), .D_LEFT(D_LEFT),
+    .JOY_X(JOY_X), .JOY_Y(JOY_Y), .C_STICK_X(C_STICK_X), .C_STICK_Y(C_STICK_Y),
+    .L_TRIGGER(L_TRIGGER), .R_TRIGGER(R_TRIGGER),
+    // powerup signals
+    .speed_caught(speed_caught),
+    .shield_caught(shield_caught),
+    .posedge_car_collision(posedge_shield_car_player_collision),
+    //outputs
+    .speed_boost_on(speed_boost_on),
+    .shield_boost_on(shield_boost_on)
 );
 
+
+
+
+//---------------------motion things-------------------------------------------
 
 initial begin
     player1_x_reg = 380;
@@ -109,37 +153,62 @@ initial begin
     player_y_speed = 2;
 end
 
-always @(posedge clk) begin
-    if (boosting) player_x_speed <= 4;
-    else player_x_speed <= 2;
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        player_x_speed <= 2;
+    end
+    else if (not_playing) begin
+        player_x_speed <= 2;
+    end
+    else if (game_state == GAMEPLAY) begin
+        if (speed_boost_on) player_x_speed <= 4;
+        else player_x_speed <= 2;
+    end
 end
 
 reg player_jumping;
 initial player_jumping = 0;
 
 localparam DEADZONE = 64;
-always @(posedge clk) begin
-    if (refresh_tick) begin
-    //--------------------vertical motion--------------------
-        // if jumping and touching the ground, casue jumping
-        if (A && player1_y_next >= 300 && !player_jumping) begin
-            player_jumping <= 1;
-        end else
-        if (player_jumping) begin
-            if (player1_y_next >= 100) begin
-                player1_y_next <= player1_y_next - 2; // go up
+// player motion
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        player1_x_reg = 380;
+        player1_x_next = 380;
+        player1_y_reg = 300;
+        player1_y_next = 300;
+        player_jumping = 0;
+    end
+    else if (not_playing) begin
+        player1_x_reg = 380;
+        player1_x_next = 380;
+        player1_y_reg = 300;
+        player1_y_next = 300;
+        player_jumping = 0;
+    end
+    else if (game_state == GAMEPLAY) begin
+        if (refresh_tick) begin
+        //--------------------vertical motion--------------------
+            // if jumping and touching the ground, casue jumping
+            if (A && player1_y_next >= 300 && !player_jumping) begin
+                player_jumping <= 1;
+            end else
+            if (player_jumping) begin
+                if (player1_y_next >= 100) begin
+                    player1_y_next <= player1_y_next - 2; // go up
+                end
+                if (~A || player1_y_next <= 100) player_jumping <= 0;
+            end else
+                if (player1_y_next <= 300) player1_y_next <= player1_y_next + 2; // go down
+        //--------------------horizontal motion--------------------
+            // if left, move left
+            // left is 0, middle is 128, right is higher: 256?
+            if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
+                player1_x_next <= player1_x_next - player_x_speed;
             end
-            if (~A || player1_y_next <= 100) player_jumping <= 0;
-        end else
-            if (player1_y_next <= 300) player1_y_next <= player1_y_next + 2; // go down
-    //--------------------horizontal motion--------------------
-        // if left, move left
-        // left is 0, middle is 128, right is higher: 256?
-        if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
-            player1_x_next <= player1_x_next - player_x_speed;
-        end
-        else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
-            player1_x_next <= player1_x_next + player_x_speed;
+            else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
+                player1_x_next <= player1_x_next + player_x_speed;
+            end
         end
     end
 end
@@ -206,57 +275,83 @@ end
 // LFSR and handling logic for each fruit
 genvar idx;
 generate
-//    genvar idx;
-    for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
-        lfsr lfsr_to_get_fruit_x (
-            .clk(clk),
-            .reset(reset),
-            .condition(fruit_respawn[idx]),
-            .low_bound(10),
-            .up_bound(590),
-            .seed(283*idx+727),
-            .random_number(fruit_x[idx])
-        );
+for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
+    lfsr lfsr_to_get_fruit_x (
+        .clk(clk),
+        .reset(reset),
+        .condition(fruit_respawn[idx]),
+        .low_bound(10),
+        .up_bound(590),
+        .seed(283*idx+727),
+        .random_number(fruit_x[idx])
+    );
 
-        lfsr lfsr_to_get_which_fruit (
-            .clk(clk),
-            .reset(reset),
-            .condition(fruit_respawn[idx]),
-            .low_bound(1),
-            .up_bound(100),
-            .seed(563+256*idx),
-            .random_number(which_fruit[idx])
-        );
+    lfsr lfsr_to_get_which_fruit (
+        .clk(clk),
+        .reset(reset),
+        .condition(fruit_respawn[idx]),
+        .low_bound(1),
+        .up_bound(100),
+        .seed(563+256*idx),
+        .random_number(which_fruit[idx])
+    );
 
-        wire player_catching;
-        wire [10:0] diff_x, diff_y;
-        wire [9:0] fruit_x_center, fruit_y_center;
-        
+    wire player_catching;
+    wire [10:0] diff_x, diff_y;
+    wire [9:0] fruit_x_center, fruit_y_center;
+    
 
-        assign fruit_x_center = fruit_x[idx] + 20;
-        assign fruit_y_center = fruit_y[idx] + 20;
-        assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
-        assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
-        assign player_catching = (diff_x <= 70) && (diff_y <= 70);
+    assign fruit_x_center = fruit_x[idx] + 20;
+    assign fruit_y_center = fruit_y[idx] + 20;
+    assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
+    assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
+    assign player_catching = (diff_x <= 70) && (diff_y <= 70);
 
-        always @(posedge clk) begin
+    always @(posedge clk) begin
+        if (reset) begin
+            // reset behavior
+            fruit_x_next_reg[idx] <= 0;
+            fruit_y_next_reg[idx] <= 0;
+            fruit_respawn[idx] <= 0;
+            score_array[idx] <= 0;
+            speed_caught[idx] <= 0;
+            shield_caught[idx] <= 0;
+        end
+        else if (not_playing) begin
+            fruit_x_next_reg[idx] <= 0;
+            fruit_y_next_reg[idx] <= 0;
+            fruit_respawn[idx] <= 0;
+            score_array[idx] <= 0;
+            speed_caught[idx] <= 0;
+            shield_caught[idx] <= 0;
+        end
+        else if (game_state == GAMEPLAY) begin
             if (refresh_tick) begin
                 // if hits the ground or is caught
-//                pumpkin_caught <= 0; //default to not caught
+                speed_caught[idx]   <= 0;
+                shield_caught[idx]  <= 0;
                 if (fruit_y_next_reg[idx] >= 440 || player_catching) begin
                     if (player_catching) begin
-                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 50) begin
+                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 40) begin
                             // apple
                             score_array[idx] <= score_array[idx] + 1;
                         end
-                        else if (which_fruit[idx] >= 50 && which_fruit[idx] < 80) begin
+                        else if (which_fruit[idx] >= 40 && which_fruit[idx] < 70) begin
                             // orange
                             score_array[idx] <= score_array[idx] + 2;
                         end
-                        else begin
+                        
+                        else if (which_fruit[idx] >= 70 && which_fruit[idx] < 80) begin
                             // pumpkin
                             score_array[idx] <= score_array[idx] + 3;
-                            pumpkin_caught <= ~pumpkin_caught;
+                        end
+                        else if (which_fruit[idx] >= 80 && which_fruit[idx] < 95) begin
+                            // speed
+                            speed_caught[idx] <= 1;
+                        end
+                        else if (which_fruit[idx] >= 95 && which_fruit[idx] <= 100) begin
+                            // shield
+                            shield_caught[idx] <= 1;
                         end
                     end
                     fruit_y_next_reg[idx] <= 0; // respawn value
@@ -267,35 +362,37 @@ generate
                 end
             end
         end
+    end
 
 //        assign fruit_x[idx] = fruit_x_next_reg[idx];
-        assign fruit_y[idx] = fruit_y_next_reg[idx];
+    assign fruit_y[idx] = fruit_y_next_reg[idx];
 
-        fruit_maker fruit_maker_inst (
-            .clk(clk),
-            .x(x),
-            .y(y),
-            .x_position(fruit_x[idx]),
-            .y_position(fruit_y[idx]),
-            .size(FRUIT_SIZE),
-            .which_fruit(which_fruit[idx]),
-            .fruit_on(fruit_on[idx]),
-            .rgb_data(fruit_rgb_data[idx])
-        );
-    end
+    fruit_maker fruit_maker_inst (
+        .clk(clk),
+        .x(x),
+        .y(y),
+        .x_position(fruit_x[idx]),
+        .y_position(fruit_y[idx]),
+        .size(FRUIT_SIZE),
+        .which_fruit(which_fruit[idx]),
+        .fruit_on(fruit_on[idx]),
+        .rgb_data(fruit_rgb_data[idx])
+    );
+end
 endgenerate
 
 // score thing
+wire [15:0] score;
 assign score =  score_array[0] +
                 score_array[1];
 //                score_array[2] +
 //                score_array[3] +
 //                score_array[4];
 
-/******************************************************************************
+/**************************************************************************************************
 * trying to draw a heart
 * doing lives by a generate block
-******************************************************************************/
+**************************************************************************************************/
 // data I need
 parameter MAX_LIVES = 3;
 parameter HEART_SIZE = 25;
@@ -309,7 +406,9 @@ wire [3:0] health_on;
 wire [11:0] health_rgb_data [11:0];
 
 // actual player lives
-reg [3:0] player1_lives = 3;
+reg [3:0] player1_lives = MAX_LIVES;
+
+assign player_dead = (player1_lives == 0);
 
 genvar i;
 generate
@@ -327,17 +426,17 @@ generate
     end
 endgenerate
 
-/******************************************************************************
+/**************************************************************************************************
 * Score board display generation
-******************************************************************************/
+**************************************************************************************************/
 // data I need
-localparam DECIMAL_PLACES = 3;
+localparam DECIMAL_PLACES = 5;
 localparam NUMBER_WIDTH = 25;
 localparam NUMBER_HEIGHT = 30;
 
 wire [9:0] score_bar_x_location, score_bar_y_location;
 
-assign score_bar_x_location = 320;
+assign score_bar_x_location = 295;
 assign score_bar_y_location = 50;
 
 wire [3:0] number_on;
@@ -345,12 +444,15 @@ wire [11:0] number_rgb_data [11:0];
 
 //----------get number data from score--------------
 
-wire [3:0] score_in_decimal [3:0];
+wire [5:0] score_in_decimal [3:0];
 
 assign score_in_decimal[0] = score % 10;
-assign score_in_decimal[1] = (score / 10) % 10;
-assign score_in_decimal[2] = (score / 100) % 10;
-assign score_in_decimal[3] = (score / 1000) % 10;
+assign score_in_decimal[1] = (score / 10)      % 10;
+assign score_in_decimal[2] = (score / 100)     % 10;
+assign score_in_decimal[3] = (score / 1_000)   % 10;
+assign score_in_decimal[4] = (score / 10_000)  % 10;
+assign score_in_decimal[5] = (score / 100_000) % 10;
+
 
 genvar iterator1;
 generate
@@ -370,9 +472,9 @@ generate
     end
 endgenerate
 
-/******************************************************************************
+/**************************************************************************************************
 * here is the car
-******************************************************************************/
+**************************************************************************************************/
 // data I need
 
 //vga data
@@ -387,12 +489,9 @@ wire [9:0] car_y_wire;
 assign car_y_wire = 325;
 
 wire [9:0] car_x_wire;
-reg [9:0] car_x_reg, car_x_next;
+reg [9:0] car_x_reg  = 700;
+reg [9:0] car_x_next = 700;
 
-initial begin
-    car_x_reg = 700;
-    car_x_next = 700;
-end
 
 // Pipeline stage for calculating next position
 // car speed is constant in this design
@@ -410,19 +509,32 @@ assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 integer car_frame_timer = 0;
 localparam car_time = 600; // 10 seconds, 600 frames = 10s * 60Hz
 // always @(posedge clk) begin
-always @(posedge refresh_tick) begin
-    if (car_frame_timer < (car_time-1)) begin
-        car_frame_timer <= car_frame_timer + 1;
-        car_respawn <= 0;
+always @(posedge clk) begin
+    if (reset) begin
+        // reset behavior
+        car_frame_timer = 0;
+        car_respawn = 0;
     end
-    else
-    if (car_frame_timer >= car_time && car_frame_timer <= (car_time+10)) begin
-        car_frame_timer <= car_frame_timer + 1;
-        car_respawn <= 1;
+    else if (not_playing) begin
+        car_frame_timer = 0;
+        car_respawn = 0;
     end
-    else begin
-        car_frame_timer <= 0;
-        car_respawn <= 1;
+    else if (game_state == GAMEPLAY) begin
+        if (refresh_tick) begin
+            if (car_frame_timer < (car_time-1)) begin
+                car_frame_timer <= car_frame_timer + 1;
+                car_respawn <= 0;
+            end
+            else
+            if (car_frame_timer >= car_time && car_frame_timer <= (car_time+10)) begin
+                car_frame_timer <= car_frame_timer + 1;
+                car_respawn <= 1;
+            end
+            else begin
+                car_frame_timer <= 0;
+                car_respawn <= 1;
+            end
+        end
     end
 end
 
@@ -436,15 +548,15 @@ wire [9:0] car_player_diff_x, car_player_diff_y;
 assign car_player_diff_x = player1_x_center >= car_center_x ? player1_x_center - car_center_x : car_center_x - player1_x_center;
 assign car_player_diff_y = player1_y_center >= car_center_y ? player1_y_center - car_center_y : car_center_y - player1_y_center;
 
-// assign player_catching = (diff_x <= 85) && (diff_y <= 125);
+
 reg car_player_collision, prev_car_player_collision;
-
-
+wire posedge_car_player_collision;
+assign posedge_car_player_collision = car_player_collision && ~prev_car_player_collision;
+assign posedge_shield_car_player_collision = posedge_car_player_collision; // for powerup earlier in the file
 
 always @(posedge clk) begin
     if (refresh_tick) begin
     //--------------------horizontal motion--------------------
-        //
         if (car_respawn) begin
             car_x_next <= 645;
         end else
@@ -459,11 +571,17 @@ always @(posedge clk) begin
 end
 
 // upon positive edge of collision, decrement lives
-always @(posedge clk) begin
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        player1_lives <= MAX_LIVES;
+    end else
     if (refresh_tick) begin
+        // update prev_car_player_collision to detect the positive edge of collision
         prev_car_player_collision <= car_player_collision;
+        // detect current collision, if two coordinates are within bounds they are hitting
         car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
-        if ((car_player_collision && ~prev_car_player_collision) && player1_lives > 0) begin
+        // upon positive edge of collision, decrement lives if player has remaining lives and no shield powerup
+        if ((posedge_car_player_collision) && (~shield_boost_on) && (player1_lives > 0)) begin
             player1_lives <= player1_lives - 1;
         end
     end
@@ -491,9 +609,9 @@ car_maker car (
 );
 
 
-/******************************************************************************
+/**************************************************************************************************
 * here is the background stuff
-******************************************************************************/
+**************************************************************************************************/
 
 wire [11:0] background_rgb;
 wire [11:0] background_rom_data_endian;
@@ -512,10 +630,10 @@ assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 //wire [11:0] background_rgb;
 //assign background_rgb = 12'hF00; // blue
 
-/******************************************************************************
+/**************************************************************************************************
 * RGB control
 * order of if-else cascade determines layering of visuals
-******************************************************************************/
+**************************************************************************************************/
 
 
 // Stage 1: Check if video is on
@@ -565,6 +683,10 @@ always @(posedge clk or posedge reset) begin
         intermediate_rgb <= number_rgb_data[1];
     else if (number_on[2])
         intermediate_rgb <= number_rgb_data[2];
+    else if (number_on[3])
+        intermediate_rgb <= number_rgb_data[3];
+    else if (number_on[4])
+        intermediate_rgb <= number_rgb_data[4];
     //--------------------background-------------------------------------------
 //    else if ((y >= 0) && (y <= 320))   intermediate_rgb <= 12'b1110_1010_0000; // blue sky
 //    else if ((y >= 320) && (y <= 360)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
