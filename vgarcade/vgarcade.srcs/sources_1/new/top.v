@@ -92,17 +92,19 @@ gamecube controller (
 //assign button_data[2] = X;
 //assign button_data[3] = Y;
 //assign button_data[4] = start_pause;
-//assign button_data[5] = L;
-//assign button_data[6] = R;
-//assign button_data[7] = Z;
+assign button_data[5] = L;
+assign button_data[6] = R;
+assign button_data[7] = Z;
 //assign button_data[8] = D_UP;
 //assign button_data[9] = D_DOWN;
 //assign button_data[10] = D_RIGHT;
 //assign button_data[11] = D_LEFT;
-//assign button_data[12] = JOY_X[5];     //only tests for movement, not value
-//assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
+assign button_data[12] = JOY_X[5];     //only tests for movement, not value
+assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
 //assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
 //assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
+
+assign button_data[15] = reset;
 
 //Section 2: Shows the specific values of the main Joystick
 //assign button_data[7:0] = JOY_X;
@@ -147,13 +149,30 @@ pixel_generation pg (
     // gamecube things
     .A(A),
     .B(B),
+    .X(X),
+    .Y(Y),
     .start_pause(start_pause),
+    .L(L),
+    .R(R),
+    .Z(Z),
+    .D_UP(D_UP),
+    .D_DOWN(D_DOWN),
+    .D_RIGHT(D_RIGHT),
+    .D_LEFT(D_LEFT),
     .JOY_X(JOY_X),
+    .JOY_Y(JOY_Y),
+    .C_STICK_X(C_STICK_X),
+    .C_STICK_Y(C_STICK_Y),
+    .L_TRIGGER(L_TRIGGER),
+    .R_TRIGGER(R_TRIGGER),
+    
+    // switches
     .sw(sw_reg),
     //.score(score),
     // test
-    .speed_boost_on(button_data[0]),
-    .shield_boost_on(button_data[1])
+    .game_state(button_data[3:0]),
+    .not_playing(button_data[4]),
+    .refresh_tick_checker(button_data[14])
 );
 
 

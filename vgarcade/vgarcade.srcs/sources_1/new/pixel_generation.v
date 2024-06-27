@@ -12,12 +12,23 @@ module pixel_generation(
     // switches for test purposes
     input [15:0] sw, 
     // output [15:0] score,
-    output speed_boost_on,
-    output shield_boost_on
+    output reg [3:0] game_state,
+    output not_playing,
+    output reg refresh_tick_checker
 );
 // create a 60Hz refresh tick at the start of vsync 
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
+
+                     
+initial refresh_tick_checker = 0;
+always @(posedge clk) begin
+    if (refresh_tick_checker == 0) begin
+        if (refresh_tick) refresh_tick_checker <= 1;
+    end
+    else if (refresh_tick_checker == 1)
+        if (B) refresh_tick_checker <= 0;
+end
 
 /**************************************************************************************************
 * game_state state machine
@@ -28,17 +39,18 @@ localparam INSTRUCTIONS  = 2;
 localparam GAMEPLAY      = 3;
 localparam KILL_SCREEN   = 4;
 
-reg [3:0] game_state;
+// reg [3:0] game_state = START_SCREEN;
+initial game_state = START_SCREEN;
 
 wire player_dead;
-wire not_playing;
+// wire not_playing;
 assign not_playing = (game_state == START_SCREEN || game_state == INPUT_DISPLAY || game_state == INSTRUCTIONS || game_state == KILL_SCREEN);
 
 
 // state control
-always @(posedge clk) begin
+always @(posedge clk or posedge reset) begin
     if (reset) begin
-        // reset behavior of state machine
+        // reset behavior of game_state state machine
         game_state <= START_SCREEN;
     end
     else
@@ -48,6 +60,8 @@ always @(posedge clk) begin
                 game_state <= GAMEPLAY;
             else if (Z)
                 game_state <= INSTRUCTIONS;
+            else if (Y)
+                game_state <= INPUT_DISPLAY;
             else
                 game_state <= START_SCREEN;
         end
@@ -61,13 +75,13 @@ always @(posedge clk) begin
             if (L & R)
                 game_state <= START_SCREEN;
             else
-                game_state <= INPUT_DISPLAY;
+                game_state <= INSTRUCTIONS;
         end
         GAMEPLAY: begin
             if (player_dead)
                 game_state <= KILL_SCREEN;
-            else
-                game_state <= GAMEPLAY;
+            // else
+            //     game_state <= GAMEPLAY;
         end
         KILL_SCREEN: begin
             if (L & R)
@@ -160,7 +174,8 @@ always @(posedge clk or posedge reset) begin
     else if (not_playing) begin
         player_x_speed <= 2;
     end
-    else if (game_state == GAMEPLAY) begin
+    // else if (game_state == GAMEPLAY) begin
+    else begin
         if (speed_boost_on) player_x_speed <= 4;
         else player_x_speed <= 2;
     end
@@ -171,22 +186,21 @@ initial player_jumping = 0;
 
 localparam DEADZONE = 64;
 // player motion
-always @(posedge clk or posedge reset) begin
+always @(posedge refresh_tick or posedge reset) begin
     if (reset) begin
-        player1_x_reg = 380;
         player1_x_next = 380;
         player1_y_reg = 300;
         player1_y_next = 300;
         player_jumping = 0;
     end
     else if (not_playing) begin
-        player1_x_reg = 380;
         player1_x_next = 380;
         player1_y_reg = 300;
         player1_y_next = 300;
         player_jumping = 0;
     end
-    else if (game_state == GAMEPLAY) begin
+    // else if (game_state == GAMEPLAY) begin
+    else begin
         if (refresh_tick) begin
         //--------------------vertical motion--------------------
             // if jumping and touching the ground, casue jumping
@@ -214,9 +228,16 @@ always @(posedge clk or posedge reset) begin
 end
 
 // Pipeline stage for updating the position
-always @(posedge clk) begin
-    player1_x_reg <= player1_x_next;  // Update x position from pipeline register
-    player1_y_reg <= player1_y_next;
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        player1_x_reg = 380;
+    end
+    else begin
+        if (refresh_tick) begin
+            player1_x_reg <= player1_x_next;  // Update x position from pipeline register
+            player1_y_reg <= player1_y_next;
+        end
+    end
 end
 
 // Assign the output wire to the updated register
@@ -307,7 +328,7 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
     assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
     assign player_catching = (diff_x <= 70) && (diff_y <= 70);
 
-    always @(posedge clk) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             // reset behavior
             fruit_x_next_reg[idx] <= 0;
@@ -325,7 +346,8 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
             speed_caught[idx] <= 0;
             shield_caught[idx] <= 0;
         end
-        else if (game_state == GAMEPLAY) begin
+        // else if (game_state == GAMEPLAY) begin
+        else begin
             if (refresh_tick) begin
                 // if hits the ground or is caught
                 speed_caught[idx]   <= 0;
@@ -509,7 +531,7 @@ assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 integer car_frame_timer = 0;
 localparam car_time = 600; // 10 seconds, 600 frames = 10s * 60Hz
 // always @(posedge clk) begin
-always @(posedge clk) begin
+always @(posedge clk or posedge reset) begin
     if (reset) begin
         // reset behavior
         car_frame_timer = 0;
@@ -519,7 +541,8 @@ always @(posedge clk) begin
         car_frame_timer = 0;
         car_respawn = 0;
     end
-    else if (game_state == GAMEPLAY) begin
+    // else if (game_state == GAMEPLAY) begin
+    else begin
         if (refresh_tick) begin
             if (car_frame_timer < (car_time-1)) begin
                 car_frame_timer <= car_frame_timer + 1;
@@ -554,28 +577,42 @@ wire posedge_car_player_collision;
 assign posedge_car_player_collision = car_player_collision && ~prev_car_player_collision;
 assign posedge_shield_car_player_collision = posedge_car_player_collision; // for powerup earlier in the file
 
-always @(posedge clk) begin
-    if (refresh_tick) begin
-    //--------------------horizontal motion--------------------
-        if (car_respawn) begin
-            car_x_next <= 645;
-        end else
-        if (car_in_x_range) begin
-            // if on screen, keep moving left
-            car_x_next <= car_x_next - car_x_speed;
-        end
-        else begin
-            car_x_next <= 700;
-        end
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        // car_x_reg = 700;
+        car_x_next = 700;
     end
+    else if (not_playing) begin
+        // car_x_reg = 700;
+        car_x_next = 700;
+    end
+    else
+        if (refresh_tick) begin
+        //--------------------horizontal motion--------------------
+            if (car_respawn) begin
+                car_x_next <= 645;
+            end else
+            if (car_in_x_range) begin
+                // if on screen, keep moving left
+                car_x_next <= car_x_next - car_x_speed;
+            end
+            else begin
+                car_x_next <= 700;
+            end
+        end
 end
 
 // upon positive edge of collision, decrement lives
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         player1_lives <= MAX_LIVES;
-    end else
-    if (refresh_tick) begin
+        car_player_collision <= 0;
+    end 
+    else if (not_playing) begin
+        player1_lives <= MAX_LIVES;
+        car_player_collision <= 0;
+    end
+    else if (refresh_tick) begin
         // update prev_car_player_collision to detect the positive edge of collision
         prev_car_player_collision <= car_player_collision;
         // detect current collision, if two coordinates are within bounds they are hitting
@@ -648,53 +685,89 @@ end
 // Stage 2: Determine intermediate RGB value
 reg [11:0] intermediate_rgb;
 always @(posedge clk or posedge reset) begin
-    if (reset)
+    if (reset) 
         intermediate_rgb <= 12'h000;
-    else if (~video_active)
-        intermediate_rgb <= 12'h000;
-    //--------------------fruit------------------------------------------------
-    else if (fruit_on[0])
-        intermediate_rgb <= fruit_rgb_data[0];
-    else if (fruit_on[1])
-        intermediate_rgb <= fruit_rgb_data[1];
-//    else if (fruit_on[2])
-//        intermediate_rgb <= fruit_rgb_data[2];
-//    else if (fruit_on[3])
-//        intermediate_rgb <= fruit_rgb_data[3];
-//    else if (fruit_on[4])
-//        intermediate_rgb <= fruit_rgb_data[4];
-    //--------------------car--------------------------------------------------
-    else if (car_on)
-        intermediate_rgb <= car_rgb_data;
-    //--------------------player-----------------------------------------------
-    else if (player1_on)
-        intermediate_rgb <= player1_rgb_data;
-    //--------------------health-----------------------------------------------
-    else if (health_on[0] && player1_lives >= 1)
-        intermediate_rgb <= health_rgb_data[0];
-    else if (health_on[1] && player1_lives >= 2)
-        intermediate_rgb <= health_rgb_data[1];
-    else if (health_on[2] && player1_lives >= 3)
-        intermediate_rgb <= health_rgb_data[2];
-    //--------------------score display------------------
-    else if (number_on[0])
-        intermediate_rgb <= number_rgb_data[0];
-    else if (number_on[1])
-        intermediate_rgb <= number_rgb_data[1];
-    else if (number_on[2])
-        intermediate_rgb <= number_rgb_data[2];
-    else if (number_on[3])
-        intermediate_rgb <= number_rgb_data[3];
-    else if (number_on[4])
-        intermediate_rgb <= number_rgb_data[4];
-    //--------------------background-------------------------------------------
-//    else if ((y >= 0) && (y <= 320))   intermediate_rgb <= 12'b1110_1010_0000; // blue sky
-//    else if ((y >= 320) && (y <= 360)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
-//    else if ((y >= 360) && (y <= 440)) intermediate_rgb <= 12'b0000_0000_0000; // black road
-//    else if ((y >= 440) && (y <= 480)) intermediate_rgb <= 12'b0100_1011_0010; // green grass
-//        intermediate_rgb <= background_rgb;
-    else
-        intermediate_rgb <= background_rgb; // white default case, shouldn't happen
+    else begin
+        case (game_state) 
+            START_SCREEN: begin
+                if (~video_active)
+                    intermediate_rgb <= 12'h000;
+                else
+                    intermediate_rgb <= 12'hF00; // static image
+            end
+
+            INPUT_DISPLAY: begin
+                if (~video_active)
+                    intermediate_rgb <= 12'h000;
+                else
+                    intermediate_rgb <= 12'h0F0; // static image
+            end
+
+            INSTRUCTIONS: begin
+                if (~video_active)
+                    intermediate_rgb <= 12'h000;
+                else
+                    intermediate_rgb <= 12'h00F; // static image
+            end
+
+            GAMEPLAY: begin
+                if (~video_active)
+                    intermediate_rgb <= 12'h000;
+                //--------------------fruit------------------------------------------------
+                else if (fruit_on[0])
+                    intermediate_rgb <= fruit_rgb_data[0];
+                else if (fruit_on[1])
+                    intermediate_rgb <= fruit_rgb_data[1];
+            //    else if (fruit_on[2])
+            //        intermediate_rgb <= fruit_rgb_data[2];
+            //    else if (fruit_on[3])
+            //        intermediate_rgb <= fruit_rgb_data[3];
+            //    else if (fruit_on[4])
+            //        intermediate_rgb <= fruit_rgb_data[4];
+                //--------------------car--------------------------------------------------
+                else if (car_on)
+                    intermediate_rgb <= car_rgb_data;
+                //--------------------player-----------------------------------------------
+                else if (player1_on)
+                    intermediate_rgb <= player1_rgb_data;
+                //--------------------health-----------------------------------------------
+                else if (health_on[0] && player1_lives >= 1)
+                    intermediate_rgb <= health_rgb_data[0];
+                else if (health_on[1] && player1_lives >= 2)
+                    intermediate_rgb <= health_rgb_data[1];
+                else if (health_on[2] && player1_lives >= 3)
+                    intermediate_rgb <= health_rgb_data[2];
+                //--------------------score display------------------
+                else if (number_on[0])
+                    intermediate_rgb <= number_rgb_data[0];
+                else if (number_on[1])
+                    intermediate_rgb <= number_rgb_data[1];
+                else if (number_on[2])
+                    intermediate_rgb <= number_rgb_data[2];
+                else if (number_on[3])
+                    intermediate_rgb <= number_rgb_data[3];
+                else if (number_on[4])
+                    intermediate_rgb <= number_rgb_data[4];
+                //--------------------background-------------------------------------------
+                else
+                    intermediate_rgb <= background_rgb; // white default case, shouldn't happen
+            end // end case of GAMEPLAY
+
+            KILL_SCREEN: begin
+                if (~video_active)
+                    intermediate_rgb <= 12'h000;
+                else
+                    intermediate_rgb <= 12'hFF0; // static image
+            end // end case of KILL_SCREEN
+
+            default: begin
+                if (~video_active)
+                    intermediate_rgb <= 12'h000;
+                else
+                    intermediate_rgb <= 12'hAAA; // some shade of gray, this should never happen
+            end
+        endcase
+    end
 end
 
 // Stage 3: Final assignment to RGB output
