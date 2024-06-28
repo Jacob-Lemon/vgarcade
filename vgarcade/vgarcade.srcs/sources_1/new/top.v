@@ -105,6 +105,8 @@ assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
 //assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
 
 assign button_data[15] = reset;
+assign button_data[11] = A;
+
 
 //Section 2: Shows the specific values of the main Joystick
 //assign button_data[7:0] = JOY_X;

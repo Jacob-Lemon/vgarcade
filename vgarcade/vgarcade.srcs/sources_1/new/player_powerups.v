@@ -57,10 +57,11 @@ down_counter speed_boost_timer (
     .clk(clk),                      // system clock
     .refresh_tick(refresh_tick),
     .reset(reset),                  // game reset
-    .powerup_start(start_boosting), // signal to control the start of the down counter
+    .timer_start(start_boosting),   // signal to control the start of the down counter
     .frames_to_count_for(960),      // 4 seconds = 240 frames @ 60Hz, 4 counts per frame
     // outputs
-    .powerup_on(speed_boost_on)           // signal that determines if boost is active
+    .timer_active(speed_boost_on)   // boost is active for as long as the timer is active
+    //.timer_inactive()
 );
 
 

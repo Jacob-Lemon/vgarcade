@@ -4,11 +4,12 @@ module down_counter(
     input clk,                          // system clock, 100MHz
     input refresh_tick,
     input reset,                        // game reset, from center button
-    input powerup_start,                // starts the counter
+    input timer_start,                  // starts the counter
     input [15:0] frames_to_count_for,   // how long, in 60Hz frames, I want the powerup to be active for
     
     // output reg [15:0] counter,
-    output powerup_on                   // a one bit output for whether or not the powerup is active
+    output timer_active,                // a one bit output for whether or not the powerup is active
+    output timer_inactive
 );
 
 reg [15:0] counter;
@@ -19,7 +20,7 @@ always @(posedge clk or posedge reset) begin
     end
     else begin
         if (refresh_tick) begin
-            if (powerup_start) begin
+            if (timer_start) begin
                 counter <= frames_to_count_for;
             end
             else
@@ -31,6 +32,6 @@ always @(posedge clk or posedge reset) begin
 end
 
 // powerup_on will be on if counter is not zero
-assign powerup_on = (|counter);
+assign timer_active = (|counter);
 
 endmodule

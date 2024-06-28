@@ -23,7 +23,7 @@ set_output_delay -clock [get_clocks sys_clk_pin] -min -add_delay 0.000 [get_port
 set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_ports vsync]
 
 
-set_output_delay -clock [get_clocks sys_clk_pin] -min -add_delay 0.000 [get_ports intermediate_rom_number_data_reg[8]]
-set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_ports intermediate_rom_number_data_reg[8]]
+#set_output_delay -clock [get_clocks sys_clk_pin] -min -add_delay 0.000 [get_ports intermediate_rom_number_data_reg[8]]
+#set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_ports intermediate_rom_number_data_reg[8]]
 
 
