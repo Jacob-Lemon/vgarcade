@@ -13,7 +13,7 @@ module pixel_generation(
     input [15:0] sw, 
     // output [15:0] score,
     output reg [3:0] game_state,
-    output not_playing,
+    output not_playing
 );
 // create a 60Hz refresh tick at the start of vsync
 // this still works as intended
