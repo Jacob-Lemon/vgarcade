@@ -8,8 +8,7 @@ module down_counter(
     input [15:0] frames_to_count_for,   // how long, in 60Hz frames, I want the powerup to be active for
     
     // output reg [15:0] counter,
-    output timer_active,                // a one bit output for whether or not the powerup is active
-    output timer_inactive
+    output timer_active                 // a one bit output for whether or not the powerup is active
 );
 
 reg [15:0] counter;

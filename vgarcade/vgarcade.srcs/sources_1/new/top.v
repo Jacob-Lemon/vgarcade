@@ -92,20 +92,19 @@ gamecube controller (
 //assign button_data[2] = X;
 //assign button_data[3] = Y;
 //assign button_data[4] = start_pause;
-assign button_data[5] = L;
-assign button_data[6] = R;
-assign button_data[7] = Z;
+//assign button_data[5] = L;
+//assign button_data[6] = R;
+//assign button_data[7] = Z;
 //assign button_data[8] = D_UP;
 //assign button_data[9] = D_DOWN;
 //assign button_data[10] = D_RIGHT;
 //assign button_data[11] = D_LEFT;
-assign button_data[12] = JOY_X[5];     //only tests for movement, not value
-assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
+//assign button_data[12] = JOY_X[5];     //only tests for movement, not value
+//assign button_data[13] = JOY_Y[5];     //only tests for movement, not value
 //assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
 //assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
 
 assign button_data[15] = reset;
-assign button_data[11] = A;
 
 
 //Section 2: Shows the specific values of the main Joystick
@@ -172,8 +171,9 @@ pixel_generation pg (
     .sw(sw_reg),
     //.score(score),
     // test
-    .game_state(button_data[3:0]),
-    .not_playing(button_data[4])
+    .game_state(button_data[5:2]),
+    .not_playing(button_data[6]),
+    .car_state(button_data[1:0])
 );
 
 
