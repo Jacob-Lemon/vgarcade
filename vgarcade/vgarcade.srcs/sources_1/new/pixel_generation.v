@@ -14,21 +14,12 @@ module pixel_generation(
     // output [15:0] score,
     output reg [3:0] game_state,
     output not_playing,
-    output reg refresh_tick_checker
 );
-// create a 60Hz refresh tick at the start of vsync 
+// create a 60Hz refresh tick at the start of vsync
+// this still works as intended
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
-                     
-initial refresh_tick_checker = 0;
-always @(posedge clk) begin
-    if (refresh_tick_checker == 0) begin
-        if (refresh_tick) refresh_tick_checker <= 1;
-    end
-    else if (refresh_tick_checker == 1)
-        if (B) refresh_tick_checker <= 0;
-end
 
 /**************************************************************************************************
 * game_state state machine
@@ -301,23 +292,23 @@ genvar idx;
 generate
 for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
     lfsr lfsr_to_get_fruit_x (
-        .clk(clk),
-        .reset(reset),
-        .condition(fruit_respawn[idx]),
-        .low_bound(10),
-        .up_bound(590),
-        .seed(283*idx+727),
-        .random_number(fruit_x[idx])
+        .clk(clk),                          // system clock, 100 MHz
+        .reset(reset),                      // system reset
+        .condition(fruit_respawn[idx]),     // the condition that triggers activation of the lfsr
+        .low_bound(10),                     // lower bounds that determine the numbers the lfsr can generate
+        .up_bound(590),                     // upper bound
+        .seed(283*idx+727),                 // seed
+        .random_number(fruit_x[idx])        // output. this is the x spawn location of the next fruit
     );
 
     lfsr lfsr_to_get_which_fruit (
-        .clk(clk),
-        .reset(reset),
-        .condition(fruit_respawn[idx]),
-        .low_bound(1),
-        .up_bound(100),
-        .seed(563+256*idx),
-        .random_number(which_fruit[idx])
+        .clk(clk),                          // system clock, 100 MHz
+        .reset(reset),                      // system reset
+        .condition(fruit_respawn[idx]),     // the condition that triggers activation of the lfsr
+        .low_bound(1),                      // lower bound of values the lfsr can generate
+        .up_bound(100),                     // upper bound
+        .seed(563+256*idx),                 // seed
+        .random_number(which_fruit[idx])    // output. this determines which fruit. apple, orange, powerup, etc.
     );
 
     wire player_catching;
@@ -500,9 +491,7 @@ endgenerate
 /**************************************************************************************************
 * here is the car
 **************************************************************************************************/
-// data I need
-
-//vga data
+// vga data
 wire car_on;
 wire [11:0] car_rgb_data;
 
@@ -518,7 +507,6 @@ reg [9:0] car_x_reg  = 700;
 reg [9:0] car_x_next = 700;
 
 
-// Pipeline stage for calculating next position
 // car speed is constant in this design
 reg [2:0] car_x_speed;
 initial car_x_speed = 1;
@@ -531,7 +519,6 @@ wire car_in_x_range; //checks whether the car is on screen or not
 assign car_going = (car_respawn) || (car_in_x_range);
 assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 
-integer car_frame_timer = 0;
 localparam car_time_duration = 600; // 10 seconds, 600 frames = 10s * 60Hz
 
 
@@ -566,7 +553,6 @@ reg [1:0] car_state = CAR_WAITING;
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         car_state <= CAR_WAITING;
-        car_frame_timer <= 0;   // this should be car_time_duration
         car_timer_start <= 0;
         
         car_x_next <= 700;
@@ -578,9 +564,11 @@ always @(posedge clk or posedge reset) begin
     else begin
         case (car_state) 
             CAR_WAITING: begin
-                if (car_timer_start)
+                if (car_timer_start) begin
                     car_timer_start <= 0;
-                
+                    car_x_next <= 649; // this puts the car in range to be moving
+                end
+
                 // upon timer expiring, move to next state
                 if (car_timer_inactive) begin
                     car_state <= CAR_DRIVING_NOT_HIT;

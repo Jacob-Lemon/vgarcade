@@ -173,8 +173,7 @@ pixel_generation pg (
     //.score(score),
     // test
     .game_state(button_data[3:0]),
-    .not_playing(button_data[4]),
-    .refresh_tick_checker(button_data[14])
+    .not_playing(button_data[4])
 );
 
 
