@@ -24,16 +24,17 @@ module input_maker (
 );
 
 
-//input display position stuff
+//input display positioning
 parameter input_background_width = 584;
 parameter input_background_height = 167;
 
-wire [9:0] input_background_x_location, input_background_y_location;
 
-assign input_background_x_location = 28;
-assign input_background_y_location = 156;
+// top left pixel position
+parameter input_background_x_location = 28;
+parameter input_background_y_location = 156;
 
-wire [9:0] row, col;
+
+wire [9:0] input_row, input_col;
 
 // boundaries
 wire [9:0] left_bound;
@@ -46,8 +47,8 @@ assign right_bound = input_background_x_location + input_background_width;
 assign up_bound    = input_background_y_location;
 assign down_bound  = input_background_y_location + input_background_height;
 
-assign col = x - left_bound;
-assign row = y - up_bound;     
+assign input_col = x - left_bound;
+assign input_row = y - up_bound;     
 
 
 wire input_display_on;
@@ -55,33 +56,35 @@ wire input_display_on;
 //for the background of the input display to show
 assign input_display_on = (x > left_bound) && (x <= right_bound) &&
                   (y >= up_bound)   && (y < down_bound) && 
-                  (rom_input_background != 12'h000);
+                  (rom_input_background != 12'h000);  // this treats it as an overlay, background can be any color
 
-//for pixel gen to show the joystick
+
+//this logic tells the vga when to draw the input viewer things instead of the background
+//the !in_center_of_joystick is used so that anything under the main joystick is just the background
 assign input_background_on = (input_display_on || button_on || joystick_on || trigger_on) && !in_center_of_joystick;
 
 
-
+//rom instantiation that gets the input viewer layout
 wire [11:0] rom_input_background;
-
 input_display_background_rom background (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(input_row),
+    .col(input_col),
     .color_data(rom_input_background)
 );
 
 
-//button display position stuff
+//button display positioning
 parameter button_background_width = 584;
 parameter button_background_height = 167;
 
-wire [9:0] button_background_x_location, button_background_y_location;
 
-assign button_background_x_location = 28;
-assign button_background_y_location = 156;
+// top left pixel position
+parameter button_background_x_location = 28;
+parameter button_background_y_location = 156;
 
-//button instantiation
+
+// button instantiation
 wire button_on;
 wire [11:0] button_rgb_data;
 button_maker buttons (
@@ -110,10 +113,7 @@ button_maker buttons (
 
 
 
-
-
-
-//joystick instantiation
+// joystick instantiation
 wire in_center_of_joystick;
 wire joystick_on;
 wire [11:0] joystick_rgb_data;
@@ -147,6 +147,9 @@ analog_trigger_maker analog (
     .R_TRIGGER(R_TRIGGER)
 );
 
+
+
+//layering logic
 reg [11:0] intermediate_rgb;
 always @(posedge clk) begin
     if (joystick_on)
@@ -155,7 +158,7 @@ always @(posedge clk) begin
         intermediate_rgb <= button_rgb_data;
     else if (input_display_on)
         intermediate_rgb <= rom_input_background;
-    else if (trigger_on) //put underneath trigger buttons to wash out annoying black rectangle strip
+    else if (trigger_on) //put underneath main display trigger buttons to hide black rectangle strip bug
         intermediate_rgb <= trigger_rgb_data;
     else 
         intermediate_rgb <= 12'h000;
@@ -163,8 +166,7 @@ end
 
 
 // this is to get rgb bits in the right order
-// they may originally be in little endian form or something
-// it may be backwards like bgr in stead of rgb
+// it is originally in bgr instead of rgb format
 assign rgb_data[11:8] = intermediate_rgb[3:0];
 assign rgb_data[7:4]  = intermediate_rgb[7:4];
 assign rgb_data[3:0]  = intermediate_rgb[11:8];

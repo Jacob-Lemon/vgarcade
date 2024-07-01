@@ -9,13 +9,15 @@ module analog_trigger_maker (
 
 
 
+//         LEFT TRIGGER
 
-//    LEFT TRIGGER
-//trigger display position stuff
+// left trigger display positioning
 wire [7:0] l_trigger_background_width;
-assign l_trigger_background_width = L_TRIGGER >> 1;
+assign l_trigger_background_width = L_TRIGGER >> 1; // uses the trigger value divided by 2
 parameter l_trigger_background_height = 14;
 
+
+// top left pixel position
 parameter l_trigger_background_x_location = 35;
 parameter l_trigger_background_y_location = 162;
 
@@ -27,11 +29,12 @@ wire [9:0] l_trigger_up_bound;
 wire [9:0] l_trigger_down_bound;
 
 assign l_trigger_left_bound  = l_trigger_background_x_location;
-assign l_trigger_right_bound = l_trigger_background_x_location + l_trigger_background_width;
+assign l_trigger_right_bound = l_trigger_background_x_location + l_trigger_background_width; // changes the right bound according to left trigger value
 assign l_trigger_up_bound    = l_trigger_background_y_location;
 assign l_trigger_down_bound  = l_trigger_background_y_location + l_trigger_background_height;
 
 
+// logic for when to draw the left trigger
 wire l_trigger_on;
 assign l_trigger_on = (x >= l_trigger_left_bound) && (x <= l_trigger_right_bound) &&
                       (y >= l_trigger_up_bound)   && (y <= l_trigger_down_bound);
@@ -41,14 +44,14 @@ assign l_trigger_on = (x >= l_trigger_left_bound) && (x <= l_trigger_right_bound
 
 
 
+//         RIGHT TRIGGER
 
-//    RIGHT TRIGGER
-//trigger display position stuff
+// right trigger display positioning
 wire [7:0] r_trigger_background_width;
-assign r_trigger_background_width = R_TRIGGER >> 1;
+assign r_trigger_background_width = R_TRIGGER >> 1; // uses the trigger value divided by 2
 parameter r_trigger_background_height = 14;
 
-//top right corner (scary!)
+// top right pixel position (scary!)
 parameter r_trigger_background_x_location = 312;
 parameter r_trigger_background_y_location = 162;
 
@@ -59,19 +62,20 @@ wire [9:0] r_trigger_right_bound;
 wire [9:0] r_trigger_up_bound;
 wire [9:0] r_trigger_down_bound;
 
-assign r_trigger_left_bound  = r_trigger_background_x_location - r_trigger_background_width;
+assign r_trigger_left_bound  = r_trigger_background_x_location - r_trigger_background_width; // changes the left bound according to right trigger value
 assign r_trigger_right_bound = r_trigger_background_x_location;
 assign r_trigger_up_bound    = r_trigger_background_y_location;
 assign r_trigger_down_bound  = r_trigger_background_y_location + r_trigger_background_height;
 
 
+// logic for when to draw the right trigger
 wire r_trigger_on;
 assign r_trigger_on = (x > r_trigger_left_bound) && (x < r_trigger_right_bound) &&
                       (y > r_trigger_up_bound)   && (y < r_trigger_down_bound);
 
 
 
-
+// logic for when to draw the triggers
 assign trigger_on = l_trigger_on || r_trigger_on;
 
 
@@ -88,7 +92,7 @@ always @(posedge clk) begin
 end
 
 
-
+// rgb that contains all trigger data
 assign trigger_rgb_data = intermediate_rgb;
 
 endmodule

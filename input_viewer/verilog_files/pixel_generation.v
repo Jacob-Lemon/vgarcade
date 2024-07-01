@@ -23,11 +23,6 @@ module pixel_generation (
     input [7:0] R_TRIGGER,
     output reg [11:0] rgb                   // to DAC, to VGA controller
     );
-    
-   
-// create a 60Hz refresh tick at the start of vsync 
-wire refresh_tick;
-assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
 
 

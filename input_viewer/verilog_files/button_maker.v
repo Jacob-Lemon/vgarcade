@@ -1,8 +1,8 @@
 module button_maker (
     input clk,
     input [9:0] x, y,
-    input [9:0] x_position, y_position,
-    input [9:0] size_x, size_y,
+    input [9:0] x_position, y_position, //all button roms are in the same location as the input background for simplicity
+    input [9:0] size_x, size_y,  //all button roms are the same size as the input background for simplicity
     input A,
     input B,
     input X,
@@ -19,7 +19,9 @@ module button_maker (
     output [11:0] button_rgb_data
 );
 
-wire [9:0] row, col;
+
+// used for all button rom instantiations
+wire [9:0] button_row, button_col;
 
 // boundaries
 wire [9:0] left_bound;
@@ -32,13 +34,13 @@ assign right_bound = x_position + size_x;
 assign up_bound    = y_position;
 assign down_bound  = y_position + size_y;
 
-assign col = x - left_bound;
-assign row = y - up_bound;
+assign button_col = x - left_bound;
+assign button_row = y - up_bound;
 
 
 
 
-//all button rom data signals
+// all button rom data signals
 wire [11:0] a_rom_data;
 wire [11:0] b_rom_data;
 wire [11:0] x_rom_data;
@@ -53,7 +55,7 @@ wire [11:0] d_right_rom_data;
 wire [11:0] d_left_rom_data;
 
 
-//all button on signals
+// all buttons' "on" signals
 wire a_on;
 wire b_on;
 wire x_on;
@@ -68,7 +70,7 @@ wire d_right_on;
 wire d_left_on;
 
 
-//all buttons rom logic
+// all buttons' rom logic
 assign a_on = (a_rom_data != 12'hFFF);
 assign b_on = (b_rom_data != 12'hFFF);
 assign x_on = (x_rom_data != 12'h000);
@@ -84,7 +86,7 @@ assign d_left_on = (d_left_rom_data != 12'h000);
 
 
 
-//logic for button on
+//logic for when to draw the buttons
 assign button_on = (x > left_bound) && (x <= right_bound) &&
                   (y >= up_bound)   && (y < down_bound) &&
                   ((A && a_on) || (B && b_on) || (X && x_on) || (Y && y_on) || (start_pause && start_on) ||
@@ -92,93 +94,98 @@ assign button_on = (x > left_bound) && (x <= right_bound) &&
                    (D_RIGHT && d_right_on) || (D_LEFT && d_left_on));
 
 
-//all button rom instantiations
+
+
+//    all button rom instantiations
+
 afill_rom a_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(a_rom_data)
 );
 
 bfill_rom b_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(b_rom_data)
 );
 
 xfill_rom x_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(x_rom_data)
 );
 
 yfill_rom y_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(y_rom_data)
 );
 
 startfill_rom start_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(start_rom_data)
 );
 
 lfill_rom l_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(l_rom_data)
 );
 
 rfill_rom r_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(r_rom_data)
 );
 
 zfill_rom z_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(z_rom_data)
 );
 
 dupfill_rom dup_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(d_up_rom_data)
 );
 
 ddownfill_rom ddown_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(d_down_rom_data)
 );
 
 drightfill_rom dright_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(d_right_rom_data)
 );
 
 dleftfill_rom dleft_but (
     .clk(clk),
-    .row(row),
-    .col(col),
+    .row(button_row),
+    .col(button_col),
     .color_data(d_left_rom_data)
 );
 
 
-//logic for displaying buttons
+
+
+// logic for displaying buttons
 reg [11:0] intermediate_rgb;
 always @(posedge clk) begin
     if (a_on && A)
@@ -210,7 +217,7 @@ always @(posedge clk) begin
 end
 
 
-
+// rgb that contains all button data
 assign button_rgb_data = intermediate_rgb;
 
 
