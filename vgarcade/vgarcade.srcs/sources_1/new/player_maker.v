@@ -4,7 +4,8 @@ module player_maker(
     input clk,
     input [9:0] x, y,
     input [9:0] x_position, y_position,
-    input [9:0] size,
+    input [9:0] height,
+    input [9:0] width,
     output player_on,
     output [11:0] rgb_data
 );
@@ -19,9 +20,9 @@ wire [9:0] up_bound;
 wire [9:0] down_bound;
 
 assign left_bound  = x_position;
-assign right_bound = x_position + size;
+assign right_bound = x_position + width;
 assign up_bound    = y_position;
-assign down_bound  = y_position + size;
+assign down_bound  = y_position + height;
 
 assign col = x - left_bound;
 assign row = y - up_bound;     

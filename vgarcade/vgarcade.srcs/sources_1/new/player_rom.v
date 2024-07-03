@@ -39,11 +39,11 @@ module player_rom (
         if ((row * 77 + col) >= 716 && (row * 77 + col) <= 716) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 717 && (row * 77 + col) <= 719) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 720 && (row * 77 + col) <= 720) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 721 && (row * 77 + col) <= 726) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 721 && (row * 77 + col) <= 726) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 727 && (row * 77 + col) <= 727) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 728 && (row * 77 + col) <= 729) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 730 && (row * 77 + col) <= 730) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 731 && (row * 77 + col) <= 735) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 731 && (row * 77 + col) <= 735) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 736 && (row * 77 + col) <= 736) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 737 && (row * 77 + col) <= 738) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 739 && (row * 77 + col) <= 739) color_data <= 12'b000000000000; else
@@ -51,15 +51,15 @@ module player_rom (
         if ((row * 77 + col) >= 793 && (row * 77 + col) <= 793) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 794 && (row * 77 + col) <= 796) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 797 && (row * 77 + col) <= 797) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 798 && (row * 77 + col) <= 800) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 798 && (row * 77 + col) <= 800) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 801 && (row * 77 + col) <= 802) color_data <= 12'b001101001100; else
-        if ((row * 77 + col) >= 803 && (row * 77 + col) <= 803) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 803 && (row * 77 + col) <= 803) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 804 && (row * 77 + col) <= 804) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 805 && (row * 77 + col) <= 806) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 807 && (row * 77 + col) <= 807) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 808 && (row * 77 + col) <= 808) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 808 && (row * 77 + col) <= 808) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 809 && (row * 77 + col) <= 810) color_data <= 12'b001101001100; else
-        if ((row * 77 + col) >= 811 && (row * 77 + col) <= 812) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 811 && (row * 77 + col) <= 812) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 813 && (row * 77 + col) <= 813) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 814 && (row * 77 + col) <= 815) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 816 && (row * 77 + col) <= 816) color_data <= 12'b000000000000; else
@@ -67,15 +67,15 @@ module player_rom (
         if ((row * 77 + col) >= 869 && (row * 77 + col) <= 869) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 870 && (row * 77 + col) <= 873) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 874 && (row * 77 + col) <= 874) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 875 && (row * 77 + col) <= 877) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 875 && (row * 77 + col) <= 877) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 878 && (row * 77 + col) <= 879) color_data <= 12'b001101001100; else
-        if ((row * 77 + col) >= 880 && (row * 77 + col) <= 880) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 880 && (row * 77 + col) <= 880) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 881 && (row * 77 + col) <= 881) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 882 && (row * 77 + col) <= 883) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 884 && (row * 77 + col) <= 884) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 885 && (row * 77 + col) <= 885) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 885 && (row * 77 + col) <= 885) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 886 && (row * 77 + col) <= 887) color_data <= 12'b001101001100; else
-        if ((row * 77 + col) >= 888 && (row * 77 + col) <= 889) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 888 && (row * 77 + col) <= 889) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 890 && (row * 77 + col) <= 890) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 891 && (row * 77 + col) <= 893) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 894 && (row * 77 + col) <= 894) color_data <= 12'b000000000000; else
@@ -117,7 +117,7 @@ module player_rom (
         if ((row * 77 + col) >= 1486 && (row * 77 + col) <= 1486) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 1487 && (row * 77 + col) <= 1490) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 1491 && (row * 77 + col) <= 1492) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 1493 && (row * 77 + col) <= 1500) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 1493 && (row * 77 + col) <= 1500) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 1501 && (row * 77 + col) <= 1502) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 1503 && (row * 77 + col) <= 1508) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 1509 && (row * 77 + col) <= 1509) color_data <= 12'b000000000000; else
@@ -125,7 +125,7 @@ module player_rom (
         if ((row * 77 + col) >= 1564 && (row * 77 + col) <= 1564) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 1565 && (row * 77 + col) <= 1568) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 1569 && (row * 77 + col) <= 1570) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 1571 && (row * 77 + col) <= 1577) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 1571 && (row * 77 + col) <= 1577) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 1578 && (row * 77 + col) <= 1578) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 1579 && (row * 77 + col) <= 1584) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 1585 && (row * 77 + col) <= 1585) color_data <= 12'b000000000000; else
@@ -133,7 +133,7 @@ module player_rom (
         if ((row * 77 + col) >= 1642 && (row * 77 + col) <= 1642) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 1643 && (row * 77 + col) <= 1646) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 1647 && (row * 77 + col) <= 1650) color_data <= 12'b000000000000; else
-        if ((row * 77 + col) >= 1651 && (row * 77 + col) <= 1653) color_data <= 12'b111111111111; else
+        if ((row * 77 + col) >= 1651 && (row * 77 + col) <= 1653) color_data <= 12'b111011101110; else
         if ((row * 77 + col) >= 1654 && (row * 77 + col) <= 1655) color_data <= 12'b000000000000; else
         if ((row * 77 + col) >= 1656 && (row * 77 + col) <= 1660) color_data <= 12'b111111111010; else
         if ((row * 77 + col) >= 1661 && (row * 77 + col) <= 1661) color_data <= 12'b000000000000; else

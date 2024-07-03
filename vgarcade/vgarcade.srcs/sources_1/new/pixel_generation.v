@@ -242,13 +242,17 @@ end
 assign player1_x_wire = player1_x_reg;
 assign player1_y_wire = player1_y_reg;
 
+localparam PLAYER_HEIGHT = 92; // player dimensions in pixels
+localparam PLAYER_WIDTH  = 77;
+
 player_maker player1 (
     .clk(clk),
     .x(x),
     .y(y),
     .x_position(player1_x_wire),
     .y_position(player1_y_wire),
-    .size(9'd100), // from bitmap image, 100x100 pixels
+    .height(PLAYER_HEIGHT),
+    .width(PLAYER_WIDTH),
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
