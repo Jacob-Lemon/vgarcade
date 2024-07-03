@@ -358,23 +358,31 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
                 shield_caught[idx]  <= 0;
                 if (fruit_y_next_reg[idx] >= 440 || player_catching) begin
                     if (player_catching) begin
-                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 40) begin
+                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 20) begin
                             // apple
                             score_array[idx] <= score_array[idx] + 1;
                         end
-                        else if (which_fruit[idx] >= 40 && which_fruit[idx] < 70) begin
+
+                        else if (which_fruit[idx] >= 20 && which_fruit[idx] < 40) begin
                             // orange
                             score_array[idx] <= score_array[idx] + 2;
                         end
-                        
-                        else if (which_fruit[idx] >= 70 && which_fruit[idx] < 80) begin
-                            // pumpkin
+                
+                        else if (which_fruit[idx] >= 40 && which_fruit[idx] < 60) begin
+                            // pineapple
                             score_array[idx] <= score_array[idx] + 3;
                         end
+
+                        else if (which_fruit[idx] >= 60 && which_fruit[idx] < 80) begin
+                            // strawberry
+                            score_array[idx] <= score_array[idx] + 4;
+                        end
+
                         else if (which_fruit[idx] >= 80 && which_fruit[idx] < 95) begin
                             // speed
                             speed_caught[idx] <= 1;
                         end
+
                         else if (which_fruit[idx] >= 95 && which_fruit[idx] <= 100) begin
                             // shield
                             shield_caught[idx] <= 1;
