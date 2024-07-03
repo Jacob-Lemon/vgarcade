@@ -6,31 +6,25 @@ module apple_rom (
 );
 
     always @(posedge clk) begin
-        if ((row * 40 + col) >= 0 && (row * 40 + col) <= 102) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 103 && (row * 40 + col) <= 103) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 104 && (row * 40 + col) <= 109) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 110 && (row * 40 + col) <= 110) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 111 && (row * 40 + col) <= 141) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 142 && (row * 40 + col) <= 151) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 152 && (row * 40 + col) <= 180) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 181 && (row * 40 + col) <= 183) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 184 && (row * 40 + col) <= 189) color_data <= 12'b000110010100; else
-        if ((row * 40 + col) >= 190 && (row * 40 + col) <= 193) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 0 && (row * 40 + col) <= 142) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 143 && (row * 40 + col) <= 151) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 152 && (row * 40 + col) <= 181) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 182 && (row * 40 + col) <= 183) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 184 && (row * 40 + col) <= 190) color_data <= 12'b000110010100; else
+        if ((row * 40 + col) >= 191 && (row * 40 + col) <= 193) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 194 && (row * 40 + col) <= 216) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 217 && (row * 40 + col) <= 218) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 219 && (row * 40 + col) <= 219) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 220 && (row * 40 + col) <= 220) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 219 && (row * 40 + col) <= 220) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 221 && (row * 40 + col) <= 222) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 223 && (row * 40 + col) <= 231) color_data <= 12'b000110010100; else
-        if ((row * 40 + col) >= 232 && (row * 40 + col) <= 234) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 223 && (row * 40 + col) <= 232) color_data <= 12'b000110010100; else
+        if ((row * 40 + col) >= 233 && (row * 40 + col) <= 234) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 235 && (row * 40 + col) <= 256) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 257 && (row * 40 + col) <= 257) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 258 && (row * 40 + col) <= 260) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 261 && (row * 40 + col) <= 261) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 262 && (row * 40 + col) <= 267) color_data <= 12'b000110000011; else
-        if ((row * 40 + col) >= 268 && (row * 40 + col) <= 270) color_data <= 12'b000110010100; else
-        if ((row * 40 + col) >= 271 && (row * 40 + col) <= 272) color_data <= 12'b000110000011; else
-        if ((row * 40 + col) >= 273 && (row * 40 + col) <= 273) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 268 && (row * 40 + col) <= 269) color_data <= 12'b000110010100; else
+        if ((row * 40 + col) >= 270 && (row * 40 + col) <= 273) color_data <= 12'b000110000011; else
         if ((row * 40 + col) >= 274 && (row * 40 + col) <= 274) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 275 && (row * 40 + col) <= 275) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 276 && (row * 40 + col) <= 297) color_data <= 12'b111111111111; else
@@ -38,235 +32,217 @@ module apple_rom (
         if ((row * 40 + col) >= 299 && (row * 40 + col) <= 299) color_data <= 12'b011101000011; else
         if ((row * 40 + col) >= 300 && (row * 40 + col) <= 300) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 301 && (row * 40 + col) <= 302) color_data <= 12'b011101000011; else
-        if ((row * 40 + col) >= 303 && (row * 40 + col) <= 313) color_data <= 12'b000110010100; else
-        if ((row * 40 + col) >= 314 && (row * 40 + col) <= 314) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 303 && (row * 40 + col) <= 314) color_data <= 12'b000110010100; else
         if ((row * 40 + col) >= 315 && (row * 40 + col) <= 316) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 317 && (row * 40 + col) <= 337) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 338 && (row * 40 + col) <= 338) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 339 && (row * 40 + col) <= 342) color_data <= 12'b011101000011; else
-        if ((row * 40 + col) >= 343 && (row * 40 + col) <= 354) color_data <= 12'b000110010100; else
-        if ((row * 40 + col) >= 355 && (row * 40 + col) <= 356) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 343 && (row * 40 + col) <= 355) color_data <= 12'b000110010100; else
+        if ((row * 40 + col) >= 356 && (row * 40 + col) <= 356) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 357 && (row * 40 + col) <= 369) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 370 && (row * 40 + col) <= 375) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 376 && (row * 40 + col) <= 377) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 376 && (row * 40 + col) <= 376) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 377 && (row * 40 + col) <= 377) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 378 && (row * 40 + col) <= 378) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 379 && (row * 40 + col) <= 379) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 380 && (row * 40 + col) <= 382) color_data <= 12'b011101000011; else
-        if ((row * 40 + col) >= 383 && (row * 40 + col) <= 394) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 383 && (row * 40 + col) <= 388) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 389 && (row * 40 + col) <= 393) color_data <= 12'b000110010100; else
+        if ((row * 40 + col) >= 394 && (row * 40 + col) <= 394) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 395 && (row * 40 + col) <= 396) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 397 && (row * 40 + col) <= 408) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 409 && (row * 40 + col) <= 409) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 410 && (row * 40 + col) <= 415) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 416 && (row * 40 + col) <= 416) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 417 && (row * 40 + col) <= 418) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 397 && (row * 40 + col) <= 407) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 408 && (row * 40 + col) <= 409) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 410 && (row * 40 + col) <= 410) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 411 && (row * 40 + col) <= 415) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 416 && (row * 40 + col) <= 417) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 418 && (row * 40 + col) <= 418) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 419 && (row * 40 + col) <= 419) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 420 && (row * 40 + col) <= 421) color_data <= 12'b011101000011; else
         if ((row * 40 + col) >= 422 && (row * 40 + col) <= 422) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 423 && (row * 40 + col) <= 433) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 423 && (row * 40 + col) <= 423) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 424 && (row * 40 + col) <= 427) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 428 && (row * 40 + col) <= 433) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 434 && (row * 40 + col) <= 434) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 435 && (row * 40 + col) <= 446) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 447 && (row * 40 + col) <= 451) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 452 && (row * 40 + col) <= 455) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 456 && (row * 40 + col) <= 457) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 458 && (row * 40 + col) <= 458) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 447 && (row * 40 + col) <= 448) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 449 && (row * 40 + col) <= 456) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 457 && (row * 40 + col) <= 458) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 459 && (row * 40 + col) <= 459) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 460 && (row * 40 + col) <= 461) color_data <= 12'b011101000011; else
-        if ((row * 40 + col) >= 462 && (row * 40 + col) <= 463) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 464 && (row * 40 + col) <= 468) color_data <= 12'b101000000000; else
+        if ((row * 40 + col) >= 462 && (row * 40 + col) <= 462) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 463 && (row * 40 + col) <= 468) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 469 && (row * 40 + col) <= 469) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 470 && (row * 40 + col) <= 470) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 471 && (row * 40 + col) <= 485) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 486 && (row * 40 + col) <= 487) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 488 && (row * 40 + col) <= 488) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 489 && (row * 40 + col) <= 489) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 490 && (row * 40 + col) <= 493) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 494 && (row * 40 + col) <= 496) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 497 && (row * 40 + col) <= 497) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 498 && (row * 40 + col) <= 498) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 488 && (row * 40 + col) <= 490) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 491 && (row * 40 + col) <= 493) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 494 && (row * 40 + col) <= 498) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 499 && (row * 40 + col) <= 499) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 500 && (row * 40 + col) <= 501) color_data <= 12'b011101000011; else
         if ((row * 40 + col) >= 502 && (row * 40 + col) <= 502) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 503 && (row * 40 + col) <= 509) color_data <= 12'b101000000000; else
+        if ((row * 40 + col) >= 503 && (row * 40 + col) <= 509) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 510 && (row * 40 + col) <= 511) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 512 && (row * 40 + col) <= 512) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 513 && (row * 40 + col) <= 525) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 526 && (row * 40 + col) <= 527) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 528 && (row * 40 + col) <= 528) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 529 && (row * 40 + col) <= 529) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 530 && (row * 40 + col) <= 535) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 536 && (row * 40 + col) <= 536) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 537 && (row * 40 + col) <= 538) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 539 && (row * 40 + col) <= 539) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 513 && (row * 40 + col) <= 524) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 525 && (row * 40 + col) <= 526) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 527 && (row * 40 + col) <= 535) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 536 && (row * 40 + col) <= 539) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 540 && (row * 40 + col) <= 541) color_data <= 12'b011101000011; else
-        if ((row * 40 + col) >= 542 && (row * 40 + col) <= 550) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 551 && (row * 40 + col) <= 552) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 542 && (row * 40 + col) <= 551) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 552 && (row * 40 + col) <= 552) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 553 && (row * 40 + col) <= 553) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 554 && (row * 40 + col) <= 563) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 564 && (row * 40 + col) <= 564) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 565 && (row * 40 + col) <= 566) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 567 && (row * 40 + col) <= 567) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 568 && (row * 40 + col) <= 576) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 577 && (row * 40 + col) <= 579) color_data <= 12'b101000000000; else
+        if ((row * 40 + col) >= 565 && (row * 40 + col) <= 565) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 566 && (row * 40 + col) <= 576) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 577 && (row * 40 + col) <= 579) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 580 && (row * 40 + col) <= 581) color_data <= 12'b011101000011; else
-        if ((row * 40 + col) >= 582 && (row * 40 + col) <= 591) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 592 && (row * 40 + col) <= 592) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 582 && (row * 40 + col) <= 592) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 593 && (row * 40 + col) <= 594) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 595 && (row * 40 + col) <= 602) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 603 && (row * 40 + col) <= 604) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 605 && (row * 40 + col) <= 606) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 607 && (row * 40 + col) <= 607) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 608 && (row * 40 + col) <= 617) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 618 && (row * 40 + col) <= 632) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 633 && (row * 40 + col) <= 634) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 605 && (row * 40 + col) <= 617) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 618 && (row * 40 + col) <= 633) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 634 && (row * 40 + col) <= 634) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 635 && (row * 40 + col) <= 635) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 636 && (row * 40 + col) <= 642) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 643 && (row * 40 + col) <= 644) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 645 && (row * 40 + col) <= 648) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 649 && (row * 40 + col) <= 651) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 643 && (row * 40 + col) <= 643) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 644 && (row * 40 + col) <= 648) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 649 && (row * 40 + col) <= 651) color_data <= 12'b111111101110; else
         if ((row * 40 + col) >= 652 && (row * 40 + col) <= 663) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 664 && (row * 40 + col) <= 673) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 674 && (row * 40 + col) <= 674) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 664 && (row * 40 + col) <= 674) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 675 && (row * 40 + col) <= 675) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 676 && (row * 40 + col) <= 676) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 677 && (row * 40 + col) <= 682) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 683 && (row * 40 + col) <= 684) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 685 && (row * 40 + col) <= 687) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 688 && (row * 40 + col) <= 691) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 692 && (row * 40 + col) <= 704) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 705 && (row * 40 + col) <= 714) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 715 && (row * 40 + col) <= 716) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 677 && (row * 40 + col) <= 681) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 682 && (row * 40 + col) <= 682) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 683 && (row * 40 + col) <= 683) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 684 && (row * 40 + col) <= 687) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 688 && (row * 40 + col) <= 691) color_data <= 12'b111111101110; else
+        if ((row * 40 + col) >= 692 && (row * 40 + col) <= 705) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 706 && (row * 40 + col) <= 715) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 716 && (row * 40 + col) <= 716) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 717 && (row * 40 + col) <= 721) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 722 && (row * 40 + col) <= 722) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 723 && (row * 40 + col) <= 723) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 724 && (row * 40 + col) <= 726) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 727 && (row * 40 + col) <= 730) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 723 && (row * 40 + col) <= 726) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 727 && (row * 40 + col) <= 730) color_data <= 12'b111111101110; else
         if ((row * 40 + col) >= 731 && (row * 40 + col) <= 745) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 746 && (row * 40 + col) <= 755) color_data <= 12'b101000000000; else
+        if ((row * 40 + col) >= 746 && (row * 40 + col) <= 755) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 756 && (row * 40 + col) <= 756) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 757 && (row * 40 + col) <= 757) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 758 && (row * 40 + col) <= 761) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 762 && (row * 40 + col) <= 762) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 763 && (row * 40 + col) <= 763) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 764 && (row * 40 + col) <= 766) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 767 && (row * 40 + col) <= 769) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 770 && (row * 40 + col) <= 785) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 786 && (row * 40 + col) <= 795) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 796 && (row * 40 + col) <= 796) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 763 && (row * 40 + col) <= 766) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 767 && (row * 40 + col) <= 769) color_data <= 12'b111111101110; else
+        if ((row * 40 + col) >= 770 && (row * 40 + col) <= 786) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 787 && (row * 40 + col) <= 796) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 797 && (row * 40 + col) <= 797) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 798 && (row * 40 + col) <= 801) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 802 && (row * 40 + col) <= 802) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 803 && (row * 40 + col) <= 803) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 804 && (row * 40 + col) <= 806) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 807 && (row * 40 + col) <= 808) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 809 && (row * 40 + col) <= 825) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 826 && (row * 40 + col) <= 835) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 836 && (row * 40 + col) <= 836) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 803 && (row * 40 + col) <= 806) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 807 && (row * 40 + col) <= 808) color_data <= 12'b111111101110; else
+        if ((row * 40 + col) >= 809 && (row * 40 + col) <= 827) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 828 && (row * 40 + col) <= 836) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 837 && (row * 40 + col) <= 837) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 838 && (row * 40 + col) <= 841) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 842 && (row * 40 + col) <= 842) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 843 && (row * 40 + col) <= 843) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 844 && (row * 40 + col) <= 865) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 866 && (row * 40 + col) <= 875) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 876 && (row * 40 + col) <= 876) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 843 && (row * 40 + col) <= 867) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 868 && (row * 40 + col) <= 876) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 877 && (row * 40 + col) <= 877) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 878 && (row * 40 + col) <= 881) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 882 && (row * 40 + col) <= 882) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 883 && (row * 40 + col) <= 883) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 884 && (row * 40 + col) <= 905) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 906 && (row * 40 + col) <= 915) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 916 && (row * 40 + col) <= 916) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 883 && (row * 40 + col) <= 907) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 908 && (row * 40 + col) <= 916) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 917 && (row * 40 + col) <= 917) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 918 && (row * 40 + col) <= 921) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 922 && (row * 40 + col) <= 922) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 923 && (row * 40 + col) <= 923) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 924 && (row * 40 + col) <= 945) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 946 && (row * 40 + col) <= 955) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 956 && (row * 40 + col) <= 956) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 923 && (row * 40 + col) <= 947) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 948 && (row * 40 + col) <= 956) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 957 && (row * 40 + col) <= 957) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 958 && (row * 40 + col) <= 961) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 962 && (row * 40 + col) <= 962) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 963 && (row * 40 + col) <= 963) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 964 && (row * 40 + col) <= 985) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 986 && (row * 40 + col) <= 995) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 996 && (row * 40 + col) <= 996) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 964 && (row * 40 + col) <= 987) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 988 && (row * 40 + col) <= 996) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 997 && (row * 40 + col) <= 997) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 998 && (row * 40 + col) <= 1002) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1003 && (row * 40 + col) <= 1004) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1005 && (row * 40 + col) <= 1025) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1026 && (row * 40 + col) <= 1035) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1036 && (row * 40 + col) <= 1036) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1003 && (row * 40 + col) <= 1003) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1004 && (row * 40 + col) <= 1027) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1028 && (row * 40 + col) <= 1036) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 1037 && (row * 40 + col) <= 1037) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1038 && (row * 40 + col) <= 1042) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1043 && (row * 40 + col) <= 1044) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1045 && (row * 40 + col) <= 1065) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1066 && (row * 40 + col) <= 1075) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1076 && (row * 40 + col) <= 1076) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1045 && (row * 40 + col) <= 1067) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1068 && (row * 40 + col) <= 1076) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 1077 && (row * 40 + col) <= 1077) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1078 && (row * 40 + col) <= 1083) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1084 && (row * 40 + col) <= 1084) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1085 && (row * 40 + col) <= 1085) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1086 && (row * 40 + col) <= 1105) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1106 && (row * 40 + col) <= 1115) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1116 && (row * 40 + col) <= 1116) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1117 && (row * 40 + col) <= 1123) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1085 && (row * 40 + col) <= 1085) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1086 && (row * 40 + col) <= 1107) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1108 && (row * 40 + col) <= 1115) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1116 && (row * 40 + col) <= 1117) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1118 && (row * 40 + col) <= 1123) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1124 && (row * 40 + col) <= 1124) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1125 && (row * 40 + col) <= 1125) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1126 && (row * 40 + col) <= 1127) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1128 && (row * 40 + col) <= 1145) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1146 && (row * 40 + col) <= 1154) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1155 && (row * 40 + col) <= 1156) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1126 && (row * 40 + col) <= 1126) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1127 && (row * 40 + col) <= 1147) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1148 && (row * 40 + col) <= 1155) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1156 && (row * 40 + col) <= 1156) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1157 && (row * 40 + col) <= 1164) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1165 && (row * 40 + col) <= 1166) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1167 && (row * 40 + col) <= 1167) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1168 && (row * 40 + col) <= 1185) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1186 && (row * 40 + col) <= 1193) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1194 && (row * 40 + col) <= 1196) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1165 && (row * 40 + col) <= 1165) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1166 && (row * 40 + col) <= 1167) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1168 && (row * 40 + col) <= 1186) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1187 && (row * 40 + col) <= 1194) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1195 && (row * 40 + col) <= 1196) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1197 && (row * 40 + col) <= 1204) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1205 && (row * 40 + col) <= 1206) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1207 && (row * 40 + col) <= 1207) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1208 && (row * 40 + col) <= 1223) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1224 && (row * 40 + col) <= 1232) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1233 && (row * 40 + col) <= 1234) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1207 && (row * 40 + col) <= 1207) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1208 && (row * 40 + col) <= 1225) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1226 && (row * 40 + col) <= 1233) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1234 && (row * 40 + col) <= 1234) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 1235 && (row * 40 + col) <= 1235) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1236 && (row * 40 + col) <= 1245) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1246 && (row * 40 + col) <= 1246) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1247 && (row * 40 + col) <= 1248) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1249 && (row * 40 + col) <= 1262) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1263 && (row * 40 + col) <= 1272) color_data <= 12'b101000000000; else
+        if ((row * 40 + col) >= 1247 && (row * 40 + col) <= 1247) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1248 && (row * 40 + col) <= 1248) color_data <= 12'b101000000000; else
+        if ((row * 40 + col) >= 1249 && (row * 40 + col) <= 1264) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1265 && (row * 40 + col) <= 1272) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 1273 && (row * 40 + col) <= 1274) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1275 && (row * 40 + col) <= 1285) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1286 && (row * 40 + col) <= 1287) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1288 && (row * 40 + col) <= 1289) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1290 && (row * 40 + col) <= 1290) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1291 && (row * 40 + col) <= 1299) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1300 && (row * 40 + col) <= 1310) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1311 && (row * 40 + col) <= 1311) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1275 && (row * 40 + col) <= 1286) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1287 && (row * 40 + col) <= 1287) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1288 && (row * 40 + col) <= 1288) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1289 && (row * 40 + col) <= 1290) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1291 && (row * 40 + col) <= 1303) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1304 && (row * 40 + col) <= 1311) color_data <= 12'b101100000000; else
         if ((row * 40 + col) >= 1312 && (row * 40 + col) <= 1313) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1314 && (row * 40 + col) <= 1327) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1328 && (row * 40 + col) <= 1329) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1330 && (row * 40 + col) <= 1331) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1332 && (row * 40 + col) <= 1336) color_data <= 12'b111100000000; else
-        if ((row * 40 + col) >= 1337 && (row * 40 + col) <= 1349) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1350 && (row * 40 + col) <= 1351) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1352 && (row * 40 + col) <= 1368) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1330 && (row * 40 + col) <= 1331) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1332 && (row * 40 + col) <= 1341) color_data <= 12'b111100000000; else
+        if ((row * 40 + col) >= 1342 && (row * 40 + col) <= 1350) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1351 && (row * 40 + col) <= 1351) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1352 && (row * 40 + col) <= 1352) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1353 && (row * 40 + col) <= 1368) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1369 && (row * 40 + col) <= 1369) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1370 && (row * 40 + col) <= 1371) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1372 && (row * 40 + col) <= 1387) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1388 && (row * 40 + col) <= 1389) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1390 && (row * 40 + col) <= 1390) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1391 && (row * 40 + col) <= 1409) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1370 && (row * 40 + col) <= 1370) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1371 && (row * 40 + col) <= 1389) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1390 && (row * 40 + col) <= 1391) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1392 && (row * 40 + col) <= 1409) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1410 && (row * 40 + col) <= 1412) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1413 && (row * 40 + col) <= 1425) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1426 && (row * 40 + col) <= 1429) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1430 && (row * 40 + col) <= 1451) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1413 && (row * 40 + col) <= 1428) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1429 && (row * 40 + col) <= 1429) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1430 && (row * 40 + col) <= 1430) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1431 && (row * 40 + col) <= 1451) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1452 && (row * 40 + col) <= 1453) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1454 && (row * 40 + col) <= 1465) color_data <= 12'b101000000000; else
-        if ((row * 40 + col) >= 1466 && (row * 40 + col) <= 1467) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1468 && (row * 40 + col) <= 1492) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1454 && (row * 40 + col) <= 1466) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1467 && (row * 40 + col) <= 1469) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1470 && (row * 40 + col) <= 1492) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1493 && (row * 40 + col) <= 1493) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1494 && (row * 40 + col) <= 1505) color_data <= 12'b000100000000; else
-        if ((row * 40 + col) >= 1506 && (row * 40 + col) <= 1506) color_data <= 12'b000000000000; else
-        if ((row * 40 + col) >= 1507 && (row * 40 + col) <= 1534) color_data <= 12'b111111111111; else
+        if ((row * 40 + col) >= 1494 && (row * 40 + col) <= 1495) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1496 && (row * 40 + col) <= 1504) color_data <= 12'b101100000000; else
+        if ((row * 40 + col) >= 1505 && (row * 40 + col) <= 1505) color_data <= 12'b000100000000; else
+        if ((row * 40 + col) >= 1506 && (row * 40 + col) <= 1507) color_data <= 12'b000000000000; else
+        if ((row * 40 + col) >= 1508 && (row * 40 + col) <= 1534) color_data <= 12'b111111111111; else
         if ((row * 40 + col) >= 1535 && (row * 40 + col) <= 1544) color_data <= 12'b000100000000; else
         if ((row * 40 + col) >= 1545 && (row * 40 + col) <= 1545) color_data <= 12'b000000000000; else
         if ((row * 40 + col) >= 1546 && (row * 40 + col) < 1600) color_data <= 12'b111111111111; else
