@@ -56,13 +56,21 @@ orange_rom orange(
     .col(col),
     .color_data(rom_orange_data)
 );
-//-----------------pumpkin-----------------
-wire [11:0] rom_pumpkin_data;
-pumpkin_rom pumpkin(
+//-----------------pineapple----------------
+wire [11:0] rom_pineapple_data;
+pineapple_rom pineapple (
     .clk(clk),
     .row(row),
     .col(col),
-    .color_data(rom_pumpkin_data)
+    .color_data(rom_pineapple_data)
+);
+//-----------------strawberry---------------
+wire [11:0] rom_strawberry_data;
+strawberry_rom strawberry (
+    .clk(clk),
+    .row(row),
+    .col(col),
+    .color_data(rom_strawberry_data)
 );
 //-----------------speed-----------------
 wire [11:0] rom_speed_data;
@@ -85,14 +93,17 @@ shield_rom shield (
 reg [11:0] intermediate_rom_fruit_data;
 
 always @(posedge clk) begin
-    if (which_fruit >= 0 && which_fruit < 40)           // apple
+    if (which_fruit >= 0 && which_fruit < 20)           // apple
         intermediate_rom_fruit_data <= rom_apple_data;
 
-    else if (which_fruit >= 40 && which_fruit < 70)     // orange
+    else if (which_fruit >= 20 && which_fruit < 40)     // orange
         intermediate_rom_fruit_data <= rom_orange_data;
     
-    else if (which_fruit >= 70 && which_fruit < 80)     // pumpkin
-        intermediate_rom_fruit_data <= rom_pumpkin_data;
+    else if (which_fruit >= 40 && which_fruit < 60)     // pineapple
+        intermediate_rom_fruit_data <= rom_pineapple_data;
+
+    else if (which_fruit >= 60 && which_fruit < 80)     // strawberry
+        intermediate_rom_fruit_data <= rom_strawberry_data;
     
     else if (which_fruit >= 80 && which_fruit < 95)     // speed
         intermediate_rom_fruit_data <= rom_speed_data;
