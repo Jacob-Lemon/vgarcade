@@ -171,8 +171,9 @@ pixel_generation pg (
     .sw(sw_reg),
     //.score(score),
     // test
-    .game_state(button_data[5:2]),
-    .not_playing(button_data[6]),
+    .not_playing(button_data[7]),
+    .game_state(button_data[6:3]),
+    .car_timer_active(button_data[2]),
     .car_state(button_data[1:0])
 );
 

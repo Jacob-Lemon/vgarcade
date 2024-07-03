@@ -5,6 +5,7 @@ module player_powerups(
     input clk,
     input reset,
     input refresh_tick,
+    input [3:0] game_state,
     // gamecube inputs
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
@@ -16,6 +17,10 @@ module player_powerups(
     output speed_boost_on,
     output reg shield_boost_on
 );
+
+wire playing;
+assign playing = (game_state == 3);    // GAMEPLAY
+
 
 /**************************************************************************************************
 * speed boost logic
@@ -37,6 +42,10 @@ always @(posedge clk or posedge reset) begin
         speed_boost_available <= 0;
         start_boosting <= 0;
     end
+    else if (~playing) begin
+        speed_boost_available <= 0;
+        start_boosting <= 0;
+    end
     else if (refresh_tick) begin
         if (speed_boost_available == 0) begin
             speed_boost_available <= (|speed_caught); // whether or not we have caught any pumpkin
@@ -55,13 +64,12 @@ end
 
 down_counter speed_boost_timer (
     .clk(clk),                      // system clock
-    .refresh_tick(refresh_tick),
+    .refresh_tick(refresh_tick),    // 60Hz frame refresh tick
     .reset(reset),                  // game reset
     .timer_start(start_boosting),   // signal to control the start of the down counter
     .frames_to_count_for(960),      // 4 seconds = 240 frames @ 60Hz, 4 counts per frame
     // outputs
     .timer_active(speed_boost_on)   // boost is active for as long as the timer is active
-    //.timer_inactive()
 );
 
 
@@ -72,6 +80,9 @@ down_counter speed_boost_timer (
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
+        shield_boost_on <= 0;
+    end
+    else if (~playing) begin
         shield_boost_on <= 0;
     end
     else if (refresh_tick) begin

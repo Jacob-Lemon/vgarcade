@@ -14,10 +14,11 @@ module pixel_generation(
     // output [15:0] score,
     output reg [3:0] game_state,
     output not_playing,
-    output reg [1:0] car_state
+    output reg [1:0] car_state,
+    output car_timer_active
 );
 // create a 60Hz refresh tick at the start of vsync
-// this still works as intended
+// this is the framerate
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
 
@@ -36,8 +37,8 @@ localparam KILL_SCREEN   = 4;
 
 wire player_dead;
 // wire not_playing;
-assign not_playing = (game_state == START_SCREEN || game_state == INPUT_DISPLAY || game_state == INSTRUCTIONS || game_state == KILL_SCREEN);
-
+// assign not_playing = (game_state == START_SCREEN || game_state == INPUT_DISPLAY || game_state == INSTRUCTIONS || game_state == KILL_SCREEN);
+assign not_playing = ~(game_state == GAMEPLAY);
 
 // state control
 always @(posedge clk or posedge reset) begin
@@ -121,7 +122,9 @@ player_powerups get_powers (
     // system inputs
     .clk(clk),
     .reset(reset),
+    // game signals
     .refresh_tick(refresh_tick),
+    .game_state(game_state),
     // gamecube inputs
     .A(A), .B(B), .X(X), .Y(Y), .start_pause(start_pause), .L(L), .R(R), .Z(Z),
     .D_UP(D_UP), .D_DOWN(D_DOWN), .D_RIGHT(D_RIGHT), .D_LEFT(D_LEFT),
@@ -513,11 +516,8 @@ reg [2:0] car_x_speed;
 initial car_x_speed = 1;    // things break if this is not one. Do not change this.
 
 // signals for the moving of the car.
-wire car_going;
-reg car_respawn;
 wire car_in_x_range; //checks whether the car is on screen or not
 
-assign car_going = (car_respawn) || (car_in_x_range);
 assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 
 localparam car_time_duration = 600; // 10 seconds, 600 frames = 10s * 60Hz
@@ -550,8 +550,9 @@ localparam CAR_WAITING         = 0;
 localparam CAR_DRIVING_NOT_HIT = 1;     // describes the state where the car has not hit the player
 localparam CAR_DRIVING_HIT     = 2;
 // reg [1:0] car_state = CAR_WAITING;
-
 // initial car_state = CAR_WAITING;
+
+// wire car_timer_active;
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -560,21 +561,29 @@ always @(posedge clk or posedge reset) begin
         
         car_x_next <= 700;
         car_player_collision <= 0;
+        player1_lives <= MAX_LIVES;
     end
     else if (not_playing) begin
         car_state <= CAR_WAITING;
+        car_timer_start <= 1;
+        
+        car_x_next <= 700;
+        car_player_collision <= 0;
+        player1_lives <= MAX_LIVES;
     end
     else begin
         case (car_state) 
             CAR_WAITING: begin
                 if (refresh_tick) begin
-                    // timer should initialize to be active, so deactivate starting the timer
+                    prev_car_player_collision <= car_player_collision;
+                    car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                     car_x_next <= 700;
+                    // timer should initialize to be active, so deactivate starting the timer
                     if (car_timer_start) begin
                         car_timer_start <= 0;
                     end
                     // upon timer expiring, move to next state
-                    if (~car_timer_active) begin
+                    else if (~car_timer_active) begin
                         car_state <= CAR_DRIVING_NOT_HIT;
                         car_x_next <= 645;  // moves the car in range
                     end
@@ -583,36 +592,45 @@ always @(posedge clk or posedge reset) begin
 
             CAR_DRIVING_NOT_HIT: begin
                 if (refresh_tick) begin
-                    // move the car
-                    car_x_next <= car_x_next - car_x_speed;
-                    
-                    // update prev_car_player_collision to detect the positive edge of collision
+                    // if (car_timer_start) begin
+                    //     car_timer_start <= 0;
+                    //     car_state <= CAR_WAITING;
+                    // end
+                    // detect the positive edge of collision
                     prev_car_player_collision <= car_player_collision;
-                    // detect current collision, if two coordinates are within bounds they are hitting
                     car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                     // if car is no longer in x range, start waiting and reset the timer
-                    if (car_x_wire == 0) begin  // dependent on car_speed being 1
-                        car_state <= CAR_WAITING;
-                        car_timer_start <= 1; // start the timer
-                    end
-                    // upon positive edge of collision, decrement lives if player has remaining lives and no shield powerup
-                    else if ((posedge_car_player_collision) && (~shield_boost_on) && (player1_lives > 0)) begin
-                        player1_lives <= player1_lives - 1;
-                        // upon collision move to next state
-                        car_state <= CAR_DRIVING_HIT;
-                    end
+                    if (~car_timer_active)
+                        car_x_next <= car_x_next - car_x_speed;
+                    
                 end
-
+                if (car_x_wire < 5) begin  // dependent on car_x_speed being 1, maybe make car_x_next == 0
+                    car_state <= CAR_WAITING;
+                    car_timer_start <= 1; // start the timer
+                end
+                // upon positive edge of collision, decrement lives if player has remaining lives and no shield powerup
+                else if ((posedge_car_player_collision) && (~shield_boost_on) && (player1_lives > 0)) begin
+                    player1_lives <= player1_lives - 1;
+                    // upon collision move to next state
+                    car_state <= CAR_DRIVING_HIT;
+                end
             end
 
             CAR_DRIVING_HIT: begin
+                // if (car_timer_start) begin
+                //     car_timer_start <= 0;
+                //     car_state <= CAR_WAITING;
+                // end
                 // don't care about collision in this state
                 if (refresh_tick) begin
-                    car_x_next <= car_x_next - car_x_speed;
-                    if (car_x_wire == 0) begin
-                        car_state <= CAR_WAITING;
-                        car_timer_start <= 1; // start the timer
-                    end
+                    prev_car_player_collision <= car_player_collision;
+                    car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
+                    if (~car_timer_active)
+                        car_x_next <= car_x_next - car_x_speed;
+                end
+                if (car_x_wire < 5) begin
+                    car_state <= CAR_WAITING;
+                    car_timer_start <= 1; // start the timer
                 end
             end
             default: begin
@@ -632,16 +650,10 @@ down_counter car_timer (
     .timer_active(car_timer_active)             // whether the timer is active, or inactive
 );
 
-
-
-
-
-
 // Pipeline stage for updating the position
 always @(posedge clk) begin
     car_x_reg <= car_x_next;  // Update x position from pipeline register
 end
-
 // Assign the output wire to the updated register
 assign car_x_wire = car_x_reg;
 
@@ -656,8 +668,6 @@ car_maker car (
     .car_on(car_on),
     .rgb_data(car_rgb_data)
 );
-
-
 /**************************************************************************************************
 * here is the background stuff
 **************************************************************************************************/
