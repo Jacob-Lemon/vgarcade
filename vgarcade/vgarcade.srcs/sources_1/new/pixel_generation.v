@@ -553,8 +553,9 @@ assign posedge_shield_car_player_collision = posedge_car_player_collision; // fo
 
 //----------------------car state machine----------------------------------------------------------
 localparam CAR_WAITING         = 0;
-localparam CAR_DRIVING_NOT_HIT = 1;     // describes the state where the car has not hit the player
-localparam CAR_DRIVING_HIT     = 2;
+localparam CAR_WARNING         = 1;
+localparam CAR_DRIVING_NOT_HIT = 2;     // describes the state where the car has not hit the player
+localparam CAR_DRIVING_HIT     = 3;
 // reg [1:0] car_state = CAR_WAITING;
 // initial car_state = CAR_WAITING;
 
