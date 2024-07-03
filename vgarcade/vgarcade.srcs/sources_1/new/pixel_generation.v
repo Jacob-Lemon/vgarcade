@@ -111,8 +111,8 @@ reg  [9:0] player1_y_next; // pipeline register for y position
 // speed boost signals
 reg [3:0] speed_caught;
 reg [3:0] shield_caught;
-//wire speed_boost_on;
-// wire shield_boost_on;
+wire speed_boost_on;
+wire shield_boost_on;
 
 // shield signals
 
@@ -136,6 +136,7 @@ player_powerups get_powers (
     .posedge_car_collision(posedge_shield_car_player_collision),
     //outputs
     .speed_boost_on(speed_boost_on),
+    .speed_boost_available(speed_boost_available),
     .shield_boost_on(shield_boost_on)
 );
 
@@ -253,14 +254,15 @@ player_maker player1 (
     .y_position(player1_y_wire),
     .height(PLAYER_HEIGHT),
     .width(PLAYER_WIDTH),
+    .shield_on(shield_boost_on),
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
 // more player data that is needed elsewhere
 wire [9:0] player1_x_center, player1_y_center;
 
-assign player1_x_center = player1_x_wire + 50;
-assign player1_y_center = player1_y_wire + 50;
+assign player1_x_center = player1_x_wire + (PLAYER_WIDTH / 2);
+assign player1_y_center = player1_y_wire + (PLAYER_WIDTH / 2);
 
 
 /**************************************************************************************************
@@ -673,9 +675,37 @@ car_maker car (
     .rgb_data(car_rgb_data)
 );
 /**************************************************************************************************
-* here is the background stuff
+* here lies the boost display
+* this displays a slot that will show a lightning bolt if the speed boost is available for 
+* the player to use
 **************************************************************************************************/
+localparam BOOST_DISPLAY_HEIGHT = 59; // dimensions for boost display in pixels
+localparam BOOST_DISPLAY_WIDTH  = 51;
 
+localparam BOOST_DISPLAY_X_POSITION = 579; // location of boost display
+localparam BOOST_DISPLAY_Y_POSITION = 20;
+
+wire [11:0] boost_display_rgb_data;
+
+boost_display_maker speed_boost_display (
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .x_position(BOOST_DISPLAY_X_POSITION),
+    .y_position(BOOST_DISPLAY_Y_POSITION),
+    .height(BOOST_DISPLAY_HEIGHT),
+    .width(BOOST_DISPLAY_WIDTH),
+    .speed_boost_available(speed_boost_available),
+    .boost_display_on(boost_display_on),
+    .rgb_data(boost_display_rgb_data)
+);
+
+
+/**************************************************************************************************
+* here lies the background stuff
+* as well as the game_state backgrounds
+**************************************************************************************************/
+//----------------------------gameplay background--------------------------------------------------
 wire [11:0] background_rgb;
 wire [11:0] background_rom_data_endian;
 background_rom background_getter (
@@ -774,6 +804,9 @@ always @(posedge clk or posedge reset) begin
                     intermediate_rgb <= number_rgb_data[3];
                 else if (number_on[4])
                     intermediate_rgb <= number_rgb_data[4];
+                //--------------------boost display-----------------------
+                else if (boost_display_on)
+                    intermediate_rgb <= boost_display_rgb_data;
                 //--------------------background-------------------------------------------
                 else
                     intermediate_rgb <= background_rgb; // white default case, shouldn't happen

@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 
-module player_maker(
+module boost_display_maker (
     input clk,
     input [9:0] x, y,
     input [9:0] x_position, y_position,
     input [9:0] height,
     input [9:0] width,
-    input shield_on,
-    output player_on,
+    input speed_boost_available,
+    output boost_display_on,
     output [11:0] rgb_data
 );
 
@@ -27,7 +27,7 @@ assign down_bound  = y_position + height;
 assign col = x - left_bound;
 assign row = y - up_bound;     
 
-assign player_on = (x >/*=*/ left_bound) && (x < right_bound) &&
+assign boost_display_on = (x >/*=*/ left_bound) && (x < right_bound) &&
                    (y >/*=*/ up_bound)   && (y < down_bound) &&
                    (rgb_data != 12'hFFF);
 
@@ -35,27 +35,29 @@ assign player_on = (x >/*=*/ left_bound) && (x < right_bound) &&
 
 
 /**************************************************************************************************
-* instantiate player roms and mux to get the right one
+* instantiate boost display roms and mux to get the right one
 * get the rest of rom data
 **************************************************************************************************/
-wire [11:0] rom_player_data;
+//------------------------active-------------------------------------------------------------------
+wire [11:0] rom_boost_display_active_data;
+boost_display_active_rom active (
+    .clk(clk),
+    .row(row),
+    .col(col),
+    .color_data(rom_boost_display_active_data)
+);
+//------------------------inactive-----------------------------------------------------------------
+wire [11:0] rom_boost_display_inactive_data;
+boost_display_inactive_rom inactive (
+    .clk(clk),
+    .row(row),
+    .col(col),
+    .color_data(rom_boost_display_inactive_data)
+);
 
-player_rom player1 (
-    .clk(clk),
-    .row(row),
-    .col(col),
-    .color_data(rom_player_data)
-);
-wire [11:0] rom_player_shielded_data;
-player_shielded_rom player1_shielded (
-    .clk(clk),
-    .row(row),
-    .col(col),
-    .color_data(rom_player_shielded_data)
-);
 
 wire [11:0] intermediate_rgb;
-assign intermediate_rgb = shield_on ? (rom_player_shielded_data) : (rom_player_data);
+assign intermediate_rgb = speed_boost_available ? (rom_boost_display_active_data) : (rom_boost_display_inactive_data);
 
 // this is to get rgb bits in the right order
 // they may originally be in little endian form or something

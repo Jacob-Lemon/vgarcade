@@ -15,6 +15,7 @@ module player_powerups(
     input posedge_car_collision,        // the positive edge of car_player_collision
     // outputs
     output speed_boost_on,
+    output reg speed_boost_available,
     output reg shield_boost_on
 );
 
@@ -27,7 +28,7 @@ assign playing = (game_state == 3);    // GAMEPLAY
 **************************************************************************************************/
 // speed boost signals
 reg start_boosting;
-reg speed_boost_available;
+// reg speed_boost_available;
 initial begin
     // speed signals
     speed_boost_available = 0;
