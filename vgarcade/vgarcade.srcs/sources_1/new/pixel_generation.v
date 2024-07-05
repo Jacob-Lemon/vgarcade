@@ -534,12 +534,6 @@ wire car_in_x_range; //checks whether the car is on screen or not
 
 assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 
-localparam car_time_duration = 600; // 10 seconds, 600 frames = 10s * 60Hz
-
-
-reg car_timer_start = 1;
-
-
 //----------------------collision variables--------------------------------------------------------
 // player-car collision detection
 wire [9:0] car_center_x, car_center_y;
@@ -560,14 +554,22 @@ assign posedge_shield_car_player_collision = posedge_car_player_collision; // fo
 
 
 //----------------------car state machine----------------------------------------------------------
+// these paramaters are counted in 60Hz frames
+localparam CAR_TIME_DURATION    = 1_440; // 24 seconds, car waits for 20 seconds, then 4 more with the warning active
+localparam CAR_WARNING_DURATION = 240;   // 4 seconds
+
+reg car_timer_start = 1;
+
 localparam CAR_WAITING         = 0;
 localparam CAR_WARNING         = 1;
 localparam CAR_DRIVING_NOT_HIT = 2;     // describes the state where the car has not hit the player
 localparam CAR_DRIVING_HIT     = 3;
 // reg [1:0] car_state = CAR_WAITING;
-// initial car_state = CAR_WAITING;
+initial car_state = CAR_WAITING;
 
 // wire car_timer_active;
+wire [15:0] car_timer_counter;
+reg car_warning_active = 0;
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -593,20 +595,33 @@ always @(posedge clk or posedge reset) begin
                     prev_car_player_collision <= car_player_collision;
                     car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                     car_x_next <= 700;
+                    car_warning_active <= 0;
                     // timer should initialize to be active, so deactivate starting the timer
                     if (car_timer_start) begin
                         car_timer_start <= 0;
                     end
                     // upon timer expiring, move to next state
-                    else if (~car_timer_active) begin
+                    // else if (~car_timer_active) begin
+                    else if (car_timer_counter == CAR_WARNING_DURATION) begin
+                        car_state <= CAR_WARNING;
+                        // car_x_next <= 645;  // moves the car in range
+                    end
+                end
+            end
+
+            CAR_WARNING: begin
+                if (refresh_tick) begin
+                    car_warning_active <= 1;
+                    if (~car_timer_active) begin
                         car_state <= CAR_DRIVING_NOT_HIT;
-                        car_x_next <= 645;  // moves the car in range
+                        car_x_next <= 645;
                     end
                 end
             end
 
             CAR_DRIVING_NOT_HIT: begin
                 if (refresh_tick) begin
+                    car_warning_active <= 0;
                     // if (car_timer_start) begin
                     //     car_timer_start <= 0;
                     //     car_state <= CAR_WAITING;
@@ -661,10 +676,29 @@ down_counter car_timer (
     .refresh_tick(refresh_tick),                // 60Hz refresh tick, framerate
     .reset(reset),                              // game reset
     .timer_start(car_timer_start),              // starts the counter
-    .frames_to_count_for(car_time_duration),    // how long, in 60Hz frames I want to count for
+    .frames_to_count_for(CAR_TIME_DURATION),    // how long, in 60Hz frames I want to count for
+    .counter(car_timer_counter),
     .timer_active(car_timer_active)             // whether the timer is active, or inactive
 );
+//---------------------------------car warning display---------------------------------------------
 
+wire [11:0] warning_rgb_data;
+wire warning_on;
+
+warning_maker car_warning (
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .x_position(580),   // 640 - 50 - 10 = 580 pixels from right edge
+    .y_position(250),   // guess as to where it might look nice
+    .height(50),        // image is 50 pixels tall
+    .width(50),         // image is 50 pixels wide
+    .warning_on(warning_on),
+    .rgb_data(warning_rgb_data)
+);
+
+
+//--------------------------------------car maker--------------------------------------------------
 // Pipeline stage for updating the position
 always @(posedge clk) begin
     car_x_reg <= car_x_next;  // Update x position from pipeline register
@@ -816,9 +850,12 @@ always @(posedge clk or posedge reset) begin
                 //--------------------boost display-----------------------
                 else if (boost_display_on)
                     intermediate_rgb <= boost_display_rgb_data;
-                //--------------------background-------------------------------------------
+                //--------------------warning display---------------------
+                else if (warning_on & car_warning_active)   // only display warning when the car is about to come
+                    intermediate_rgb <= warning_rgb_data;
+                //--------------------background--------------------------
                 else
-                    intermediate_rgb <= background_rgb; // white default case, shouldn't happen
+                    intermediate_rgb <= background_rgb; // background is like the default case
             end // end case of GAMEPLAY
 
             KILL_SCREEN: begin

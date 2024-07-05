@@ -7,11 +7,11 @@ module down_counter(
     input timer_start,                  // starts the counter
     input [15:0] frames_to_count_for,   // how long, in 60Hz frames, I want the powerup to be active for
     
-    // output reg [15:0] counter,
+    output reg [15:0] counter,
     output timer_active                 // a one bit output for whether or not the powerup is active
 );
 
-reg [15:0] counter;
+// reg [15:0] counter;
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin

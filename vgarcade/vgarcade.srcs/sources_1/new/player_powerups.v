@@ -70,6 +70,7 @@ down_counter speed_boost_timer (
     .timer_start(start_boosting),   // signal to control the start of the down counter
     .frames_to_count_for(960),      // 4 seconds = 240 frames @ 60Hz, 4 counts per frame
     // outputs
+    .counter(),                     // unused port in this case, may be invalid syntax
     .timer_active(speed_boost_on)   // boost is active for as long as the timer is active
 );
 
