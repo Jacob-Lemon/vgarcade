@@ -1,6 +1,4 @@
-`timescale 1ns / 1ps
-
-module fruit_maker(
+module fruit_maker (
     input clk,
     input [9:0] x, y,
     input [9:0] x_position, y_position,
@@ -93,22 +91,22 @@ shield_rom shield (
 reg [11:0] intermediate_rom_fruit_data;
 
 always @(posedge clk) begin
-    if (which_fruit >= 0 && which_fruit < 20)           // apple
+    if (which_fruit >= 0 && which_fruit < 40)           // apple
         intermediate_rom_fruit_data <= rom_apple_data;
 
-    else if (which_fruit >= 20 && which_fruit < 40)     // orange
+    else if (which_fruit >= 40 && which_fruit < 70)     // orange
         intermediate_rom_fruit_data <= rom_orange_data;
     
-    else if (which_fruit >= 40 && which_fruit < 60)     // pineapple
+    else if (which_fruit >= 70 && which_fruit < 90)     // pineapple
         intermediate_rom_fruit_data <= rom_pineapple_data;
 
-    else if (which_fruit >= 60 && which_fruit < 80)     // strawberry
+    else if (which_fruit >= 90 && which_fruit < 97)     // strawberry
         intermediate_rom_fruit_data <= rom_strawberry_data;
     
-    else if (which_fruit >= 80 && which_fruit < 95)     // speed
+    else if (which_fruit >= 97 && which_fruit < 99)     // speed
         intermediate_rom_fruit_data <= rom_speed_data;
     
-    else if (which_fruit >= 95 && which_fruit <= 100)     // shield
+    else if (which_fruit >= 99 && which_fruit <= 100)     // shield
         intermediate_rom_fruit_data <= rom_shield_data;
         
 end
