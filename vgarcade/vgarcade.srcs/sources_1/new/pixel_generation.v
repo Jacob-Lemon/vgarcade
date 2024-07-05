@@ -746,9 +746,8 @@ boost_display_maker speed_boost_display (
 * here lies the background stuff
 * as well as the game_state backgrounds
 **************************************************************************************************/
-//----------------------------gameplay background--------------------------------------------------
-wire [11:0] background_rgb;
-wire [11:0] background_rom_data_endian;
+//---------------------------gameplay background---------------------------------------------------
+wire [11:0] background_rgb, background_rom_data_endian;
 background_rom background_getter (
     .clk(clk),
     .row(y),
@@ -760,9 +759,26 @@ assign background_rgb[11:8] = background_rom_data_endian[3:0];
 assign background_rgb[7:4]  = background_rom_data_endian[7:4];
 assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 
+// wire [11:0] background_rgb;
+// assign background_rgb = 12'hF00; // blue
+//---------------------------killscreen background-------------------------------------------------
+wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
+killscreen_rom killscreen (
+    .clk(clk),
+    .row(y),
+    .col(x),
+    .color_data(killscreen_rgb_reversed)
+);
+assign killscreen_rgb[11:8] = killscreen_rgb_reversed[3:0];
+assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
+assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
 
-//wire [11:0] background_rgb;
-//assign background_rgb = 12'hF00; // blue
+// wire [11:0] killscreen_rgb;
+// assign killscreen_rgb = 12'hFF0; // cyan
+
+//---------------------------start screen background-----------------------------------------------
+//---------------------------instructions background-----------------------------------------------
+
 
 /**************************************************************************************************
 * RGB control
@@ -860,7 +876,7 @@ always @(posedge clk or posedge reset) begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
                 else
-                    intermediate_rgb <= 12'hFF0; // static image
+                    intermediate_rgb <= killscreen_rgb; // static image
             end // end case of KILL_SCREEN
 
             default: begin
