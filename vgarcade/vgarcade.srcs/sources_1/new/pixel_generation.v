@@ -476,7 +476,7 @@ wire [11:0] number_rgb_data [11:0];
 
 //----------get number data from score--------------
 
-wire [DECIMAL_PLACES:0] score_in_decimal [3:0];
+wire [DECIMAL_PLACES:0] score_in_decimal [4:0];
 
 assign score_in_decimal[0] = score % 10;
 assign score_in_decimal[1] = (score / 10)      % 10;
@@ -762,21 +762,22 @@ assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 // wire [11:0] background_rgb;
 // assign background_rgb = 12'hF00; // blue
 //---------------------------killscreen background-------------------------------------------------
-wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
-killscreen_rom killscreen (
-    .clk(clk),
-    .row(y),
-    .col(x),
-    .color_data(killscreen_rgb_reversed)
-);
-assign killscreen_rgb[11:8] = killscreen_rgb_reversed[3:0];
-assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
-assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
+//wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
+//killscreen_rom killscreen (
+//    .clk(clk),
+//    .row(y),
+//    .col(x),
+//    .color_data(killscreen_rgb_reversed)
+//);
+//assign killscreen_rgb[11:8] = killscreen_rgb_reversed[3:0];
+//assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
+//assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
 
-// wire [11:0] killscreen_rgb;
-// assign killscreen_rgb = 12'hFF0; // cyan
+wire [11:0] killscreen_rgb;
+assign killscreen_rgb = 12'hFF0; // cyan
 
 //---------------------------start screen background-----------------------------------------------
+
 //---------------------------instructions background-----------------------------------------------
 
 
