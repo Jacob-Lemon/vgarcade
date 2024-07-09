@@ -637,11 +637,17 @@ always @(posedge clk or posedge reset) begin
                     car_timer_start <= 1; // start the timer
                 end
                 // upon positive edge of collision, decrement lives if player has remaining lives and no shield powerup
-                else if ((posedge_car_player_collision) && (~shield_boost_on) && (player1_lives > 0)) begin
-                    player1_lives <= player1_lives - 1;
+                // else if ((posedge_car_player_collision) && (~shield_boost_on) && (player1_lives > 0)) begin
+                //     player1_lives <= player1_lives - 1;
+                //     // upon collision move to next state
+                //     car_state <= CAR_DRIVING_HIT;
+                // end
+                else if ((posedge_car_player_collision) && (player1_lives > 0)) begin
+                    if (~shield_boost_on) player1_lives <= player1_lives - 1;
                     // upon collision move to next state
                     car_state <= CAR_DRIVING_HIT;
                 end
+
             end
 
             CAR_DRIVING_HIT: begin
@@ -777,6 +783,16 @@ wire [11:0] killscreen_rgb;
 assign killscreen_rgb = 12'hFF0; // cyan
 
 //---------------------------start screen background-----------------------------------------------
+wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
+start_screen_rom start_screen (
+    .clk(clk),
+    .row(y),
+    .col(x),
+    .color_data(start_screen_rgb_reversed)
+);
+assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
+assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
+assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
 
 //---------------------------instructions background-----------------------------------------------
 
@@ -807,7 +823,7 @@ always @(posedge clk or posedge reset) begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
                 else
-                    intermediate_rgb <= 12'hF00; // static image
+                    intermediate_rgb <= start_screen_rgb; // static image, was blue
             end
 
             INPUT_DISPLAY: begin
