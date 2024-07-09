@@ -637,7 +637,7 @@ always @(posedge clk or posedge reset) begin
                 end
                 // upon positive edge of collision, decrement lives if player has remaining lives and no shield powerup
                 // else if ((posedge_car_player_collision) && (player1_lives > 0)) begin
-                else if ((car_player_collision) && (player1_lives > 0)) begin
+                else if ((posedge_car_player_collision) && (player1_lives > 0)) begin
                     if (~shield_boost_on) begin
                         player1_lives <= player1_lives - 1;
                     end

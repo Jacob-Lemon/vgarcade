@@ -79,7 +79,6 @@ down_counter speed_boost_timer (
 * shield logic
 **************************************************************************************************/
 
-
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         shield_boost_on <= 0;
@@ -87,7 +86,7 @@ always @(posedge clk or posedge reset) begin
     else if (~playing) begin
         shield_boost_on <= 0;
     end
-    else if (refresh_tick) begin
+    else begin
         if (shield_boost_on == 0) begin
             shield_boost_on <= (|shield_caught);
         end
