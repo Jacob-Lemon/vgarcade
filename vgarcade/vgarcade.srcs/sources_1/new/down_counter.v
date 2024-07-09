@@ -18,11 +18,10 @@ always @(posedge clk or posedge reset) begin
         counter <= 0; // powerup is not on and counting upon reset
     end
     else begin
-        if (refresh_tick) begin
-            if (timer_start) begin
-                counter <= frames_to_count_for;
-            end
-            else
+        if (timer_start) begin
+            counter <= frames_to_count_for;
+        end
+        else if (refresh_tick) begin
             if (counter > 0) begin
                 counter <= counter - 1;
             end

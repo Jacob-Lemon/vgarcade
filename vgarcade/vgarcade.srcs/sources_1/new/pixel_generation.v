@@ -92,9 +92,6 @@ end
 * this is where I am making a player character
 * with motion!!! :)
 **************************************************************************************************/
-// necessary signals
-wire player1_on;
-wire [11:0] player1_rgb_data;
 //------------------------------position things------------------------------
 
 wire [9:0] player1_x_wire;
@@ -240,6 +237,11 @@ end
 // Assign the output wire to the updated register
 assign player1_x_wire = player1_x_reg;
 assign player1_y_wire = player1_y_reg;
+
+//----------------------player rgb signals---------------------------------------------------------
+wire player1_on;
+wire [11:0] player1_rgb_data;
+
 
 localparam PLAYER_HEIGHT = 92; // player dimensions in pixels
 localparam PLAYER_WIDTH  = 77;
@@ -589,9 +591,10 @@ always @(posedge clk or posedge reset) begin
     else begin
         case (car_state) 
             CAR_WAITING: begin
-                if (refresh_tick) begin
+                // if (refresh_tick) begin
                     prev_car_player_collision <= car_player_collision;
-                    car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
+                    // car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
+                    car_player_collision <= (player1_on & car_on);
                     car_x_next <= 700;
                     car_warning_active <= 0;
                     // timer should initialize to be active, so deactivate starting the timer
@@ -604,46 +607,40 @@ always @(posedge clk or posedge reset) begin
                         car_state <= CAR_WARNING;
                         // car_x_next <= 645;  // moves the car in range
                     end
-                end
+                // end
             end
 
             CAR_WARNING: begin
-                if (refresh_tick) begin
+                // if (refresh_tick) begin
                     car_warning_active <= 1;
                     if (~car_timer_active) begin
                         car_state <= CAR_DRIVING_NOT_HIT;
                         car_x_next <= 645;
                     end
-                end
+                // end
             end
 
             CAR_DRIVING_NOT_HIT: begin
                 if (refresh_tick) begin
-                    car_warning_active <= 0;
-                    // if (car_timer_start) begin
-                    //     car_timer_start <= 0;
-                    //     car_state <= CAR_WAITING;
-                    // end
-                    // detect the positive edge of collision
-                    prev_car_player_collision <= car_player_collision;
-                    car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
-                    // if car is no longer in x range, start waiting and reset the timer
                     if (~car_timer_active)
                         car_x_next <= car_x_next - car_x_speed;
-                    
                 end
-                if (car_x_wire < 5) begin  // dependent on car_x_speed being 1, maybe make car_x_next == 0
+                car_warning_active <= 0;
+                // detect positive edge of collision
+                prev_car_player_collision <= car_player_collision;
+                // car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
+                car_player_collision <= (player1_on & car_on);
+
+                if (car_x_wire < 5) begin
                     car_state <= CAR_WAITING;
                     car_timer_start <= 1; // start the timer
                 end
                 // upon positive edge of collision, decrement lives if player has remaining lives and no shield powerup
-                // else if ((posedge_car_player_collision) && (~shield_boost_on) && (player1_lives > 0)) begin
-                //     player1_lives <= player1_lives - 1;
-                //     // upon collision move to next state
-                //     car_state <= CAR_DRIVING_HIT;
-                // end
-                else if ((posedge_car_player_collision) && (player1_lives > 0)) begin
-                    if (~shield_boost_on) player1_lives <= player1_lives - 1;
+                // else if ((posedge_car_player_collision) && (player1_lives > 0)) begin
+                else if ((car_player_collision) && (player1_lives > 0)) begin
+                    if (~shield_boost_on) begin
+                        player1_lives <= player1_lives - 1;
+                    end
                     // upon collision move to next state
                     car_state <= CAR_DRIVING_HIT;
                 end
@@ -657,11 +654,12 @@ always @(posedge clk or posedge reset) begin
                 // end
                 // don't care about collision in this state
                 if (refresh_tick) begin
-                    prev_car_player_collision <= car_player_collision;
-                    car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                     if (~car_timer_active)
                         car_x_next <= car_x_next - car_x_speed;
                 end
+                prev_car_player_collision <= car_player_collision;
+                // car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
+                car_player_collision <= (player1_on & car_on);
                 if (car_x_wire < 5) begin
                     car_state <= CAR_WAITING;
                     car_timer_start <= 1; // start the timer
@@ -783,17 +781,18 @@ wire [11:0] killscreen_rgb;
 assign killscreen_rgb = 12'hFF0; // cyan
 
 //---------------------------start screen background-----------------------------------------------
-wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
-start_screen_rom start_screen (
-    .clk(clk),
-    .row(y),
-    .col(x),
-    .color_data(start_screen_rgb_reversed)
-);
-assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
-assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
-assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
-
+// wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
+// start_screen_rom start_screen (
+//     .clk(clk),
+//     .row(y),
+//     .col(x),
+//     .color_data(start_screen_rgb_reversed)
+// );
+// assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
+// assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
+// assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
+wire [11:0] start_screen_rgb;
+assign start_screen_rgb = 12'hF00;
 //---------------------------instructions background-----------------------------------------------
 
 
@@ -848,12 +847,8 @@ always @(posedge clk or posedge reset) begin
                     intermediate_rgb <= fruit_rgb_data[0];
                 else if (fruit_on[1])
                     intermediate_rgb <= fruit_rgb_data[1];
-            //    else if (fruit_on[2])
-            //        intermediate_rgb <= fruit_rgb_data[2];
-            //    else if (fruit_on[3])
-            //        intermediate_rgb <= fruit_rgb_data[3];
-            //    else if (fruit_on[4])
-            //        intermediate_rgb <= fruit_rgb_data[4];
+                // else if (fruit_on[2])
+                //     intermediate_rgb <= fruit_rgb_data[2]; // additional fruits follow in this manner
                 //--------------------car--------------------------------------------------
                 else if (car_on)
                     intermediate_rgb <= car_rgb_data;
