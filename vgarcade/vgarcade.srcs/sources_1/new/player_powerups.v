@@ -2,11 +2,11 @@
 
 module player_powerups(
     // system inputs
-    input clk,
-    input reset,
-    input refresh_tick,
-    input [3:0] game_state,
-    // gamecube inputs
+    input clk,              // 100Mhz system clock
+    input reset,            // sytem reset
+    input refresh_tick,     // 60Hz refresh tick
+    input [3:0] game_state, // game state for reset purposes
+    // gamecube inputs, each button and joystick
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // powerup inputs from pixel gen
@@ -87,10 +87,13 @@ always @(posedge clk or posedge reset) begin
         shield_boost_on <= 0;
     end
     else begin
+        // this is a super simple state machine
         if (shield_boost_on == 0) begin
+            // if we haven't caught a shield, it goes high when we have caught one
             shield_boost_on <= (|shield_caught);
         end
         else if (shield_boost_on == 1) begin
+            // if we have a shield, it goes low upon car collision
             if (posedge_car_collision)
                 shield_boost_on <= 0;
         end
