@@ -321,7 +321,7 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .random_number(which_fruit[idx])    // output. this determines which fruit. apple, orange, powerup, etc.
     );
 
-    wire player_catching;
+    wire [NUM_FRUITS:0] player_catching;
     wire [10:0] diff_x, diff_y;
     wire [9:0] fruit_x_center, fruit_y_center;
     
@@ -330,7 +330,10 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
     assign fruit_y_center = fruit_y[idx] + 20;
     assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
     assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
-    assign player_catching = (diff_x <= 70) && (diff_y <= 70);
+    
+    // assign player_catching = (diff_x <= 70) && (diff_y <= 70);
+    assign player_catching[idx] = (player1_on & fruit_on[idx]);
+
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -352,12 +355,12 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         end
         // else if (game_state == GAMEPLAY) begin
         else begin
-            if (refresh_tick) begin
+            // if (refresh_tick) begin
                 // if hits the ground or is caught
                 speed_caught[idx]   <= 0;
                 shield_caught[idx]  <= 0;
-                if (fruit_y_next_reg[idx] >= 440 || player_catching) begin
-                    if (player_catching) begin
+                if (fruit_y_next_reg[idx] >= 440 || player_catching[idx]) begin
+                    if (player_catching[idx]) begin
                         if (which_fruit[idx] >= 0 && which_fruit[idx] < 40) begin
                             // apple
                             score_array[idx] <= score_array[idx] + 1;
@@ -382,7 +385,6 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
                             // speed
                             speed_caught[idx] <= 1;
                         end
-
                         else if (which_fruit[idx] >= 99 && which_fruit[idx] <= 100) begin
                             // shield
                             shield_caught[idx] <= 1;
@@ -391,10 +393,12 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
                     fruit_y_next_reg[idx] <= 0; // respawn value
                     fruit_respawn[idx] <= 1;
                 end else begin
-                    fruit_y_next_reg[idx] <= fruit_y_next_reg[idx] + 1;
+                    if (refresh_tick) begin
+                        fruit_y_next_reg[idx] <= fruit_y_next_reg[idx] + 1;
+                    end
                     fruit_respawn[idx] <= 0;
                 end
-            end
+            // end
         end
     end
 
@@ -540,10 +544,6 @@ wire [9:0] car_center_x, car_center_y;
 assign car_center_x = car_x_wire + (CAR_WIDTH / 2);
 assign car_center_y = car_y_wire + (CAR_HEIGHT / 2);
 
-wire [9:0] car_player_diff_x, car_player_diff_y;
-
-assign car_player_diff_x = player1_x_center >= car_center_x ? player1_x_center - car_center_x : car_center_x - player1_x_center;
-assign car_player_diff_y = player1_y_center >= car_center_y ? player1_y_center - car_center_y : car_center_y - player1_y_center;
 
 
 reg car_player_collision, prev_car_player_collision;
@@ -555,6 +555,7 @@ assign posedge_shield_car_player_collision = posedge_car_player_collision; // fo
 
 //----------------------car state machine----------------------------------------------------------
 // these paramaters are counted in 60Hz frames
+// CAR_TIME_DURATION represents the total length of the car time cyle, waiting stage time plus warning time
 localparam CAR_TIME_DURATION    = 1_440; // 24 seconds, car waits for 20 seconds, then 4 more with the warning active
 localparam CAR_WARNING_DURATION = 240;   // 4 seconds
 
@@ -593,7 +594,6 @@ always @(posedge clk or posedge reset) begin
             CAR_WAITING: begin
                 // if (refresh_tick) begin
                     prev_car_player_collision <= car_player_collision;
-                    // car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                     car_player_collision <= (player1_on & car_on);
                     car_x_next <= 700;
                     car_warning_active <= 0;
@@ -628,7 +628,6 @@ always @(posedge clk or posedge reset) begin
                 car_warning_active <= 0;
                 // detect positive edge of collision
                 prev_car_player_collision <= car_player_collision;
-                // car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                 car_player_collision <= (player1_on & car_on);
 
                 if (car_x_wire < 5) begin
@@ -658,7 +657,6 @@ always @(posedge clk or posedge reset) begin
                         car_x_next <= car_x_next - car_x_speed;
                 end
                 prev_car_player_collision <= car_player_collision;
-                // car_player_collision <= (car_player_diff_x <= 80) && (car_player_diff_y <= 120);
                 car_player_collision <= (player1_on & car_on);
                 if (car_x_wire < 5) begin
                     car_state <= CAR_WAITING;

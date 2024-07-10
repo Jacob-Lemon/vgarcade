@@ -47,7 +47,7 @@ always @(posedge clk or posedge reset) begin
         speed_boost_available <= 0;
         start_boosting <= 0;
     end
-    else if (refresh_tick) begin
+    else // if (refresh_tick) begin
         if (speed_boost_available == 0) begin
             speed_boost_available <= (|speed_caught); // whether or not we have caught any pumpkin
             start_boosting <= 0; // critical change here!!!
@@ -60,7 +60,7 @@ always @(posedge clk or posedge reset) begin
             else 
                 start_boosting <= 0; // this makes it so boost works but can't be boosting and hold
         end
-    end
+    // end
 end
 
 down_counter speed_boost_timer (
