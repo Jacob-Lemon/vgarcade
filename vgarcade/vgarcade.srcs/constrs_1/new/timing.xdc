@@ -27,3 +27,11 @@ set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_port
 #set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_ports intermediate_rom_number_data_reg[8]]
 
 
+
+set_property ram_style block [get_cells {button_data_OBUF[*]_inst}]
+set_property RAM_STYLE block [get_cells pg]
+
+
+
+
+
