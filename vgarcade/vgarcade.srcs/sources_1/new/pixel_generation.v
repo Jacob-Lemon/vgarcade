@@ -8,18 +8,12 @@ module pixel_generation(
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
-    input [15:0] sw, 
-    // output [15:0] score,
-    output reg [3:0] game_state,
-    output not_playing,
-    output reg [1:0] car_state,
-    output car_timer_active
+    input [15:0] sw,                // switches from the basys3 board
 );
 // create a 60Hz refresh tick at the start of vsync
 // this is the framerate
 wire refresh_tick;
 assign refresh_tick = ((y == 481) && (x == 0)) ? 1 : 0;
-
 
 /**************************************************************************************************
 * game_state state machine
@@ -30,12 +24,11 @@ localparam INSTRUCTIONS  = 2;
 localparam GAMEPLAY      = 3;
 localparam KILL_SCREEN   = 4;
 
-// reg [3:0] game_state = START_SCREEN;
-// initial game_state = START_SCREEN;
+reg [3:0] game_state;
+initial game_state = START_SCREEN;
 
 wire player_dead;
-// wire not_playing;
-// assign not_playing = (game_state == START_SCREEN || game_state == INPUT_DISPLAY || game_state == INSTRUCTIONS || game_state == KILL_SCREEN);
+wire not_playing;
 assign not_playing = ~(game_state == GAMEPLAY);
 
 // state control
@@ -71,8 +64,6 @@ always @(posedge clk or posedge reset) begin
         GAMEPLAY: begin
             if (player_dead)
                 game_state <= KILL_SCREEN;
-            // else
-            //     game_state <= GAMEPLAY;
         end
         KILL_SCREEN: begin
             if (L & R)
@@ -86,14 +77,11 @@ always @(posedge clk or posedge reset) begin
     endcase
 end
 
-
-
 /**************************************************************************************************
 * this is where I am making a player character
 * with motion!!! :)
 **************************************************************************************************/
 //------------------------------position things------------------------------
-
 wire [9:0] player1_x_wire;
 reg  [9:0] player1_x_reg;
 reg  [9:0] player1_x_next; // pipeline register for x position
@@ -110,7 +98,6 @@ wire speed_boost_on;
 wire shield_boost_on;
 
 // shield signals
-
 wire posedge_shield_car_player_collision;
 
 player_powerups get_powers (
@@ -135,9 +122,6 @@ player_powerups get_powers (
     .shield_boost_on(shield_boost_on)
 );
 
-
-
-
 //---------------------motion things-------------------------------------------
 
 initial begin
@@ -146,9 +130,6 @@ initial begin
     player1_y_reg = 300;
     player1_y_next = 300;
 end
-
-// position y is constant in this example
-//assign player1_y_wire = 300;
 
 // Pipeline stage for calculating next position
 reg [2:0] player_x_speed;
@@ -165,8 +146,8 @@ always @(posedge clk or posedge reset) begin
     else if (not_playing) begin
         player_x_speed <= 2;
     end
-    // else if (game_state == GAMEPLAY) begin
     else begin
+        // speed is determined by if the speed boost is active or not
         if (speed_boost_on) player_x_speed <= 4;
         else player_x_speed <= 2;
     end
@@ -188,30 +169,35 @@ always @(posedge clk or posedge reset) begin
         player1_y_next = 300;
         player_jumping = 0;
     end
-    // else if (game_state == GAMEPLAY) begin
     else begin
         if (refresh_tick) begin
-        //--------------------vertical motion--------------------
+            //--------------------vertical motion--------------------
             // if jumping and touching the ground, cause jumping
             if (A && player1_y_next >= 299 && !player_jumping) begin // 299 was 300
                 player_jumping <= 1;
             end else
             if (player_jumping) begin
+                // if we are low enough, we can keep jumping
                 if (player1_y_next >= 100) begin
                     player1_y_next <= player1_y_next - 2; // go up
                 end
-                if (~A || player1_y_next <= 100)
+                // if we stop holding A, or reach max jump height
+                if (~A || player1_y_next <= 100) begin
                     player_jumping <= 0;
-            end else
+                end
+            end else begin
                 if (player1_y_next <= 300)
                     player1_y_next <= player1_y_next + 2; // go down
-        //--------------------horizontal motion--------------------
+                end
+            //--------------------horizontal motion--------------------
             // if left, move left
             // left is 0, middle is 128, right is higher: 256? - on the joystick
             if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
+                // move left
                 player1_x_next <= player1_x_next - player_x_speed;
             end
             else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
+                // move right
                 player1_x_next <= player1_x_next + player_x_speed;
             end
         end
@@ -227,10 +213,8 @@ always @(posedge clk or posedge reset) begin
         player1_x_reg = 380;
     end
     else begin
-        // if (refresh_tick) begin
-            player1_x_reg <= player1_x_next;  // Update x position from pipeline register
-            player1_y_reg <= player1_y_next;
-        // end
+        player1_x_reg <= player1_x_next;  // Update x position from pipeline register
+        player1_y_reg <= player1_y_next;
     end
 end
 
@@ -242,8 +226,8 @@ assign player1_y_wire = player1_y_reg;
 wire player1_on;
 wire [11:0] player1_rgb_data;
 
-
-localparam PLAYER_HEIGHT = 92; // player dimensions in pixels
+// player dimensions in pixels
+localparam PLAYER_HEIGHT = 92;
 localparam PLAYER_WIDTH  = 77;
 
 player_maker player1 (
@@ -263,7 +247,6 @@ wire [9:0] player1_x_center, player1_y_center;
 
 assign player1_x_center = player1_x_wire + (PLAYER_WIDTH / 2);
 assign player1_y_center = player1_y_wire + (PLAYER_WIDTH / 2);
-
 
 /**************************************************************************************************
 * Here lies the creation of multiple fruits
@@ -565,10 +548,10 @@ localparam CAR_WAITING         = 0;
 localparam CAR_WARNING         = 1;
 localparam CAR_DRIVING_NOT_HIT = 2;     // describes the state where the car has not hit the player
 localparam CAR_DRIVING_HIT     = 3;
-// reg [1:0] car_state = CAR_WAITING;
+reg [1:0] car_state = CAR_WAITING;
 initial car_state = CAR_WAITING;
 
-// wire car_timer_active;
+wire car_timer_active;
 wire [15:0] car_timer_counter;
 reg car_warning_active = 0;
 

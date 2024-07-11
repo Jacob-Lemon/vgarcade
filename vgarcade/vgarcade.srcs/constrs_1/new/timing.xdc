@@ -27,7 +27,7 @@ set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_port
 #set_output_delay -clock [get_clocks sys_clk_pin] -max -add_delay 1.000 [get_ports intermediate_rom_number_data_reg[8]]
 
 
-
+## this may be doing absolutely nothing
 set_property ram_style block [get_cells {button_data*}]
 set_property ram_style block [get_cells pg]
 
