@@ -6,1908 +6,982 @@ module background_rom (
 );
 
     always @(posedge clk) begin
-        if ((row * 640 + col) >= 0 && (row * 640 + col) <= 8518) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 8519 && (row * 640 + col) <= 8533) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 8534 && (row * 640 + col) <= 9156) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 9157 && (row * 640 + col) <= 9175) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 9176 && (row * 640 + col) <= 9794) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 9795 && (row * 640 + col) <= 9817) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 9818 && (row * 640 + col) <= 10431) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 10432 && (row * 640 + col) <= 10460) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 10461 && (row * 640 + col) <= 11071) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 11072 && (row * 640 + col) <= 11100) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 11101 && (row * 640 + col) <= 11710) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 11711 && (row * 640 + col) <= 11741) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 11742 && (row * 640 + col) <= 12348) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 12349 && (row * 640 + col) <= 12383) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 12384 && (row * 640 + col) <= 12988) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 12989 && (row * 640 + col) <= 13023) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 13024 && (row * 640 + col) <= 13627) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 13628 && (row * 640 + col) <= 13664) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 13665 && (row * 640 + col) <= 14265) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 14266 && (row * 640 + col) <= 14306) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 14307 && (row * 640 + col) <= 14905) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 14906 && (row * 640 + col) <= 14946) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 14947 && (row * 640 + col) <= 15545) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 15546 && (row * 640 + col) <= 15586) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 15587 && (row * 640 + col) <= 16184) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 16185 && (row * 640 + col) <= 16227) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 16228 && (row * 640 + col) <= 16824) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 16825 && (row * 640 + col) <= 16867) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 16868 && (row * 640 + col) <= 17463) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 17464 && (row * 640 + col) <= 17508) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 17509 && (row * 640 + col) <= 18103) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 18104 && (row * 640 + col) <= 18148) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 18149 && (row * 640 + col) <= 18742) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 18743 && (row * 640 + col) <= 18789) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 18790 && (row * 640 + col) <= 19382) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 19383 && (row * 640 + col) <= 19429) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 19430 && (row * 640 + col) <= 20022) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 20023 && (row * 640 + col) <= 20069) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 20070 && (row * 640 + col) <= 20662) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 20663 && (row * 640 + col) <= 20709) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 20710 && (row * 640 + col) <= 21302) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 21303 && (row * 640 + col) <= 21349) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 21350 && (row * 640 + col) <= 21942) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 21943 && (row * 640 + col) <= 21989) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 21990 && (row * 640 + col) <= 22582) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 22583 && (row * 640 + col) <= 22629) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 22630 && (row * 640 + col) <= 23222) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 23223 && (row * 640 + col) <= 23269) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 23270 && (row * 640 + col) <= 23862) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 23863 && (row * 640 + col) <= 23909) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 23910 && (row * 640 + col) <= 24502) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 24503 && (row * 640 + col) <= 24549) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 24550 && (row * 640 + col) <= 25142) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 25143 && (row * 640 + col) <= 25189) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 25190 && (row * 640 + col) <= 25782) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 25783 && (row * 640 + col) <= 25829) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 25830 && (row * 640 + col) <= 26422) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 26423 && (row * 640 + col) <= 26469) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 26470 && (row * 640 + col) <= 27062) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 27063 && (row * 640 + col) <= 27109) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 27110 && (row * 640 + col) <= 27703) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 27704 && (row * 640 + col) <= 27749) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 27750 && (row * 640 + col) <= 28343) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 28344 && (row * 640 + col) <= 28388) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 28389 && (row * 640 + col) <= 28984) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 28985 && (row * 640 + col) <= 29028) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 29029 && (row * 640 + col) <= 29624) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 29625 && (row * 640 + col) <= 29667) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 29668 && (row * 640 + col) <= 30265) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 30266 && (row * 640 + col) <= 30307) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 30308 && (row * 640 + col) <= 30905) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 30906 && (row * 640 + col) <= 30946) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 30947 && (row * 640 + col) <= 31545) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 31546 && (row * 640 + col) <= 31586) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 31587 && (row * 640 + col) <= 32186) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 32187 && (row * 640 + col) <= 32225) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 32226 && (row * 640 + col) <= 32828) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 32829 && (row * 640 + col) <= 32864) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 32865 && (row * 640 + col) <= 33468) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 33469 && (row * 640 + col) <= 33503) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 33504 && (row * 640 + col) <= 34109) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 34110 && (row * 640 + col) <= 34143) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 34144 && (row * 640 + col) <= 34751) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 34752 && (row * 640 + col) <= 34781) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 34782 && (row * 640 + col) <= 35391) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 35392 && (row * 640 + col) <= 35420) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 35421 && (row * 640 + col) <= 36032) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 36033 && (row * 640 + col) <= 36059) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 36060 && (row * 640 + col) <= 36674) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 36675 && (row * 640 + col) <= 36697) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 36698 && (row * 640 + col) <= 37316) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 37317 && (row * 640 + col) <= 37335) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 37336 && (row * 640 + col) <= 37958) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 37959 && (row * 640 + col) <= 37973) color_data <= 12'b111111110000; else
-        if ((row * 640 + col) >= 37974 && (row * 640 + col) <= 41998) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 41999 && (row * 640 + col) <= 42001) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 42002 && (row * 640 + col) <= 42638) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 42639 && (row * 640 + col) <= 42641) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 42642 && (row * 640 + col) <= 43278) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 43279 && (row * 640 + col) <= 43281) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 43282 && (row * 640 + col) <= 43918) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 43919 && (row * 640 + col) <= 43921) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 43922 && (row * 640 + col) <= 44558) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 44559 && (row * 640 + col) <= 44561) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 44562 && (row * 640 + col) <= 45198) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 45199 && (row * 640 + col) <= 45201) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 45202 && (row * 640 + col) <= 45439) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 45440 && (row * 640 + col) <= 45445) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 45446 && (row * 640 + col) <= 45838) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 45839 && (row * 640 + col) <= 45841) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 45842 && (row * 640 + col) <= 46079) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 46080 && (row * 640 + col) <= 46085) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 46086 && (row * 640 + col) <= 46478) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 46479 && (row * 640 + col) <= 46481) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 46482 && (row * 640 + col) <= 46719) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 46720 && (row * 640 + col) <= 46726) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 46727 && (row * 640 + col) <= 47118) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 47119 && (row * 640 + col) <= 47121) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 47122 && (row * 640 + col) <= 47359) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 47360 && (row * 640 + col) <= 47379) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 47380 && (row * 640 + col) <= 47758) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 47759 && (row * 640 + col) <= 47761) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 47762 && (row * 640 + col) <= 47999) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 48000 && (row * 640 + col) <= 48019) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 48020 && (row * 640 + col) <= 48398) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 48399 && (row * 640 + col) <= 48401) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 48402 && (row * 640 + col) <= 48639) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 48640 && (row * 640 + col) <= 48664) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 48665 && (row * 640 + col) <= 49038) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 49039 && (row * 640 + col) <= 49041) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 49042 && (row * 640 + col) <= 49279) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 49280 && (row * 640 + col) <= 49305) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 49306 && (row * 640 + col) <= 49678) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 49679 && (row * 640 + col) <= 49681) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 49682 && (row * 640 + col) <= 49919) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 49920 && (row * 640 + col) <= 49945) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 49946 && (row * 640 + col) <= 50318) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 50319 && (row * 640 + col) <= 50321) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 50322 && (row * 640 + col) <= 50559) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 50560 && (row * 640 + col) <= 50587) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 50588 && (row * 640 + col) <= 50958) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 50959 && (row * 640 + col) <= 50961) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 50962 && (row * 640 + col) <= 51199) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 51200 && (row * 640 + col) <= 51230) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 51231 && (row * 640 + col) <= 51598) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 51599 && (row * 640 + col) <= 51601) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 51602 && (row * 640 + col) <= 51839) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 51840 && (row * 640 + col) <= 51871) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 51872 && (row * 640 + col) <= 52238) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 52239 && (row * 640 + col) <= 52241) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 52242 && (row * 640 + col) <= 52479) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 52480 && (row * 640 + col) <= 52512) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 52513 && (row * 640 + col) <= 52878) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 52879 && (row * 640 + col) <= 52881) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 52882 && (row * 640 + col) <= 53119) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 53120 && (row * 640 + col) <= 53153) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 53154 && (row * 640 + col) <= 53518) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 53519 && (row * 640 + col) <= 53521) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 53522 && (row * 640 + col) <= 53759) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 53760 && (row * 640 + col) <= 53794) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 53795 && (row * 640 + col) <= 54158) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 54159 && (row * 640 + col) <= 54161) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 54162 && (row * 640 + col) <= 54399) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 54400 && (row * 640 + col) <= 54453) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 54454 && (row * 640 + col) <= 54798) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 54799 && (row * 640 + col) <= 54801) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 54802 && (row * 640 + col) <= 55039) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 55040 && (row * 640 + col) <= 55093) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 55094 && (row * 640 + col) <= 55438) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 55439 && (row * 640 + col) <= 55441) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 55442 && (row * 640 + col) <= 55679) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 55680 && (row * 640 + col) <= 55734) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 55735 && (row * 640 + col) <= 56078) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 56079 && (row * 640 + col) <= 56081) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 56082 && (row * 640 + col) <= 56319) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 56320 && (row * 640 + col) <= 56379) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 56380 && (row * 640 + col) <= 56718) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 56719 && (row * 640 + col) <= 56721) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 56722 && (row * 640 + col) <= 56959) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 56960 && (row * 640 + col) <= 57019) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 57020 && (row * 640 + col) <= 57358) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 57359 && (row * 640 + col) <= 57361) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 57362 && (row * 640 + col) <= 57599) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 57600 && (row * 640 + col) <= 57659) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 57660 && (row * 640 + col) <= 57998) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 57999 && (row * 640 + col) <= 58001) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 58002 && (row * 640 + col) <= 58239) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 58240 && (row * 640 + col) <= 58307) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 58308 && (row * 640 + col) <= 58638) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 58639 && (row * 640 + col) <= 58641) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 58642 && (row * 640 + col) <= 58879) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 58880 && (row * 640 + col) <= 58948) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 58949 && (row * 640 + col) <= 59278) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 59279 && (row * 640 + col) <= 59281) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 59282 && (row * 640 + col) <= 59519) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 59520 && (row * 640 + col) <= 59588) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 59589 && (row * 640 + col) <= 59918) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 59919 && (row * 640 + col) <= 59921) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 59922 && (row * 640 + col) <= 60159) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 60160 && (row * 640 + col) <= 60239) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 60240 && (row * 640 + col) <= 60558) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 60559 && (row * 640 + col) <= 60561) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 60562 && (row * 640 + col) <= 60799) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 60800 && (row * 640 + col) <= 60879) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 60880 && (row * 640 + col) <= 61198) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 61199 && (row * 640 + col) <= 61201) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 61202 && (row * 640 + col) <= 61439) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 61440 && (row * 640 + col) <= 61518) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 61519 && (row * 640 + col) <= 61838) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 61839 && (row * 640 + col) <= 61841) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 61842 && (row * 640 + col) <= 62079) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 62080 && (row * 640 + col) <= 62142) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 62143 && (row * 640 + col) <= 62478) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 62479 && (row * 640 + col) <= 62481) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 62482 && (row * 640 + col) <= 62532) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 62533 && (row * 640 + col) <= 62547) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 62548 && (row * 640 + col) <= 62719) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 62720 && (row * 640 + col) <= 62782) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 62783 && (row * 640 + col) <= 63118) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 63119 && (row * 640 + col) <= 63121) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 63122 && (row * 640 + col) <= 63172) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 63173 && (row * 640 + col) <= 63187) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 63188 && (row * 640 + col) <= 63359) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 63360 && (row * 640 + col) <= 63400) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 63401 && (row * 640 + col) <= 63758) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 63759 && (row * 640 + col) <= 63761) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 63762 && (row * 640 + col) <= 63811) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 63812 && (row * 640 + col) <= 63837) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 63838 && (row * 640 + col) <= 63999) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 64000 && (row * 640 + col) <= 64039) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 64040 && (row * 640 + col) <= 64398) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 64399 && (row * 640 + col) <= 64401) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 64402 && (row * 640 + col) <= 64450) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 64451 && (row * 640 + col) <= 64478) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 64479 && (row * 640 + col) <= 64639) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 64640 && (row * 640 + col) <= 64679) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 64680 && (row * 640 + col) <= 65038) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 65039 && (row * 640 + col) <= 65041) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 65042 && (row * 640 + col) <= 65089) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 65090 && (row * 640 + col) <= 65118) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 65119 && (row * 640 + col) <= 65678) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 65679 && (row * 640 + col) <= 65681) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 65682 && (row * 640 + col) <= 65725) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 65726 && (row * 640 + col) <= 65763) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 65764 && (row * 640 + col) <= 66318) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 66319 && (row * 640 + col) <= 66321) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 66322 && (row * 640 + col) <= 66364) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 66365 && (row * 640 + col) <= 66404) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 66405 && (row * 640 + col) <= 66958) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 66959 && (row * 640 + col) <= 66961) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 66962 && (row * 640 + col) <= 67004) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 67005 && (row * 640 + col) <= 67044) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 67045 && (row * 640 + col) <= 67593) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 67594 && (row * 640 + col) <= 67606) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 67607 && (row * 640 + col) <= 67642) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 67643 && (row * 640 + col) <= 67686) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 67687 && (row * 640 + col) <= 68232) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 68233 && (row * 640 + col) <= 68246) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 68247 && (row * 640 + col) <= 68281) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 68282 && (row * 640 + col) <= 68327) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 68328 && (row * 640 + col) <= 68872) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 68873 && (row * 640 + col) <= 68887) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 68888 && (row * 640 + col) <= 68921) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 68922 && (row * 640 + col) <= 68967) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 68968 && (row * 640 + col) <= 69512) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 69513 && (row * 640 + col) <= 69527) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 69528 && (row * 640 + col) <= 69558) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 69559 && (row * 640 + col) <= 69607) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 69608 && (row * 640 + col) <= 70152) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 70153 && (row * 640 + col) <= 70166) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 70167 && (row * 640 + col) <= 70198) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 70199 && (row * 640 + col) <= 70247) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 70248 && (row * 640 + col) <= 70792) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 70793 && (row * 640 + col) <= 70807) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 70808 && (row * 640 + col) <= 70838) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 70839 && (row * 640 + col) <= 70887) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 70888 && (row * 640 + col) <= 71426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 71427 && (row * 640 + col) <= 71452) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 71453 && (row * 640 + col) <= 71476) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 71477 && (row * 640 + col) <= 71529) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 71530 && (row * 640 + col) <= 72066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 72067 && (row * 640 + col) <= 72092) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 72093 && (row * 640 + col) <= 72115) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 72116 && (row * 640 + col) <= 72170) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 72171 && (row * 640 + col) <= 72706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 72707 && (row * 640 + col) <= 72732) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 72733 && (row * 640 + col) <= 72755) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 72756 && (row * 640 + col) <= 72810) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 72811 && (row * 640 + col) <= 73346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 73347 && (row * 640 + col) <= 73372) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 73373 && (row * 640 + col) <= 73387) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 73388 && (row * 640 + col) <= 73450) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 73451 && (row * 640 + col) <= 73986) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 73987 && (row * 640 + col) <= 74012) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 74013 && (row * 640 + col) <= 74026) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 74027 && (row * 640 + col) <= 74090) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 74091 && (row * 640 + col) <= 74626) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 74627 && (row * 640 + col) <= 74652) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 74653 && (row * 640 + col) <= 74666) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 74667 && (row * 640 + col) <= 74730) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 74731 && (row * 640 + col) <= 75266) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 75267 && (row * 640 + col) <= 75292) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 75293 && (row * 640 + col) <= 75301) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 75302 && (row * 640 + col) <= 75370) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 75371 && (row * 640 + col) <= 75906) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 75907 && (row * 640 + col) <= 75932) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 75933 && (row * 640 + col) <= 75941) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 75942 && (row * 640 + col) <= 76010) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 76011 && (row * 640 + col) <= 76546) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 76547 && (row * 640 + col) <= 76572) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 76573 && (row * 640 + col) <= 76580) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 76581 && (row * 640 + col) <= 76650) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 76651 && (row * 640 + col) <= 77186) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 77187 && (row * 640 + col) <= 77212) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 77213 && (row * 640 + col) <= 77218) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 77219 && (row * 640 + col) <= 77295) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 77296 && (row * 640 + col) <= 77826) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 77827 && (row * 640 + col) <= 77852) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 77853 && (row * 640 + col) <= 77858) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 77859 && (row * 640 + col) <= 77936) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 77937 && (row * 640 + col) <= 78466) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 78467 && (row * 640 + col) <= 78492) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 78493 && (row * 640 + col) <= 78498) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 78499 && (row * 640 + col) <= 78577) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 78578 && (row * 640 + col) <= 79106) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 79107 && (row * 640 + col) <= 79132) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 79133 && (row * 640 + col) <= 79138) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 79139 && (row * 640 + col) <= 79218) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 79219 && (row * 640 + col) <= 79746) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 79747 && (row * 640 + col) <= 79772) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 79773 && (row * 640 + col) <= 79778) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 79779 && (row * 640 + col) <= 79858) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 79859 && (row * 640 + col) <= 80386) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 80387 && (row * 640 + col) <= 80412) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 80413 && (row * 640 + col) <= 80416) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 80417 && (row * 640 + col) <= 80503) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 80504 && (row * 640 + col) <= 81026) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 81027 && (row * 640 + col) <= 81052) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 81053 && (row * 640 + col) <= 81055) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 81056 && (row * 640 + col) <= 81144) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 81145 && (row * 640 + col) <= 81666) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 81667 && (row * 640 + col) <= 81692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 81693 && (row * 640 + col) <= 81695) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 81696 && (row * 640 + col) <= 81784) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 81785 && (row * 640 + col) <= 82306) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 82307 && (row * 640 + col) <= 82332) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 82333 && (row * 640 + col) <= 82333) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 82334 && (row * 640 + col) <= 82426) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 82427 && (row * 640 + col) <= 82946) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 82947 && (row * 640 + col) <= 82972) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 82973 && (row * 640 + col) <= 83067) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 83068 && (row * 640 + col) <= 83586) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 83587 && (row * 640 + col) <= 83612) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 83613 && (row * 640 + col) <= 83707) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 83708 && (row * 640 + col) <= 84226) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 84227 && (row * 640 + col) <= 84252) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 84253 && (row * 640 + col) <= 84352) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 84353 && (row * 640 + col) <= 84866) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 84867 && (row * 640 + col) <= 84892) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 84893 && (row * 640 + col) <= 84993) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 84994 && (row * 640 + col) <= 85506) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 85507 && (row * 640 + col) <= 85532) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 85533 && (row * 640 + col) <= 85632) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 85633 && (row * 640 + col) <= 86146) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 86147 && (row * 640 + col) <= 86172) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 86173 && (row * 640 + col) <= 86190) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 86191 && (row * 640 + col) <= 86204) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 86205 && (row * 640 + col) <= 86258) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 86259 && (row * 640 + col) <= 86786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 86787 && (row * 640 + col) <= 86812) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 86813 && (row * 640 + col) <= 86829) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 86830 && (row * 640 + col) <= 86844) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 86845 && (row * 640 + col) <= 86898) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 86899 && (row * 640 + col) <= 87426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 87427 && (row * 640 + col) <= 87452) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 87453 && (row * 640 + col) <= 87453) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 87454 && (row * 640 + col) <= 87469) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 87470 && (row * 640 + col) <= 87484) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 87485 && (row * 640 + col) <= 87488) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 87489 && (row * 640 + col) <= 87490) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 87491 && (row * 640 + col) <= 87502) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 87503 && (row * 640 + col) <= 87504) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 87505 && (row * 640 + col) <= 87513) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 87514 && (row * 640 + col) <= 87517) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 87518 && (row * 640 + col) <= 87538) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 87539 && (row * 640 + col) <= 88066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88067 && (row * 640 + col) <= 88092) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 88093 && (row * 640 + col) <= 88101) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88102 && (row * 640 + col) <= 88103) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 88104 && (row * 640 + col) <= 88125) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88126 && (row * 640 + col) <= 88126) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 88127 && (row * 640 + col) <= 88136) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88137 && (row * 640 + col) <= 88138) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 88139 && (row * 640 + col) <= 88147) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88148 && (row * 640 + col) <= 88149) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 88150 && (row * 640 + col) <= 88159) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88160 && (row * 640 + col) <= 88160) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 88161 && (row * 640 + col) <= 88170) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88171 && (row * 640 + col) <= 88172) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 88173 && (row * 640 + col) <= 88706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 88707 && (row * 640 + col) <= 88732) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 88733 && (row * 640 + col) <= 89346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 89347 && (row * 640 + col) <= 89372) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 89373 && (row * 640 + col) <= 89946) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 89947 && (row * 640 + col) <= 89966) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 89967 && (row * 640 + col) <= 89986) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 89987 && (row * 640 + col) <= 90012) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 90013 && (row * 640 + col) <= 90586) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 90587 && (row * 640 + col) <= 90606) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 90607 && (row * 640 + col) <= 90626) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 90627 && (row * 640 + col) <= 90652) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 90653 && (row * 640 + col) <= 91226) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 91227 && (row * 640 + col) <= 91246) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 91247 && (row * 640 + col) <= 91266) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 91267 && (row * 640 + col) <= 91292) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 91293 && (row * 640 + col) <= 91866) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 91867 && (row * 640 + col) <= 91886) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 91887 && (row * 640 + col) <= 91906) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 91907 && (row * 640 + col) <= 91932) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 91933 && (row * 640 + col) <= 92506) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 92507 && (row * 640 + col) <= 92526) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 92527 && (row * 640 + col) <= 92546) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 92547 && (row * 640 + col) <= 92572) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 92573 && (row * 640 + col) <= 93146) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 93147 && (row * 640 + col) <= 93166) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 93167 && (row * 640 + col) <= 93186) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 93187 && (row * 640 + col) <= 93212) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 93213 && (row * 640 + col) <= 93437) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 93438 && (row * 640 + col) <= 93439) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 93440 && (row * 640 + col) <= 93786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 93787 && (row * 640 + col) <= 93806) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 93807 && (row * 640 + col) <= 93826) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 93827 && (row * 640 + col) <= 93852) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 93853 && (row * 640 + col) <= 94076) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 94077 && (row * 640 + col) <= 94079) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 94080 && (row * 640 + col) <= 94426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 94427 && (row * 640 + col) <= 94446) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 94447 && (row * 640 + col) <= 94466) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 94467 && (row * 640 + col) <= 94492) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 94493 && (row * 640 + col) <= 94716) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 94717 && (row * 640 + col) <= 94719) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 94720 && (row * 640 + col) <= 95066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 95067 && (row * 640 + col) <= 95086) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 95087 && (row * 640 + col) <= 95107) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 95108 && (row * 640 + col) <= 95132) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 95133 && (row * 640 + col) <= 95354) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 95355 && (row * 640 + col) <= 95359) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 95360 && (row * 640 + col) <= 95706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 95707 && (row * 640 + col) <= 95726) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 95727 && (row * 640 + col) <= 95747) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 95748 && (row * 640 + col) <= 95772) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 95773 && (row * 640 + col) <= 95992) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 95993 && (row * 640 + col) <= 95999) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96000 && (row * 640 + col) <= 96103) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96104 && (row * 640 + col) <= 96105) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96106 && (row * 640 + col) <= 96109) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96110 && (row * 640 + col) <= 96110) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96111 && (row * 640 + col) <= 96120) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96121 && (row * 640 + col) <= 96122) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96123 && (row * 640 + col) <= 96126) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96127 && (row * 640 + col) <= 96127) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96128 && (row * 640 + col) <= 96131) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96132 && (row * 640 + col) <= 96133) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96134 && (row * 640 + col) <= 96137) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96138 && (row * 640 + col) <= 96139) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96140 && (row * 640 + col) <= 96346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96347 && (row * 640 + col) <= 96366) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 96367 && (row * 640 + col) <= 96387) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96388 && (row * 640 + col) <= 96412) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 96413 && (row * 640 + col) <= 96631) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96632 && (row * 640 + col) <= 96639) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 96640 && (row * 640 + col) <= 96676) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 96677 && (row * 640 + col) <= 96742) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96743 && (row * 640 + col) <= 96753) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96754 && (row * 640 + col) <= 96759) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96760 && (row * 640 + col) <= 96780) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 96781 && (row * 640 + col) <= 96880) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96881 && (row * 640 + col) <= 96883) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 96884 && (row * 640 + col) <= 96946) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96947 && (row * 640 + col) <= 96974) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 96975 && (row * 640 + col) <= 96986) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 96987 && (row * 640 + col) <= 97006) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97007 && (row * 640 + col) <= 97026) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97027 && (row * 640 + col) <= 97052) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97053 && (row * 640 + col) <= 97144) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97145 && (row * 640 + col) <= 97167) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97168 && (row * 640 + col) <= 97268) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97269 && (row * 640 + col) <= 97279) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 97280 && (row * 640 + col) <= 97316) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97317 && (row * 640 + col) <= 97381) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97382 && (row * 640 + col) <= 97394) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 97395 && (row * 640 + col) <= 97398) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97399 && (row * 640 + col) <= 97420) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 97421 && (row * 640 + col) <= 97520) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97521 && (row * 640 + col) <= 97523) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97524 && (row * 640 + col) <= 97586) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97587 && (row * 640 + col) <= 97615) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97616 && (row * 640 + col) <= 97626) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97627 && (row * 640 + col) <= 97646) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97647 && (row * 640 + col) <= 97666) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97667 && (row * 640 + col) <= 97692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97693 && (row * 640 + col) <= 97784) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97785 && (row * 640 + col) <= 97807) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97808 && (row * 640 + col) <= 97907) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 97908 && (row * 640 + col) <= 97919) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 97920 && (row * 640 + col) <= 97956) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 97957 && (row * 640 + col) <= 98020) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98021 && (row * 640 + col) <= 98034) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 98035 && (row * 640 + col) <= 98038) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98039 && (row * 640 + col) <= 98061) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 98062 && (row * 640 + col) <= 98160) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98161 && (row * 640 + col) <= 98163) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98164 && (row * 640 + col) <= 98226) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98227 && (row * 640 + col) <= 98255) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98256 && (row * 640 + col) <= 98266) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98267 && (row * 640 + col) <= 98286) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98287 && (row * 640 + col) <= 98306) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98307 && (row * 640 + col) <= 98332) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98333 && (row * 640 + col) <= 98424) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98425 && (row * 640 + col) <= 98447) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98448 && (row * 640 + col) <= 98547) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98548 && (row * 640 + col) <= 98559) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 98560 && (row * 640 + col) <= 98596) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98597 && (row * 640 + col) <= 98656) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98657 && (row * 640 + col) <= 98703) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 98704 && (row * 640 + col) <= 98731) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98732 && (row * 640 + col) <= 98757) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98758 && (row * 640 + col) <= 98780) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98781 && (row * 640 + col) <= 98783) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98784 && (row * 640 + col) <= 98800) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98801 && (row * 640 + col) <= 98803) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98804 && (row * 640 + col) <= 98866) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98867 && (row * 640 + col) <= 98895) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98896 && (row * 640 + col) <= 98906) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98907 && (row * 640 + col) <= 98926) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98927 && (row * 640 + col) <= 98947) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 98948 && (row * 640 + col) <= 98972) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 98973 && (row * 640 + col) <= 99064) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99065 && (row * 640 + col) <= 99087) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99088 && (row * 640 + col) <= 99181) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99182 && (row * 640 + col) <= 99199) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 99200 && (row * 640 + col) <= 99236) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99237 && (row * 640 + col) <= 99296) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99297 && (row * 640 + col) <= 99343) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 99344 && (row * 640 + col) <= 99371) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99372 && (row * 640 + col) <= 99397) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99398 && (row * 640 + col) <= 99420) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99421 && (row * 640 + col) <= 99423) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99424 && (row * 640 + col) <= 99440) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99441 && (row * 640 + col) <= 99443) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99444 && (row * 640 + col) <= 99506) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99507 && (row * 640 + col) <= 99535) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99536 && (row * 640 + col) <= 99546) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99547 && (row * 640 + col) <= 99566) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99567 && (row * 640 + col) <= 99587) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99588 && (row * 640 + col) <= 99612) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99613 && (row * 640 + col) <= 99704) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99705 && (row * 640 + col) <= 99727) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99728 && (row * 640 + col) <= 99820) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99821 && (row * 640 + col) <= 99839) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 99840 && (row * 640 + col) <= 99876) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 99877 && (row * 640 + col) <= 99934) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 99935 && (row * 640 + col) <= 99984) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 99985 && (row * 640 + col) <= 100011) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100012 && (row * 640 + col) <= 100037) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100038 && (row * 640 + col) <= 100060) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100061 && (row * 640 + col) <= 100063) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100064 && (row * 640 + col) <= 100080) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100081 && (row * 640 + col) <= 100083) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100084 && (row * 640 + col) <= 100146) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100147 && (row * 640 + col) <= 100174) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100175 && (row * 640 + col) <= 100186) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100187 && (row * 640 + col) <= 100206) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100207 && (row * 640 + col) <= 100227) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100228 && (row * 640 + col) <= 100252) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100253 && (row * 640 + col) <= 100344) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100345 && (row * 640 + col) <= 100367) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100368 && (row * 640 + col) <= 100450) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100451 && (row * 640 + col) <= 100456) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 100457 && (row * 640 + col) <= 100459) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100460 && (row * 640 + col) <= 100479) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 100480 && (row * 640 + col) <= 100516) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100517 && (row * 640 + col) <= 100573) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100574 && (row * 640 + col) <= 100623) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 100624 && (row * 640 + col) <= 100651) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100652 && (row * 640 + col) <= 100677) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100678 && (row * 640 + col) <= 100700) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100701 && (row * 640 + col) <= 100703) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100704 && (row * 640 + col) <= 100717) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100718 && (row * 640 + col) <= 100725) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100726 && (row * 640 + col) <= 100786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100787 && (row * 640 + col) <= 100815) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100816 && (row * 640 + col) <= 100826) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100827 && (row * 640 + col) <= 100852) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100853 && (row * 640 + col) <= 100867) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100868 && (row * 640 + col) <= 100892) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100893 && (row * 640 + col) <= 100961) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100962 && (row * 640 + col) <= 100978) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 100979 && (row * 640 + col) <= 100984) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 100985 && (row * 640 + col) <= 101007) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101008 && (row * 640 + col) <= 101089) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101090 && (row * 640 + col) <= 101119) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 101120 && (row * 640 + col) <= 101156) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101157 && (row * 640 + col) <= 101212) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101213 && (row * 640 + col) <= 101263) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 101264 && (row * 640 + col) <= 101291) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101292 && (row * 640 + col) <= 101317) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101318 && (row * 640 + col) <= 101340) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101341 && (row * 640 + col) <= 101343) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101344 && (row * 640 + col) <= 101357) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101358 && (row * 640 + col) <= 101366) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101367 && (row * 640 + col) <= 101426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101427 && (row * 640 + col) <= 101455) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101456 && (row * 640 + col) <= 101466) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101467 && (row * 640 + col) <= 101492) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101493 && (row * 640 + col) <= 101507) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101508 && (row * 640 + col) <= 101532) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101533 && (row * 640 + col) <= 101601) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101602 && (row * 640 + col) <= 101618) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101619 && (row * 640 + col) <= 101624) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101625 && (row * 640 + col) <= 101647) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101648 && (row * 640 + col) <= 101729) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101730 && (row * 640 + col) <= 101759) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 101760 && (row * 640 + col) <= 101796) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101797 && (row * 640 + col) <= 101850) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101851 && (row * 640 + col) <= 101904) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 101905 && (row * 640 + col) <= 101931) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101932 && (row * 640 + col) <= 101957) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101958 && (row * 640 + col) <= 101980) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101981 && (row * 640 + col) <= 101983) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 101984 && (row * 640 + col) <= 101997) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 101998 && (row * 640 + col) <= 102006) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102007 && (row * 640 + col) <= 102066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102067 && (row * 640 + col) <= 102095) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102096 && (row * 640 + col) <= 102106) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102107 && (row * 640 + col) <= 102132) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102133 && (row * 640 + col) <= 102147) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102148 && (row * 640 + col) <= 102172) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102173 && (row * 640 + col) <= 102241) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102242 && (row * 640 + col) <= 102258) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102259 && (row * 640 + col) <= 102264) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102265 && (row * 640 + col) <= 102287) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102288 && (row * 640 + col) <= 102362) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102363 && (row * 640 + col) <= 102399) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 102400 && (row * 640 + col) <= 102436) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102437 && (row * 640 + col) <= 102490) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102491 && (row * 640 + col) <= 102543) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 102544 && (row * 640 + col) <= 102571) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102572 && (row * 640 + col) <= 102597) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102598 && (row * 640 + col) <= 102620) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102621 && (row * 640 + col) <= 102623) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102624 && (row * 640 + col) <= 102637) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102638 && (row * 640 + col) <= 102646) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102647 && (row * 640 + col) <= 102669) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102670 && (row * 640 + col) <= 102691) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102692 && (row * 640 + col) <= 102706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102707 && (row * 640 + col) <= 102734) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102735 && (row * 640 + col) <= 102746) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102747 && (row * 640 + col) <= 102772) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102773 && (row * 640 + col) <= 102787) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102788 && (row * 640 + col) <= 102812) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102813 && (row * 640 + col) <= 102881) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102882 && (row * 640 + col) <= 102898) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102899 && (row * 640 + col) <= 102904) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 102905 && (row * 640 + col) <= 102927) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 102928 && (row * 640 + col) <= 103001) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103002 && (row * 640 + col) <= 103039) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 103040 && (row * 640 + col) <= 103076) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103077 && (row * 640 + col) <= 103129) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103130 && (row * 640 + col) <= 103183) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 103184 && (row * 640 + col) <= 103211) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103212 && (row * 640 + col) <= 103237) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103238 && (row * 640 + col) <= 103260) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103261 && (row * 640 + col) <= 103263) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103264 && (row * 640 + col) <= 103277) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103278 && (row * 640 + col) <= 103286) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103287 && (row * 640 + col) <= 103309) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103310 && (row * 640 + col) <= 103331) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103332 && (row * 640 + col) <= 103346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103347 && (row * 640 + col) <= 103375) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103376 && (row * 640 + col) <= 103386) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103387 && (row * 640 + col) <= 103412) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103413 && (row * 640 + col) <= 103427) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103428 && (row * 640 + col) <= 103452) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103453 && (row * 640 + col) <= 103521) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103522 && (row * 640 + col) <= 103538) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103539 && (row * 640 + col) <= 103544) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103545 && (row * 640 + col) <= 103567) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103568 && (row * 640 + col) <= 103638) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103639 && (row * 640 + col) <= 103639) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 103640 && (row * 640 + col) <= 103640) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103641 && (row * 640 + col) <= 103679) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 103680 && (row * 640 + col) <= 103716) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103717 && (row * 640 + col) <= 103767) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103768 && (row * 640 + col) <= 103823) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 103824 && (row * 640 + col) <= 103851) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103852 && (row * 640 + col) <= 103877) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103878 && (row * 640 + col) <= 103900) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103901 && (row * 640 + col) <= 103903) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103904 && (row * 640 + col) <= 103917) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103918 && (row * 640 + col) <= 103926) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103927 && (row * 640 + col) <= 103949) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103950 && (row * 640 + col) <= 103971) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 103972 && (row * 640 + col) <= 103986) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 103987 && (row * 640 + col) <= 104015) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104016 && (row * 640 + col) <= 104026) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104027 && (row * 640 + col) <= 104052) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104053 && (row * 640 + col) <= 104067) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104068 && (row * 640 + col) <= 104092) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104093 && (row * 640 + col) <= 104161) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104162 && (row * 640 + col) <= 104178) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104179 && (row * 640 + col) <= 104184) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104185 && (row * 640 + col) <= 104207) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104208 && (row * 640 + col) <= 104273) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104274 && (row * 640 + col) <= 104319) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 104320 && (row * 640 + col) <= 104356) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104357 && (row * 640 + col) <= 104407) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104408 && (row * 640 + col) <= 104463) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 104464 && (row * 640 + col) <= 104491) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104492 && (row * 640 + col) <= 104517) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104518 && (row * 640 + col) <= 104540) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104541 && (row * 640 + col) <= 104543) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104544 && (row * 640 + col) <= 104555) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104556 && (row * 640 + col) <= 104569) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104570 && (row * 640 + col) <= 104589) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104590 && (row * 640 + col) <= 104611) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104612 && (row * 640 + col) <= 104626) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104627 && (row * 640 + col) <= 104655) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104656 && (row * 640 + col) <= 104666) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104667 && (row * 640 + col) <= 104692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104693 && (row * 640 + col) <= 104707) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104708 && (row * 640 + col) <= 104732) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104733 && (row * 640 + col) <= 104801) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104802 && (row * 640 + col) <= 104818) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104819 && (row * 640 + col) <= 104824) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104825 && (row * 640 + col) <= 104847) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104848 && (row * 640 + col) <= 104912) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 104913 && (row * 640 + col) <= 104959) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 104960 && (row * 640 + col) <= 104996) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 104997 && (row * 640 + col) <= 105047) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105048 && (row * 640 + col) <= 105104) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 105105 && (row * 640 + col) <= 105131) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105132 && (row * 640 + col) <= 105157) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105158 && (row * 640 + col) <= 105180) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105181 && (row * 640 + col) <= 105183) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105184 && (row * 640 + col) <= 105195) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105196 && (row * 640 + col) <= 105209) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105210 && (row * 640 + col) <= 105229) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105230 && (row * 640 + col) <= 105251) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105252 && (row * 640 + col) <= 105266) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105267 && (row * 640 + col) <= 105295) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105296 && (row * 640 + col) <= 105306) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105307 && (row * 640 + col) <= 105332) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105333 && (row * 640 + col) <= 105347) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105348 && (row * 640 + col) <= 105372) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105373 && (row * 640 + col) <= 105441) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105442 && (row * 640 + col) <= 105458) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105459 && (row * 640 + col) <= 105464) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105465 && (row * 640 + col) <= 105487) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105488 && (row * 640 + col) <= 105552) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105553 && (row * 640 + col) <= 105599) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 105600 && (row * 640 + col) <= 105636) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105637 && (row * 640 + col) <= 105687) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105688 && (row * 640 + col) <= 105745) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 105746 && (row * 640 + col) <= 105771) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105772 && (row * 640 + col) <= 105797) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105798 && (row * 640 + col) <= 105820) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105821 && (row * 640 + col) <= 105823) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105824 && (row * 640 + col) <= 105835) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105836 && (row * 640 + col) <= 105848) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105849 && (row * 640 + col) <= 105869) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105870 && (row * 640 + col) <= 105891) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105892 && (row * 640 + col) <= 105906) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105907 && (row * 640 + col) <= 105935) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105936 && (row * 640 + col) <= 105946) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105947 && (row * 640 + col) <= 105972) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 105973 && (row * 640 + col) <= 105987) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 105988 && (row * 640 + col) <= 106012) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106013 && (row * 640 + col) <= 106081) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106082 && (row * 640 + col) <= 106098) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106099 && (row * 640 + col) <= 106104) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106105 && (row * 640 + col) <= 106127) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106128 && (row * 640 + col) <= 106190) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106191 && (row * 640 + col) <= 106239) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 106240 && (row * 640 + col) <= 106276) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106277 && (row * 640 + col) <= 106327) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106328 && (row * 640 + col) <= 106386) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 106387 && (row * 640 + col) <= 106411) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106412 && (row * 640 + col) <= 106437) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106438 && (row * 640 + col) <= 106457) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106458 && (row * 640 + col) <= 106465) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106466 && (row * 640 + col) <= 106475) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106476 && (row * 640 + col) <= 106488) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106489 && (row * 640 + col) <= 106509) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106510 && (row * 640 + col) <= 106531) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106532 && (row * 640 + col) <= 106546) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106547 && (row * 640 + col) <= 106575) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106576 && (row * 640 + col) <= 106586) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106587 && (row * 640 + col) <= 106612) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106613 && (row * 640 + col) <= 106627) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106628 && (row * 640 + col) <= 106652) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106653 && (row * 640 + col) <= 106721) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106722 && (row * 640 + col) <= 106738) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106739 && (row * 640 + col) <= 106744) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106745 && (row * 640 + col) <= 106767) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106768 && (row * 640 + col) <= 106829) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106830 && (row * 640 + col) <= 106879) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 106880 && (row * 640 + col) <= 106916) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 106917 && (row * 640 + col) <= 106966) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 106967 && (row * 640 + col) <= 107027) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 107028 && (row * 640 + col) <= 107051) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107052 && (row * 640 + col) <= 107077) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107078 && (row * 640 + col) <= 107097) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107098 && (row * 640 + col) <= 107105) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107106 && (row * 640 + col) <= 107115) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107116 && (row * 640 + col) <= 107128) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107129 && (row * 640 + col) <= 107149) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107150 && (row * 640 + col) <= 107171) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107172 && (row * 640 + col) <= 107186) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107187 && (row * 640 + col) <= 107215) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107216 && (row * 640 + col) <= 107226) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107227 && (row * 640 + col) <= 107252) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107253 && (row * 640 + col) <= 107267) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107268 && (row * 640 + col) <= 107292) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107293 && (row * 640 + col) <= 107361) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107362 && (row * 640 + col) <= 107378) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107379 && (row * 640 + col) <= 107384) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107385 && (row * 640 + col) <= 107407) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107408 && (row * 640 + col) <= 107469) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107470 && (row * 640 + col) <= 107519) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 107520 && (row * 640 + col) <= 107556) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107557 && (row * 640 + col) <= 107605) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107606 && (row * 640 + col) <= 107669) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 107670 && (row * 640 + col) <= 107691) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107692 && (row * 640 + col) <= 107717) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107718 && (row * 640 + col) <= 107737) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107738 && (row * 640 + col) <= 107745) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107746 && (row * 640 + col) <= 107755) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107756 && (row * 640 + col) <= 107768) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107769 && (row * 640 + col) <= 107789) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107790 && (row * 640 + col) <= 107811) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107812 && (row * 640 + col) <= 107826) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107827 && (row * 640 + col) <= 107855) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107856 && (row * 640 + col) <= 107866) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107867 && (row * 640 + col) <= 107892) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107893 && (row * 640 + col) <= 107907) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 107908 && (row * 640 + col) <= 107932) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 107933 && (row * 640 + col) <= 108001) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108002 && (row * 640 + col) <= 108018) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108019 && (row * 640 + col) <= 108024) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108025 && (row * 640 + col) <= 108047) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108048 && (row * 640 + col) <= 108104) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108105 && (row * 640 + col) <= 108159) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 108160 && (row * 640 + col) <= 108196) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108197 && (row * 640 + col) <= 108244) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108245 && (row * 640 + col) <= 108309) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 108310 && (row * 640 + col) <= 108331) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108332 && (row * 640 + col) <= 108357) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108358 && (row * 640 + col) <= 108363) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108364 && (row * 640 + col) <= 108385) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108386 && (row * 640 + col) <= 108395) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108396 && (row * 640 + col) <= 108408) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108409 && (row * 640 + col) <= 108429) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108430 && (row * 640 + col) <= 108451) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108452 && (row * 640 + col) <= 108466) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108467 && (row * 640 + col) <= 108495) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108496 && (row * 640 + col) <= 108506) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108507 && (row * 640 + col) <= 108532) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108533 && (row * 640 + col) <= 108547) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108548 && (row * 640 + col) <= 108572) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108573 && (row * 640 + col) <= 108641) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108642 && (row * 640 + col) <= 108658) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108659 && (row * 640 + col) <= 108664) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108665 && (row * 640 + col) <= 108687) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108688 && (row * 640 + col) <= 108743) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108744 && (row * 640 + col) <= 108777) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 108778 && (row * 640 + col) <= 108786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108787 && (row * 640 + col) <= 108799) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 108800 && (row * 640 + col) <= 108836) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108837 && (row * 640 + col) <= 108882) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108883 && (row * 640 + col) <= 108949) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 108950 && (row * 640 + col) <= 108952) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108953 && (row * 640 + col) <= 108954) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 108955 && (row * 640 + col) <= 108971) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 108972 && (row * 640 + col) <= 108997) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 108998 && (row * 640 + col) <= 109003) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109004 && (row * 640 + col) <= 109025) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109026 && (row * 640 + col) <= 109035) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109036 && (row * 640 + col) <= 109048) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109049 && (row * 640 + col) <= 109069) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109070 && (row * 640 + col) <= 109091) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109092 && (row * 640 + col) <= 109106) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109107 && (row * 640 + col) <= 109135) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109136 && (row * 640 + col) <= 109146) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109147 && (row * 640 + col) <= 109172) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109173 && (row * 640 + col) <= 109187) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109188 && (row * 640 + col) <= 109212) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109213 && (row * 640 + col) <= 109281) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109282 && (row * 640 + col) <= 109298) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109299 && (row * 640 + col) <= 109304) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109305 && (row * 640 + col) <= 109327) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109328 && (row * 640 + col) <= 109383) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109384 && (row * 640 + col) <= 109417) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 109418 && (row * 640 + col) <= 109427) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109428 && (row * 640 + col) <= 109439) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 109440 && (row * 640 + col) <= 109477) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109478 && (row * 640 + col) <= 109522) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109523 && (row * 640 + col) <= 109595) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 109596 && (row * 640 + col) <= 109611) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109612 && (row * 640 + col) <= 109637) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109638 && (row * 640 + col) <= 109643) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109644 && (row * 640 + col) <= 109666) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109667 && (row * 640 + col) <= 109675) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109676 && (row * 640 + col) <= 109688) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109689 && (row * 640 + col) <= 109695) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109696 && (row * 640 + col) <= 109696) color_data <= 12'b101010101010; else
-        if ((row * 640 + col) >= 109697 && (row * 640 + col) <= 109709) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109710 && (row * 640 + col) <= 109731) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109732 && (row * 640 + col) <= 109746) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109747 && (row * 640 + col) <= 109774) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109775 && (row * 640 + col) <= 109786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109787 && (row * 640 + col) <= 109812) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109813 && (row * 640 + col) <= 109827) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109828 && (row * 640 + col) <= 109852) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109853 && (row * 640 + col) <= 109921) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109922 && (row * 640 + col) <= 109938) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109939 && (row * 640 + col) <= 109944) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 109945 && (row * 640 + col) <= 109967) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 109968 && (row * 640 + col) <= 110024) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110025 && (row * 640 + col) <= 110056) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 110057 && (row * 640 + col) <= 110067) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110068 && (row * 640 + col) <= 110079) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 110080 && (row * 640 + col) <= 110125) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110126 && (row * 640 + col) <= 110161) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110162 && (row * 640 + col) <= 110217) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 110218 && (row * 640 + col) <= 110231) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 110232 && (row * 640 + col) <= 110235) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 110236 && (row * 640 + col) <= 110251) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110252 && (row * 640 + col) <= 110277) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110278 && (row * 640 + col) <= 110283) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110284 && (row * 640 + col) <= 110308) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110309 && (row * 640 + col) <= 110315) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110316 && (row * 640 + col) <= 110328) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110329 && (row * 640 + col) <= 110349) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110350 && (row * 640 + col) <= 110371) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110372 && (row * 640 + col) <= 110386) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110387 && (row * 640 + col) <= 110415) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110416 && (row * 640 + col) <= 110426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110427 && (row * 640 + col) <= 110452) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110453 && (row * 640 + col) <= 110467) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110468 && (row * 640 + col) <= 110492) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110493 && (row * 640 + col) <= 110561) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110562 && (row * 640 + col) <= 110578) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110579 && (row * 640 + col) <= 110584) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110585 && (row * 640 + col) <= 110607) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110608 && (row * 640 + col) <= 110664) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110665 && (row * 640 + col) <= 110666) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 110667 && (row * 640 + col) <= 110709) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110710 && (row * 640 + col) <= 110710) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 110711 && (row * 640 + col) <= 110719) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110720 && (row * 640 + col) <= 110765) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110766 && (row * 640 + col) <= 110796) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110797 && (row * 640 + col) <= 110857) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 110858 && (row * 640 + col) <= 110871) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 110872 && (row * 640 + col) <= 110875) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 110876 && (row * 640 + col) <= 110891) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110892 && (row * 640 + col) <= 110917) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110918 && (row * 640 + col) <= 110923) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110924 && (row * 640 + col) <= 110948) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110949 && (row * 640 + col) <= 110955) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110956 && (row * 640 + col) <= 110968) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 110969 && (row * 640 + col) <= 110989) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 110990 && (row * 640 + col) <= 111011) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111012 && (row * 640 + col) <= 111026) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111027 && (row * 640 + col) <= 111054) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111055 && (row * 640 + col) <= 111066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111067 && (row * 640 + col) <= 111092) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111093 && (row * 640 + col) <= 111107) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111108 && (row * 640 + col) <= 111132) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111133 && (row * 640 + col) <= 111201) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111202 && (row * 640 + col) <= 111218) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111219 && (row * 640 + col) <= 111224) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111225 && (row * 640 + col) <= 111247) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111248 && (row * 640 + col) <= 111359) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111360 && (row * 640 + col) <= 111405) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111406 && (row * 640 + col) <= 111435) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111436 && (row * 640 + col) <= 111497) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 111498 && (row * 640 + col) <= 111588) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111589 && (row * 640 + col) <= 111594) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111595 && (row * 640 + col) <= 111608) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111609 && (row * 640 + col) <= 111629) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111630 && (row * 640 + col) <= 111651) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111652 && (row * 640 + col) <= 111666) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111667 && (row * 640 + col) <= 111695) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111696 && (row * 640 + col) <= 111706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111707 && (row * 640 + col) <= 111732) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111733 && (row * 640 + col) <= 111747) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111748 && (row * 640 + col) <= 111772) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111773 && (row * 640 + col) <= 111841) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111842 && (row * 640 + col) <= 111858) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111859 && (row * 640 + col) <= 111864) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 111865 && (row * 640 + col) <= 111887) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 111888 && (row * 640 + col) <= 111999) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112000 && (row * 640 + col) <= 112045) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112046 && (row * 640 + col) <= 112075) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112076 && (row * 640 + col) <= 112137) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 112138 && (row * 640 + col) <= 112228) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112229 && (row * 640 + col) <= 112234) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112235 && (row * 640 + col) <= 112248) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112249 && (row * 640 + col) <= 112269) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112270 && (row * 640 + col) <= 112291) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112292 && (row * 640 + col) <= 112306) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112307 && (row * 640 + col) <= 112335) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112336 && (row * 640 + col) <= 112346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112347 && (row * 640 + col) <= 112372) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112373 && (row * 640 + col) <= 112387) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112388 && (row * 640 + col) <= 112412) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112413 && (row * 640 + col) <= 112481) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112482 && (row * 640 + col) <= 112498) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112499 && (row * 640 + col) <= 112504) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112505 && (row * 640 + col) <= 112527) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112528 && (row * 640 + col) <= 112639) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112640 && (row * 640 + col) <= 112685) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112686 && (row * 640 + col) <= 112714) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112715 && (row * 640 + col) <= 112777) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 112778 && (row * 640 + col) <= 112868) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112869 && (row * 640 + col) <= 112874) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112875 && (row * 640 + col) <= 112888) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112889 && (row * 640 + col) <= 112909) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112910 && (row * 640 + col) <= 112931) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112932 && (row * 640 + col) <= 112946) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112947 && (row * 640 + col) <= 112975) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 112976 && (row * 640 + col) <= 112986) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 112987 && (row * 640 + col) <= 113012) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113013 && (row * 640 + col) <= 113027) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113028 && (row * 640 + col) <= 113052) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113053 && (row * 640 + col) <= 113121) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113122 && (row * 640 + col) <= 113138) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113139 && (row * 640 + col) <= 113144) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113145 && (row * 640 + col) <= 113167) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113168 && (row * 640 + col) <= 113279) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113280 && (row * 640 + col) <= 113325) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113326 && (row * 640 + col) <= 113350) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113351 && (row * 640 + col) <= 113417) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 113418 && (row * 640 + col) <= 113508) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113509 && (row * 640 + col) <= 113515) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113516 && (row * 640 + col) <= 113528) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113529 && (row * 640 + col) <= 113549) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113550 && (row * 640 + col) <= 113571) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113572 && (row * 640 + col) <= 113586) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113587 && (row * 640 + col) <= 113614) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113615 && (row * 640 + col) <= 113626) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113627 && (row * 640 + col) <= 113652) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113653 && (row * 640 + col) <= 113667) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113668 && (row * 640 + col) <= 113692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113693 && (row * 640 + col) <= 113761) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113762 && (row * 640 + col) <= 113778) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113779 && (row * 640 + col) <= 113784) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113785 && (row * 640 + col) <= 113807) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113808 && (row * 640 + col) <= 113919) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113920 && (row * 640 + col) <= 113965) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 113966 && (row * 640 + col) <= 113990) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 113991 && (row * 640 + col) <= 114057) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 114058 && (row * 640 + col) <= 114148) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114149 && (row * 640 + col) <= 114155) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114156 && (row * 640 + col) <= 114168) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114169 && (row * 640 + col) <= 114189) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114190 && (row * 640 + col) <= 114211) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114212 && (row * 640 + col) <= 114226) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114227 && (row * 640 + col) <= 114255) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114256 && (row * 640 + col) <= 114266) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114267 && (row * 640 + col) <= 114292) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114293 && (row * 640 + col) <= 114307) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114308 && (row * 640 + col) <= 114332) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114333 && (row * 640 + col) <= 114401) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114402 && (row * 640 + col) <= 114418) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114419 && (row * 640 + col) <= 114424) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114425 && (row * 640 + col) <= 114447) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114448 && (row * 640 + col) <= 114559) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114560 && (row * 640 + col) <= 114605) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114606 && (row * 640 + col) <= 114625) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114626 && (row * 640 + col) <= 114697) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 114698 && (row * 640 + col) <= 114788) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114789 && (row * 640 + col) <= 114795) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114796 && (row * 640 + col) <= 114808) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114809 && (row * 640 + col) <= 114829) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114830 && (row * 640 + col) <= 114851) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114852 && (row * 640 + col) <= 114866) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114867 && (row * 640 + col) <= 114895) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114896 && (row * 640 + col) <= 114906) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114907 && (row * 640 + col) <= 114932) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114933 && (row * 640 + col) <= 114947) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 114948 && (row * 640 + col) <= 114972) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 114973 && (row * 640 + col) <= 115041) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115042 && (row * 640 + col) <= 115058) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115059 && (row * 640 + col) <= 115064) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115065 && (row * 640 + col) <= 115087) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115088 && (row * 640 + col) <= 115199) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115200 && (row * 640 + col) <= 115245) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115246 && (row * 640 + col) <= 115264) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115265 && (row * 640 + col) <= 115337) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 115338 && (row * 640 + col) <= 115428) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115429 && (row * 640 + col) <= 115435) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115436 && (row * 640 + col) <= 115448) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115449 && (row * 640 + col) <= 115469) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115470 && (row * 640 + col) <= 115491) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115492 && (row * 640 + col) <= 115506) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115507 && (row * 640 + col) <= 115537) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115538 && (row * 640 + col) <= 115543) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115544 && (row * 640 + col) <= 115572) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115573 && (row * 640 + col) <= 115587) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115588 && (row * 640 + col) <= 115621) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115622 && (row * 640 + col) <= 115681) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115682 && (row * 640 + col) <= 115698) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115699 && (row * 640 + col) <= 115704) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115705 && (row * 640 + col) <= 115727) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115728 && (row * 640 + col) <= 115839) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115840 && (row * 640 + col) <= 115885) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 115886 && (row * 640 + col) <= 115903) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 115904 && (row * 640 + col) <= 115977) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 115978 && (row * 640 + col) <= 116068) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116069 && (row * 640 + col) <= 116075) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116076 && (row * 640 + col) <= 116088) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116089 && (row * 640 + col) <= 116109) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116110 && (row * 640 + col) <= 116131) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116132 && (row * 640 + col) <= 116146) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116147 && (row * 640 + col) <= 116177) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116178 && (row * 640 + col) <= 116183) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116184 && (row * 640 + col) <= 116212) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116213 && (row * 640 + col) <= 116227) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116228 && (row * 640 + col) <= 116261) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116262 && (row * 640 + col) <= 116321) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116322 && (row * 640 + col) <= 116338) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116339 && (row * 640 + col) <= 116344) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116345 && (row * 640 + col) <= 116367) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116368 && (row * 640 + col) <= 116479) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116480 && (row * 640 + col) <= 116525) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116526 && (row * 640 + col) <= 116541) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116542 && (row * 640 + col) <= 116617) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 116618 && (row * 640 + col) <= 116708) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116709 && (row * 640 + col) <= 116715) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116716 && (row * 640 + col) <= 116728) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116729 && (row * 640 + col) <= 116749) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116750 && (row * 640 + col) <= 116771) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116772 && (row * 640 + col) <= 116786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116787 && (row * 640 + col) <= 116817) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116818 && (row * 640 + col) <= 116823) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116824 && (row * 640 + col) <= 116852) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116853 && (row * 640 + col) <= 116867) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116868 && (row * 640 + col) <= 116901) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116902 && (row * 640 + col) <= 116961) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116962 && (row * 640 + col) <= 116978) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 116979 && (row * 640 + col) <= 116984) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 116985 && (row * 640 + col) <= 117007) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117008 && (row * 640 + col) <= 117119) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117120 && (row * 640 + col) <= 117165) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117166 && (row * 640 + col) <= 117181) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117182 && (row * 640 + col) <= 117257) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 117258 && (row * 640 + col) <= 117348) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117349 && (row * 640 + col) <= 117355) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117356 && (row * 640 + col) <= 117368) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117369 && (row * 640 + col) <= 117389) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117390 && (row * 640 + col) <= 117411) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117412 && (row * 640 + col) <= 117426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117427 && (row * 640 + col) <= 117457) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117458 && (row * 640 + col) <= 117463) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117464 && (row * 640 + col) <= 117492) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117493 && (row * 640 + col) <= 117507) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117508 && (row * 640 + col) <= 117541) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117542 && (row * 640 + col) <= 117601) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117602 && (row * 640 + col) <= 117618) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117619 && (row * 640 + col) <= 117624) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117625 && (row * 640 + col) <= 117647) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117648 && (row * 640 + col) <= 117759) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117760 && (row * 640 + col) <= 117805) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117806 && (row * 640 + col) <= 117820) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117821 && (row * 640 + col) <= 117897) color_data <= 12'b111111111111; else
         if ((row * 640 + col) >= 117898 && (row * 640 + col) <= 117988) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 117989 && (row * 640 + col) <= 117995) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 117996 && (row * 640 + col) <= 118008) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118009 && (row * 640 + col) <= 118029) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118030 && (row * 640 + col) <= 118051) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118052 && (row * 640 + col) <= 118066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118067 && (row * 640 + col) <= 118097) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118098 && (row * 640 + col) <= 118103) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118104 && (row * 640 + col) <= 118132) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118133 && (row * 640 + col) <= 118147) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118148 && (row * 640 + col) <= 118181) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118182 && (row * 640 + col) <= 118241) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118242 && (row * 640 + col) <= 118258) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118259 && (row * 640 + col) <= 118264) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118265 && (row * 640 + col) <= 118287) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118288 && (row * 640 + col) <= 118399) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118400 && (row * 640 + col) <= 118445) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118446 && (row * 640 + col) <= 118456) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118457 && (row * 640 + col) <= 118536) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 118537 && (row * 640 + col) <= 118537) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118538 && (row * 640 + col) <= 118628) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118629 && (row * 640 + col) <= 118634) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118635 && (row * 640 + col) <= 118648) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118649 && (row * 640 + col) <= 118669) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118670 && (row * 640 + col) <= 118692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118693 && (row * 640 + col) <= 118706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118707 && (row * 640 + col) <= 118737) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118738 && (row * 640 + col) <= 118743) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118744 && (row * 640 + col) <= 118772) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118773 && (row * 640 + col) <= 118787) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118788 && (row * 640 + col) <= 118821) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118822 && (row * 640 + col) <= 118881) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118882 && (row * 640 + col) <= 118898) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118899 && (row * 640 + col) <= 118904) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 118905 && (row * 640 + col) <= 118927) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 118928 && (row * 640 + col) <= 119039) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119040 && (row * 640 + col) <= 119085) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119086 && (row * 640 + col) <= 119095) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119096 && (row * 640 + col) <= 119175) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 119176 && (row * 640 + col) <= 119177) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119178 && (row * 640 + col) <= 119288) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119289 && (row * 640 + col) <= 119309) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119310 && (row * 640 + col) <= 119340) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119341 && (row * 640 + col) <= 119346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119347 && (row * 640 + col) <= 119377) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119378 && (row * 640 + col) <= 119383) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119384 && (row * 640 + col) <= 119412) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119413 && (row * 640 + col) <= 119427) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119428 && (row * 640 + col) <= 119461) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119462 && (row * 640 + col) <= 119521) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119522 && (row * 640 + col) <= 119567) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119568 && (row * 640 + col) <= 119679) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119680 && (row * 640 + col) <= 119725) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119726 && (row * 640 + col) <= 119735) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119736 && (row * 640 + col) <= 119747) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 119748 && (row * 640 + col) <= 119750) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119751 && (row * 640 + col) <= 119769) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 119770 && (row * 640 + col) <= 119781) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119782 && (row * 640 + col) <= 119801) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 119802 && (row * 640 + col) <= 119817) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119818 && (row * 640 + col) <= 119928) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119929 && (row * 640 + col) <= 119949) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119950 && (row * 640 + col) <= 119980) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 119981 && (row * 640 + col) <= 119986) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 119987 && (row * 640 + col) <= 120017) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120018 && (row * 640 + col) <= 120023) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120024 && (row * 640 + col) <= 120052) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120053 && (row * 640 + col) <= 120067) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120068 && (row * 640 + col) <= 120101) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120102 && (row * 640 + col) <= 120161) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120162 && (row * 640 + col) <= 120207) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120208 && (row * 640 + col) <= 120319) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120320 && (row * 640 + col) <= 120365) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120366 && (row * 640 + col) <= 120375) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120376 && (row * 640 + col) <= 120386) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 120387 && (row * 640 + col) <= 120390) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120391 && (row * 640 + col) <= 120409) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 120410 && (row * 640 + col) <= 120421) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120422 && (row * 640 + col) <= 120441) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 120442 && (row * 640 + col) <= 120457) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120458 && (row * 640 + col) <= 120568) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120569 && (row * 640 + col) <= 120589) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120590 && (row * 640 + col) <= 120620) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120621 && (row * 640 + col) <= 120626) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120627 && (row * 640 + col) <= 120657) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120658 && (row * 640 + col) <= 120663) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120664 && (row * 640 + col) <= 120692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120693 && (row * 640 + col) <= 120707) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120708 && (row * 640 + col) <= 120741) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120742 && (row * 640 + col) <= 120801) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120802 && (row * 640 + col) <= 120847) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 120848 && (row * 640 + col) <= 120959) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 120960 && (row * 640 + col) <= 121005) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121006 && (row * 640 + col) <= 121018) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121019 && (row * 640 + col) <= 121019) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 121020 && (row * 640 + col) <= 121063) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121064 && (row * 640 + col) <= 121064) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 121065 && (row * 640 + col) <= 121072) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121073 && (row * 640 + col) <= 121073) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 121074 && (row * 640 + col) <= 121097) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121098 && (row * 640 + col) <= 121208) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121209 && (row * 640 + col) <= 121229) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121230 && (row * 640 + col) <= 121260) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121261 && (row * 640 + col) <= 121266) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121267 && (row * 640 + col) <= 121297) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121298 && (row * 640 + col) <= 121303) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121304 && (row * 640 + col) <= 121332) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121333 && (row * 640 + col) <= 121347) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121348 && (row * 640 + col) <= 121381) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121382 && (row * 640 + col) <= 121441) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121442 && (row * 640 + col) <= 121487) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121488 && (row * 640 + col) <= 121599) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121600 && (row * 640 + col) <= 121645) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121646 && (row * 640 + col) <= 121737) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121738 && (row * 640 + col) <= 121848) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121849 && (row * 640 + col) <= 121869) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121870 && (row * 640 + col) <= 121900) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121901 && (row * 640 + col) <= 121906) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121907 && (row * 640 + col) <= 121937) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121938 && (row * 640 + col) <= 121943) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121944 && (row * 640 + col) <= 121972) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 121973 && (row * 640 + col) <= 121987) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 121988 && (row * 640 + col) <= 122021) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122022 && (row * 640 + col) <= 122081) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122082 && (row * 640 + col) <= 122127) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122128 && (row * 640 + col) <= 122239) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122240 && (row * 640 + col) <= 122285) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122286 && (row * 640 + col) <= 122314) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122315 && (row * 640 + col) <= 122318) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122319 && (row * 640 + col) <= 122324) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122325 && (row * 640 + col) <= 122327) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122328 && (row * 640 + col) <= 122341) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122342 && (row * 640 + col) <= 122342) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122343 && (row * 640 + col) <= 122343) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122344 && (row * 640 + col) <= 122344) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122345 && (row * 640 + col) <= 122377) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122378 && (row * 640 + col) <= 122488) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122489 && (row * 640 + col) <= 122509) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122510 && (row * 640 + col) <= 122540) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122541 && (row * 640 + col) <= 122546) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122547 && (row * 640 + col) <= 122577) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122578 && (row * 640 + col) <= 122583) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122584 && (row * 640 + col) <= 122612) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122613 && (row * 640 + col) <= 122627) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122628 && (row * 640 + col) <= 122661) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122662 && (row * 640 + col) <= 122668) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122669 && (row * 640 + col) <= 122688) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122689 && (row * 640 + col) <= 122689) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122690 && (row * 640 + col) <= 122692) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122693 && (row * 640 + col) <= 122703) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122704 && (row * 640 + col) <= 122705) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122706 && (row * 640 + col) <= 122707) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122708 && (row * 640 + col) <= 122709) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122710 && (row * 640 + col) <= 122710) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122711 && (row * 640 + col) <= 122767) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122768 && (row * 640 + col) <= 122879) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122880 && (row * 640 + col) <= 122925) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122926 && (row * 640 + col) <= 122954) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 122955 && (row * 640 + col) <= 122985) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 122986 && (row * 640 + col) <= 123017) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123018 && (row * 640 + col) <= 123128) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123129 && (row * 640 + col) <= 123149) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123150 && (row * 640 + col) <= 123180) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123181 && (row * 640 + col) <= 123186) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123187 && (row * 640 + col) <= 123217) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123218 && (row * 640 + col) <= 123223) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123224 && (row * 640 + col) <= 123252) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123253 && (row * 640 + col) <= 123267) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123268 && (row * 640 + col) <= 123301) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123302 && (row * 640 + col) <= 123307) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123308 && (row * 640 + col) <= 123332) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123333 && (row * 640 + col) <= 123341) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123342 && (row * 640 + col) <= 123407) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123408 && (row * 640 + col) <= 123519) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123520 && (row * 640 + col) <= 123565) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123566 && (row * 640 + col) <= 123594) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123595 && (row * 640 + col) <= 123625) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123626 && (row * 640 + col) <= 123657) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123658 && (row * 640 + col) <= 123768) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123769 && (row * 640 + col) <= 123789) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123790 && (row * 640 + col) <= 123820) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123821 && (row * 640 + col) <= 123826) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123827 && (row * 640 + col) <= 123857) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123858 && (row * 640 + col) <= 123863) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123864 && (row * 640 + col) <= 123892) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123893 && (row * 640 + col) <= 123907) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123908 && (row * 640 + col) <= 123941) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123942 && (row * 640 + col) <= 123947) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123948 && (row * 640 + col) <= 123972) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 123973 && (row * 640 + col) <= 123981) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 123982 && (row * 640 + col) <= 124047) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124048 && (row * 640 + col) <= 124159) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124160 && (row * 640 + col) <= 124205) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124206 && (row * 640 + col) <= 124234) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124235 && (row * 640 + col) <= 124265) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124266 && (row * 640 + col) <= 124297) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124298 && (row * 640 + col) <= 124409) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124410 && (row * 640 + col) <= 124410) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124411 && (row * 640 + col) <= 124411) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124412 && (row * 640 + col) <= 124429) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124430 && (row * 640 + col) <= 124460) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124461 && (row * 640 + col) <= 124466) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124467 && (row * 640 + col) <= 124497) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124498 && (row * 640 + col) <= 124501) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124502 && (row * 640 + col) <= 124502) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124503 && (row * 640 + col) <= 124503) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124504 && (row * 640 + col) <= 124532) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124533 && (row * 640 + col) <= 124547) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124548 && (row * 640 + col) <= 124581) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124582 && (row * 640 + col) <= 124587) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124588 && (row * 640 + col) <= 124612) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124613 && (row * 640 + col) <= 124621) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124622 && (row * 640 + col) <= 124687) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124688 && (row * 640 + col) <= 124799) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124800 && (row * 640 + col) <= 124845) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124846 && (row * 640 + col) <= 124874) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124875 && (row * 640 + col) <= 124905) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 124906 && (row * 640 + col) <= 124937) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 124938 && (row * 640 + col) <= 125051) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125052 && (row * 640 + col) <= 125069) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125070 && (row * 640 + col) <= 125100) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125101 && (row * 640 + col) <= 125106) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125107 && (row * 640 + col) <= 125137) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125138 && (row * 640 + col) <= 125141) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125142 && (row * 640 + col) <= 125172) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125173 && (row * 640 + col) <= 125187) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125188 && (row * 640 + col) <= 125221) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125222 && (row * 640 + col) <= 125227) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125228 && (row * 640 + col) <= 125252) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125253 && (row * 640 + col) <= 125261) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125262 && (row * 640 + col) <= 125327) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125328 && (row * 640 + col) <= 125439) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125440 && (row * 640 + col) <= 125485) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125486 && (row * 640 + col) <= 125514) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125515 && (row * 640 + col) <= 125545) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125546 && (row * 640 + col) <= 125577) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125578 && (row * 640 + col) <= 125691) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125692 && (row * 640 + col) <= 125709) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125710 && (row * 640 + col) <= 125740) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125741 && (row * 640 + col) <= 125746) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125747 && (row * 640 + col) <= 125777) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125778 && (row * 640 + col) <= 125781) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125782 && (row * 640 + col) <= 125812) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125813 && (row * 640 + col) <= 125827) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125828 && (row * 640 + col) <= 125861) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125862 && (row * 640 + col) <= 125867) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125868 && (row * 640 + col) <= 125892) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125893 && (row * 640 + col) <= 125901) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 125902 && (row * 640 + col) <= 125967) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 125968 && (row * 640 + col) <= 126079) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126080 && (row * 640 + col) <= 126125) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126126 && (row * 640 + col) <= 126154) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126155 && (row * 640 + col) <= 126185) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126186 && (row * 640 + col) <= 126217) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126218 && (row * 640 + col) <= 126331) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126332 && (row * 640 + col) <= 126349) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126350 && (row * 640 + col) <= 126380) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126381 && (row * 640 + col) <= 126386) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126387 && (row * 640 + col) <= 126417) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126418 && (row * 640 + col) <= 126421) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126422 && (row * 640 + col) <= 126501) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126502 && (row * 640 + col) <= 126507) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126508 && (row * 640 + col) <= 126532) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126533 && (row * 640 + col) <= 126541) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126542 && (row * 640 + col) <= 126607) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126608 && (row * 640 + col) <= 126719) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126720 && (row * 640 + col) <= 126765) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126766 && (row * 640 + col) <= 126794) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126795 && (row * 640 + col) <= 126825) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126826 && (row * 640 + col) <= 126857) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126858 && (row * 640 + col) <= 126971) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 126972 && (row * 640 + col) <= 126989) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 126990 && (row * 640 + col) <= 127020) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127021 && (row * 640 + col) <= 127026) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127027 && (row * 640 + col) <= 127057) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127058 && (row * 640 + col) <= 127061) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127062 && (row * 640 + col) <= 127141) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127142 && (row * 640 + col) <= 127147) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127148 && (row * 640 + col) <= 127172) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127173 && (row * 640 + col) <= 127181) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127182 && (row * 640 + col) <= 127247) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127248 && (row * 640 + col) <= 127359) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127360 && (row * 640 + col) <= 127405) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127406 && (row * 640 + col) <= 127434) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127435 && (row * 640 + col) <= 127465) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127466 && (row * 640 + col) <= 127497) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127498 && (row * 640 + col) <= 127611) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127612 && (row * 640 + col) <= 127629) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127630 && (row * 640 + col) <= 127660) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127661 && (row * 640 + col) <= 127666) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127667 && (row * 640 + col) <= 127697) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127698 && (row * 640 + col) <= 127701) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127702 && (row * 640 + col) <= 127781) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127782 && (row * 640 + col) <= 127787) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127788 && (row * 640 + col) <= 127812) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127813 && (row * 640 + col) <= 127821) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 127822 && (row * 640 + col) <= 127887) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 127888 && (row * 640 + col) <= 127999) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128000 && (row * 640 + col) <= 128045) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128046 && (row * 640 + col) <= 128071) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128072 && (row * 640 + col) <= 128108) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128109 && (row * 640 + col) <= 128137) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128138 && (row * 640 + col) <= 128251) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128252 && (row * 640 + col) <= 128269) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128270 && (row * 640 + col) <= 128300) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128301 && (row * 640 + col) <= 128306) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128307 && (row * 640 + col) <= 128421) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128422 && (row * 640 + col) <= 128427) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128428 && (row * 640 + col) <= 128452) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128453 && (row * 640 + col) <= 128461) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128462 && (row * 640 + col) <= 128527) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128528 && (row * 640 + col) <= 128639) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128640 && (row * 640 + col) <= 128685) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128686 && (row * 640 + col) <= 128711) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128712 && (row * 640 + col) <= 128748) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128749 && (row * 640 + col) <= 128777) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128778 && (row * 640 + col) <= 128891) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128892 && (row * 640 + col) <= 128909) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128910 && (row * 640 + col) <= 128940) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 128941 && (row * 640 + col) <= 128946) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 128947 && (row * 640 + col) <= 129061) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129062 && (row * 640 + col) <= 129067) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129068 && (row * 640 + col) <= 129092) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129093 && (row * 640 + col) <= 129101) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129102 && (row * 640 + col) <= 129167) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129168 && (row * 640 + col) <= 129279) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129280 && (row * 640 + col) <= 129325) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129326 && (row * 640 + col) <= 129351) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129352 && (row * 640 + col) <= 129388) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129389 && (row * 640 + col) <= 129417) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129418 && (row * 640 + col) <= 129531) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129532 && (row * 640 + col) <= 129549) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129550 && (row * 640 + col) <= 129580) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129581 && (row * 640 + col) <= 129586) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129587 && (row * 640 + col) <= 129701) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129702 && (row * 640 + col) <= 129707) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129708 && (row * 640 + col) <= 129732) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129733 && (row * 640 + col) <= 129741) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129742 && (row * 640 + col) <= 129807) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129808 && (row * 640 + col) <= 129919) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129920 && (row * 640 + col) <= 129965) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 129966 && (row * 640 + col) <= 129991) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 129992 && (row * 640 + col) <= 130028) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130029 && (row * 640 + col) <= 130057) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130058 && (row * 640 + col) <= 130171) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130172 && (row * 640 + col) <= 130180) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130181 && (row * 640 + col) <= 130186) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130187 && (row * 640 + col) <= 130189) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130190 && (row * 640 + col) <= 130223) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130224 && (row * 640 + col) <= 130226) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130227 && (row * 640 + col) <= 130341) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130342 && (row * 640 + col) <= 130347) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130348 && (row * 640 + col) <= 130372) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130373 && (row * 640 + col) <= 130381) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130382 && (row * 640 + col) <= 130447) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130448 && (row * 640 + col) <= 130559) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130560 && (row * 640 + col) <= 130605) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130606 && (row * 640 + col) <= 130631) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130632 && (row * 640 + col) <= 130668) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130669 && (row * 640 + col) <= 130697) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130698 && (row * 640 + col) <= 130811) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130812 && (row * 640 + col) <= 130820) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130821 && (row * 640 + col) <= 130826) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130827 && (row * 640 + col) <= 130829) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130830 && (row * 640 + col) <= 130863) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130864 && (row * 640 + col) <= 130866) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130867 && (row * 640 + col) <= 130981) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 130982 && (row * 640 + col) <= 130987) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 130988 && (row * 640 + col) <= 131012) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131013 && (row * 640 + col) <= 131021) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131022 && (row * 640 + col) <= 131087) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131088 && (row * 640 + col) <= 131199) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131200 && (row * 640 + col) <= 131245) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131246 && (row * 640 + col) <= 131271) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131272 && (row * 640 + col) <= 131308) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131309 && (row * 640 + col) <= 131337) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131338 && (row * 640 + col) <= 131451) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131452 && (row * 640 + col) <= 131460) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131461 && (row * 640 + col) <= 131466) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131467 && (row * 640 + col) <= 131469) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131470 && (row * 640 + col) <= 131503) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131504 && (row * 640 + col) <= 131506) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131507 && (row * 640 + col) <= 131621) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131622 && (row * 640 + col) <= 131627) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131628 && (row * 640 + col) <= 131652) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131653 && (row * 640 + col) <= 131661) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131662 && (row * 640 + col) <= 131727) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131728 && (row * 640 + col) <= 131839) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131840 && (row * 640 + col) <= 131885) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131886 && (row * 640 + col) <= 131911) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131912 && (row * 640 + col) <= 131948) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 131949 && (row * 640 + col) <= 131977) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 131978 && (row * 640 + col) <= 132091) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132092 && (row * 640 + col) <= 132098) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132099 && (row * 640 + col) <= 132143) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132144 && (row * 640 + col) <= 132146) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132147 && (row * 640 + col) <= 132261) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132262 && (row * 640 + col) <= 132267) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132268 && (row * 640 + col) <= 132292) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132293 && (row * 640 + col) <= 132301) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132302 && (row * 640 + col) <= 132367) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132368 && (row * 640 + col) <= 132479) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132480 && (row * 640 + col) <= 132525) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132526 && (row * 640 + col) <= 132551) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132552 && (row * 640 + col) <= 132588) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132589 && (row * 640 + col) <= 132617) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132618 && (row * 640 + col) <= 132731) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132732 && (row * 640 + col) <= 132737) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132738 && (row * 640 + col) <= 132783) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132784 && (row * 640 + col) <= 132786) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132787 && (row * 640 + col) <= 132901) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132902 && (row * 640 + col) <= 132907) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132908 && (row * 640 + col) <= 132932) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 132933 && (row * 640 + col) <= 132941) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 132942 && (row * 640 + col) <= 133007) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133008 && (row * 640 + col) <= 133119) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133120 && (row * 640 + col) <= 133165) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133166 && (row * 640 + col) <= 133191) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133192 && (row * 640 + col) <= 133228) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133229 && (row * 640 + col) <= 133257) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133258 && (row * 640 + col) <= 133371) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133372 && (row * 640 + col) <= 133377) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133378 && (row * 640 + col) <= 133423) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133424 && (row * 640 + col) <= 133426) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133427 && (row * 640 + col) <= 133541) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133542 && (row * 640 + col) <= 133547) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133548 && (row * 640 + col) <= 133572) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133573 && (row * 640 + col) <= 133581) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133582 && (row * 640 + col) <= 133647) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133648 && (row * 640 + col) <= 133698) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133699 && (row * 640 + col) <= 133708) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 133709 && (row * 640 + col) <= 133759) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133760 && (row * 640 + col) <= 133805) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133806 && (row * 640 + col) <= 133831) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133832 && (row * 640 + col) <= 133868) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133869 && (row * 640 + col) <= 133880) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133881 && (row * 640 + col) <= 133888) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 133889 && (row * 640 + col) <= 133897) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 133898 && (row * 640 + col) <= 134063) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134064 && (row * 640 + col) <= 134066) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134067 && (row * 640 + col) <= 134181) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134182 && (row * 640 + col) <= 134187) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134188 && (row * 640 + col) <= 134287) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134288 && (row * 640 + col) <= 134338) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134339 && (row * 640 + col) <= 134349) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 134350 && (row * 640 + col) <= 134399) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134400 && (row * 640 + col) <= 134445) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134446 && (row * 640 + col) <= 134471) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134472 && (row * 640 + col) <= 134508) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134509 && (row * 640 + col) <= 134520) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134521 && (row * 640 + col) <= 134528) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134529 && (row * 640 + col) <= 134537) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134538 && (row * 640 + col) <= 134703) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134704 && (row * 640 + col) <= 134706) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134707 && (row * 640 + col) <= 134821) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134822 && (row * 640 + col) <= 134827) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134828 && (row * 640 + col) <= 134927) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 134928 && (row * 640 + col) <= 134977) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134978 && (row * 640 + col) <= 134989) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 134990 && (row * 640 + col) <= 134993) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 134994 && (row * 640 + col) <= 134996) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 134997 && (row * 640 + col) <= 135039) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135040 && (row * 640 + col) <= 135085) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135086 && (row * 640 + col) <= 135111) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135112 && (row * 640 + col) <= 135148) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135149 && (row * 640 + col) <= 135159) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135160 && (row * 640 + col) <= 135168) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135169 && (row * 640 + col) <= 135177) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135178 && (row * 640 + col) <= 135343) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135344 && (row * 640 + col) <= 135346) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135347 && (row * 640 + col) <= 135461) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135462 && (row * 640 + col) <= 135467) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135468 && (row * 640 + col) <= 135567) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135568 && (row * 640 + col) <= 135615) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135616 && (row * 640 + col) <= 135637) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 135638 && (row * 640 + col) <= 135679) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135680 && (row * 640 + col) <= 135725) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135726 && (row * 640 + col) <= 135748) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135749 && (row * 640 + col) <= 135788) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 135789 && (row * 640 + col) <= 135791) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 135792 && (row * 640 + col) <= 136101) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136102 && (row * 640 + col) <= 136107) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136108 && (row * 640 + col) <= 136207) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136208 && (row * 640 + col) <= 136222) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136223 && (row * 640 + col) <= 136227) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136228 && (row * 640 + col) <= 136255) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136256 && (row * 640 + col) <= 136277) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 136278 && (row * 640 + col) <= 136319) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136320 && (row * 640 + col) <= 136365) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136366 && (row * 640 + col) <= 136388) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136389 && (row * 640 + col) <= 136428) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136429 && (row * 640 + col) <= 136431) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136432 && (row * 640 + col) <= 136741) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136742 && (row * 640 + col) <= 136747) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136748 && (row * 640 + col) <= 136847) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136848 && (row * 640 + col) <= 136862) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136863 && (row * 640 + col) <= 136867) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 136868 && (row * 640 + col) <= 136894) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136895 && (row * 640 + col) <= 136918) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 136919 && (row * 640 + col) <= 136959) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 136960 && (row * 640 + col) <= 137005) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137006 && (row * 640 + col) <= 137028) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137029 && (row * 640 + col) <= 137068) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137069 && (row * 640 + col) <= 137071) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137072 && (row * 640 + col) <= 137381) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137382 && (row * 640 + col) <= 137387) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137388 && (row * 640 + col) <= 137487) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137488 && (row * 640 + col) <= 137501) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137502 && (row * 640 + col) <= 137508) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137509 && (row * 640 + col) <= 137532) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137533 && (row * 640 + col) <= 137560) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 137561 && (row * 640 + col) <= 137599) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137600 && (row * 640 + col) <= 137645) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137646 && (row * 640 + col) <= 137668) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137669 && (row * 640 + col) <= 137708) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 137709 && (row * 640 + col) <= 137711) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 137712 && (row * 640 + col) <= 138021) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138022 && (row * 640 + col) <= 138027) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138028 && (row * 640 + col) <= 138156) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138157 && (row * 640 + col) <= 138172) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138173 && (row * 640 + col) <= 138200) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 138201 && (row * 640 + col) <= 138239) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138240 && (row * 640 + col) <= 138285) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138286 && (row * 640 + col) <= 138308) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138309 && (row * 640 + col) <= 138348) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138349 && (row * 640 + col) <= 138351) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138352 && (row * 640 + col) <= 138661) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138662 && (row * 640 + col) <= 138667) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138668 && (row * 640 + col) <= 138796) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138797 && (row * 640 + col) <= 138799) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138800 && (row * 640 + col) <= 138840) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 138841 && (row * 640 + col) <= 138879) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138880 && (row * 640 + col) <= 138925) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138926 && (row * 640 + col) <= 138948) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138949 && (row * 640 + col) <= 138988) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 138989 && (row * 640 + col) <= 138991) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 138992 && (row * 640 + col) <= 139301) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 139302 && (row * 640 + col) <= 139307) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 139308 && (row * 640 + col) <= 139436) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 139437 && (row * 640 + col) <= 139438) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 139439 && (row * 640 + col) <= 139480) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 139481 && (row * 640 + col) <= 139519) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 139520 && (row * 640 + col) <= 139565) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 139566 && (row * 640 + col) <= 139588) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 139589 && (row * 640 + col) <= 139628) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 139629 && (row * 640 + col) <= 139631) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 139632 && (row * 640 + col) <= 139941) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 139942 && (row * 640 + col) <= 139947) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 139948 && (row * 640 + col) <= 140076) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 140077 && (row * 640 + col) <= 140078) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140079 && (row * 640 + col) <= 140120) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 140121 && (row * 640 + col) <= 140159) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140160 && (row * 640 + col) <= 140205) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 140206 && (row * 640 + col) <= 140228) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140229 && (row * 640 + col) <= 140268) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 140269 && (row * 640 + col) <= 140271) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140272 && (row * 640 + col) <= 140581) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 140582 && (row * 640 + col) <= 140587) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140588 && (row * 640 + col) <= 140716) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 140717 && (row * 640 + col) <= 140764) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 140765 && (row * 640 + col) <= 140799) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140800 && (row * 640 + col) <= 140850) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 140851 && (row * 640 + col) <= 140859) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140860 && (row * 640 + col) <= 140908) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 140909 && (row * 640 + col) <= 140911) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 140912 && (row * 640 + col) <= 141221) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 141222 && (row * 640 + col) <= 141227) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 141228 && (row * 640 + col) <= 141356) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 141357 && (row * 640 + col) <= 141405) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 141406 && (row * 640 + col) <= 141439) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 141440 && (row * 640 + col) <= 141490) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 141491 && (row * 640 + col) <= 141499) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 141500 && (row * 640 + col) <= 141548) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 141549 && (row * 640 + col) <= 141551) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 141552 && (row * 640 + col) <= 141861) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 141862 && (row * 640 + col) <= 141867) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 141868 && (row * 640 + col) <= 141996) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 141997 && (row * 640 + col) <= 142046) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 142047 && (row * 640 + col) <= 142079) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142080 && (row * 640 + col) <= 142130) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 142131 && (row * 640 + col) <= 142139) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142140 && (row * 640 + col) <= 142188) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 142189 && (row * 640 + col) <= 142191) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142192 && (row * 640 + col) <= 142501) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 142502 && (row * 640 + col) <= 142507) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142508 && (row * 640 + col) <= 142636) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 142637 && (row * 640 + col) <= 142690) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 142691 && (row * 640 + col) <= 142719) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142720 && (row * 640 + col) <= 142770) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 142771 && (row * 640 + col) <= 142779) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142780 && (row * 640 + col) <= 142828) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 142829 && (row * 640 + col) <= 142831) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 142832 && (row * 640 + col) <= 143276) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 143277 && (row * 640 + col) <= 143331) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 143332 && (row * 640 + col) <= 143359) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 143360 && (row * 640 + col) <= 143410) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 143411 && (row * 640 + col) <= 143419) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 143420 && (row * 640 + col) <= 143468) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 143469 && (row * 640 + col) <= 143471) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 143472 && (row * 640 + col) <= 143916) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 143917 && (row * 640 + col) <= 143971) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 143972 && (row * 640 + col) <= 143999) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 144000 && (row * 640 + col) <= 144050) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 144051 && (row * 640 + col) <= 144059) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 144060 && (row * 640 + col) <= 144108) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 144109 && (row * 640 + col) <= 144111) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 144112 && (row * 640 + col) <= 144556) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 144557 && (row * 640 + col) <= 144611) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 144612 && (row * 640 + col) <= 144639) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 144640 && (row * 640 + col) <= 144690) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 144691 && (row * 640 + col) <= 144699) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 144700 && (row * 640 + col) <= 144748) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 144749 && (row * 640 + col) <= 144751) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 144752 && (row * 640 + col) <= 145196) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 145197 && (row * 640 + col) <= 145197) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 145198 && (row * 640 + col) <= 145250) color_data <= 12'b111111111111; else
-        if ((row * 640 + col) >= 145251 && (row * 640 + col) <= 145279) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 145280 && (row * 640 + col) <= 145330) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 145331 && (row * 640 + col) <= 145339) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 145340 && (row * 640 + col) <= 145388) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 145389 && (row * 640 + col) <= 145391) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 145392 && (row * 640 + col) <= 145836) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 145837 && (row * 640 + col) <= 145919) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 145920 && (row * 640 + col) <= 145970) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 145971 && (row * 640 + col) <= 145979) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 145980 && (row * 640 + col) <= 146028) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 146029 && (row * 640 + col) <= 146031) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 146032 && (row * 640 + col) <= 146476) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 146477 && (row * 640 + col) <= 146559) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 146560 && (row * 640 + col) <= 146610) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 146611 && (row * 640 + col) <= 146619) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 146620 && (row * 640 + col) <= 147116) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 147117 && (row * 640 + col) <= 147199) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 147200 && (row * 640 + col) <= 147250) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 147251 && (row * 640 + col) <= 147259) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 147260 && (row * 640 + col) <= 147756) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 147757 && (row * 640 + col) <= 147839) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 147840 && (row * 640 + col) <= 147891) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 147892 && (row * 640 + col) <= 147899) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 147900 && (row * 640 + col) <= 148396) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 148397 && (row * 640 + col) <= 148479) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 148480 && (row * 640 + col) <= 149036) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 149037 && (row * 640 + col) <= 149085) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 149086 && (row * 640 + col) <= 149087) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 149088 && (row * 640 + col) <= 149119) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 149120 && (row * 640 + col) <= 149676) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 149677 && (row * 640 + col) <= 149725) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 149726 && (row * 640 + col) <= 149727) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 149728 && (row * 640 + col) <= 149759) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 149760 && (row * 640 + col) <= 150316) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 150317 && (row * 640 + col) <= 150364) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 150365 && (row * 640 + col) <= 150368) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 150369 && (row * 640 + col) <= 150399) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 150400 && (row * 640 + col) <= 150956) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 150957 && (row * 640 + col) <= 151002) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 151003 && (row * 640 + col) <= 151010) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 151011 && (row * 640 + col) <= 151033) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 151034 && (row * 640 + col) <= 151596) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 151597 && (row * 640 + col) <= 151642) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 151643 && (row * 640 + col) <= 151650) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 151651 && (row * 640 + col) <= 151673) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 151674 && (row * 640 + col) <= 152236) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 152237 && (row * 640 + col) <= 152282) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 152283 && (row * 640 + col) <= 152290) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 152291 && (row * 640 + col) <= 152313) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 152314 && (row * 640 + col) <= 152876) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 152877 && (row * 640 + col) <= 152899) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 152900 && (row * 640 + col) <= 152904) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 152905 && (row * 640 + col) <= 152922) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 152923 && (row * 640 + col) <= 152930) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 152931 && (row * 640 + col) <= 152953) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 152954 && (row * 640 + col) <= 153516) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 153517 && (row * 640 + col) <= 153539) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 153540 && (row * 640 + col) <= 153544) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 153545 && (row * 640 + col) <= 153562) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 153563 && (row * 640 + col) <= 153570) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 153571 && (row * 640 + col) <= 153593) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 153594 && (row * 640 + col) <= 154156) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 154157 && (row * 640 + col) <= 154179) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 154180 && (row * 640 + col) <= 154184) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 154185 && (row * 640 + col) <= 154199) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 154200 && (row * 640 + col) <= 154796) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 154797 && (row * 640 + col) <= 154819) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 154820 && (row * 640 + col) <= 154824) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 154825 && (row * 640 + col) <= 154839) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 154840 && (row * 640 + col) <= 155436) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 155437 && (row * 640 + col) <= 155459) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 155460 && (row * 640 + col) <= 155464) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 155465 && (row * 640 + col) <= 155479) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 155480 && (row * 640 + col) <= 156076) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 156077 && (row * 640 + col) <= 156087) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 156088 && (row * 640 + col) <= 156110) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 156111 && (row * 640 + col) <= 156119) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 156120 && (row * 640 + col) <= 156716) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 156717 && (row * 640 + col) <= 156727) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 156728 && (row * 640 + col) <= 156750) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 156751 && (row * 640 + col) <= 156759) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 156760 && (row * 640 + col) <= 157356) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 157357 && (row * 640 + col) <= 157367) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 157368 && (row * 640 + col) <= 157390) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 157391 && (row * 640 + col) <= 157399) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 157400 && (row * 640 + col) <= 157996) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 157997 && (row * 640 + col) <= 158007) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 158008 && (row * 640 + col) <= 158030) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 158031 && (row * 640 + col) <= 158039) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 158040 && (row * 640 + col) <= 158636) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 158637 && (row * 640 + col) <= 158647) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 158648 && (row * 640 + col) <= 158670) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 158671 && (row * 640 + col) <= 158679) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 158680 && (row * 640 + col) <= 159276) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 159277 && (row * 640 + col) <= 159287) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 159288 && (row * 640 + col) <= 159310) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 159311 && (row * 640 + col) <= 159319) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 159320 && (row * 640 + col) <= 159950) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 159951 && (row * 640 + col) <= 159959) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 159960 && (row * 640 + col) <= 160590) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 160591 && (row * 640 + col) <= 160599) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 160600 && (row * 640 + col) <= 161230) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 161231 && (row * 640 + col) <= 161239) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 161240 && (row * 640 + col) <= 161870) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 161871 && (row * 640 + col) <= 161879) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 161880 && (row * 640 + col) <= 162510) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 162511 && (row * 640 + col) <= 162519) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 162520 && (row * 640 + col) <= 163150) color_data <= 12'b000001111101; else
-        if ((row * 640 + col) >= 163151 && (row * 640 + col) <= 163159) color_data <= 12'b000110111111; else
         if ((row * 640 + col) >= 163160 && (row * 640 + col) <= 181119) color_data <= 12'b000001111101; else
         if ((row * 640 + col) >= 181120 && (row * 640 + col) <= 204799) color_data <= 12'b010010000001; else
         if ((row * 640 + col) >= 204800 && (row * 640 + col) <= 239999) color_data <= 12'b101010101010; else
@@ -2082,6 +1156,6 @@ module background_rom (
         if ((row * 640 + col) >= 248921 && (row * 640 + col) <= 248959) color_data <= 12'b110011001100; else
         if ((row * 640 + col) >= 248960 && (row * 640 + col) <= 284159) color_data <= 12'b101010101010; else
         if ((row * 640 + col) >= 284160 && (row * 640 + col) < 307200) color_data <= 12'b010010000001; else
-        color_data <= 12'b000000000000;
+        color_data <= 12'b000110111111;
     end
 endmodule

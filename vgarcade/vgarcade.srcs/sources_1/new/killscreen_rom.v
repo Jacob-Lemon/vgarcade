@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 module killscreen_rom (
     input wire clk,
     input wire [8:0] row,
@@ -6,5 +5,9 @@ module killscreen_rom (
     output reg [11:0] color_data
 );
 
+
+    always @(posedge clk) begin
+		color_data <= 12'b000000001111;
+	end	    
 
 endmodule
