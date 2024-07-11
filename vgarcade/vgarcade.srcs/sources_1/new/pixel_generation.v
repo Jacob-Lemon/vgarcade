@@ -764,34 +764,86 @@ assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 // wire [11:0] background_rgb;
 // assign background_rgb = 12'hF00; // blue
 //---------------------------killscreen background-------------------------------------------------
-//wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
-//killscreen_rom killscreen (
-//    .clk(clk),
-//    .row(y),
-//    .col(x),
-//    .color_data(killscreen_rgb_reversed)
-//);
-//assign killscreen_rgb[11:8] = killscreen_rgb_reversed[3:0];
-//assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
-//assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
+// wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
+// killscreen_rom killscreen (
+//     .clk(clk),
+//     .row(y),
+//     .col(x),
+//     .color_data(killscreen_rgb_reversed)
+// );
+// assign killscreen_rgb[11:8] = killscreen_rgb_reversed[3:0];
+// assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
+// assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
 
 wire [11:0] killscreen_rgb;
 assign killscreen_rgb = 12'hFF0; // cyan
 
 //---------------------------start screen background-----------------------------------------------
-// wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
-// start_screen_rom start_screen (
-//     .clk(clk),
-//     .row(y),
-//     .col(x),
-//     .color_data(start_screen_rgb_reversed)
-// );
-// assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
-// assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
-// assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
-wire [11:0] start_screen_rgb;
-assign start_screen_rgb = 12'hF00;
+ wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
+ start_screen_rom start_screen (
+     .clk(clk),
+     .row(y),
+     .col(x),
+     .color_data(start_screen_rgb_reversed)
+ );
+ assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
+ assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
+ assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
+//wire [11:0] start_screen_rgb;
+//assign start_screen_rgb = 12'h00F;
+
+
 //---------------------------instructions background-----------------------------------------------
+// wire [11:0] instructions_rgb, instructions_rgb_reversed;
+// instructions_rom instructions (
+//      .clk(clk),
+//      .row(y),
+//      .col(x),
+//      .color_data(instructions_rgb_reversed)
+//  );
+//  assign instructions_rgb[11:8] = instructions_rgb_reversed[3:0];
+//  assign instructions_rgb[7:4]  = instructions_rgb_reversed[7:4];
+//  assign instructions_rgb[3:0]  = instructions_rgb_reversed[11:8];
+
+wire [11:0] instructions_rgb;
+assign instructions_rgb = 12'h0FF;
+
+
+
+
+/******************************************************************************
+Drawing background of input viewer
+******************************************************************************/
+wire input_background_on;
+wire [11:0] input_background_rgb_data;
+
+//input maker instantiation for displaying background
+input_maker display_background (
+        .clk(clk),
+        .x(x),
+        .y(y),
+        .input_background_on(input_background_on),
+        .rgb_data(input_background_rgb_data),
+        .A(A),
+        .B(B),
+        .X(X),
+        .Y(Y),
+        .start_pause(start_pause),
+        .L(L),
+        .R(R),
+        .Z(Z),
+        .D_UP(D_UP),
+        .D_DOWN(D_DOWN),
+        .D_RIGHT(D_RIGHT),
+        .D_LEFT(D_LEFT),
+        .JOY_X(JOY_X),
+        .JOY_Y(JOY_Y),
+        .C_STICK_X(C_STICK_X),
+        .C_STICK_Y(C_STICK_Y),
+        .L_TRIGGER(L_TRIGGER),
+        .R_TRIGGER(R_TRIGGER)
+    );
+
 
 
 /**************************************************************************************************
@@ -826,15 +878,18 @@ always @(posedge clk or posedge reset) begin
             INPUT_DISPLAY: begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
+                //--------------------input_background------------------------------------------------
+                else if (input_background_on)
+                    intermediate_rgb <= input_background_rgb_data;
                 else
-                    intermediate_rgb <= 12'h0F0; // static image
+                    intermediate_rgb <= 12'h000; // black behind input viewer
             end
 
             INSTRUCTIONS: begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
                 else
-                    intermediate_rgb <= 12'h00F; // static image
+                    intermediate_rgb <= instructions_rgb; // static image
             end
 
             GAMEPLAY: begin
