@@ -1,5 +1,6 @@
 import imageio.v2 as imageio
 import math
+import os
 import re
 from collections import Counter
 
@@ -8,20 +9,17 @@ def get_color_bits(im, y, x):
     r, g, b = im[y, x]
     return ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4)
 
-def generate_verilog_module(name, im):
+def generate_verilog_module(name, im, output_dir):
     y_max, x_max, _ = im.shape
     total_pixels = y_max * x_max
     row_width = math.ceil(math.log2(y_max))
     col_width = math.ceil(math.log2(x_max))
     max_index_width = len(str(total_pixels - 1))  # Width of the largest index as a string
 
-    file_name = f"{name.split('.')[0]}_rom.v"
+    file_name = os.path.join(output_dir, name.split('.')[0] + "_rom.v")
 
-    module_name_thing = f"{file_name.split('/')[0]}"
-    print(module_name_thing)
-    
     with open(file_name, 'w') as f:
-        f.write(f"module {module_name_thing.split('.')[0]} (\n    input wire clk,\n")
+        f.write("module " + name.split('.')[0] + "_rom (\n\tinput wire clk,\n")
         f.write(f"    input wire [{row_width-1}:0] row,\n    input wire [{col_width-1}:0] col,\n")
         f.write("    output reg [11:0] color_data\n);\n\n")
 
@@ -76,12 +74,11 @@ def optimize_verilog_file(file_path):
     with open(file_path, 'w') as file:
         file.writelines(processed_lines)
 
-def generate(name):
+def generate(name, output_dir="."):
     im = imageio.imread(name)  # Load image
     print(f"width: {im.shape[1]}, height: {im.shape[0]}")
-    generate_verilog_module(name, im)
+    generate_verilog_module(name, im, output_dir)
 
-
-
-
-generate("xfill.bmp")  # Update the path to your bitmap file
+# Example usage
+# generate("start_screen.bmp", "C:/path/to/put/output/files")  # looks in current path for bmp file, saves rom files to specified output path
+generate("start_screen.bmp") # looks in current path for bmp file, saves rom files to current path

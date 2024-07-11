@@ -1,5 +1,6 @@
 import imageio.v2 as imageio
 import math
+import os
 import re
 from collections import Counter
 
@@ -19,7 +20,7 @@ def get_color_bits(im, y, x):
 # Write to file Verilog HDL
 # Takes name of file, image array,
 # pixel coordinates of background color to mask as 0
-def rom_12_bit(name, im, mask=False, rem_x=-1, rem_y=-1):
+def rom_12_bit(name, im, output_dir, mask=False, rem_x=-1, rem_y=-1):
     # Get colorbyte of background color
     # If coordinates left at default, map all data without masking
     if rem_x == -1 or rem_y == -1:
@@ -29,7 +30,7 @@ def rom_12_bit(name, im, mask=False, rem_x=-1, rem_y=-1):
         a = get_color_bits(im, rem_x, rem_y)
 
     # Make output filename from input
-    file_name = name.split('.')[0] + "_rom.v"
+    file_name = os.path.join(output_dir, name.split('.')[0] + "_rom.v")
 
     # Open file
     f = open(file_name, 'w')
@@ -38,8 +39,8 @@ def rom_12_bit(name, im, mask=False, rem_x=-1, rem_y=-1):
     y_max, x_max, z = im.shape
 
     # Get width of row and column case words
-    row_width = math.ceil(math.log(y_max-1,2))
-    col_width = math.ceil(math.log(x_max-1,2))
+    row_width = math.ceil(math.log(y_max-1, 2))
+    col_width = math.ceil(math.log(x_max-1, 2))
 
     # Write beginning part of module up to case statements
     f.write("module " + name.split('.')[0] + "_rom\n\t(\n\t\t")
@@ -60,10 +61,10 @@ def rom_12_bit(name, im, mask=False, rem_x=-1, rem_y=-1):
             f.write("\t\t" + str(row_width + col_width) + "'b" + case + ": color_data = " + str(12) + "'b")
 
             # If mask is set to false, just write color data
-            if(mask == False):
+            if mask == False:
                 f.write(get_color_bits(im, y, x))
                 f.write(";\n")
-            elif(get_color_bits(im, y, x) != a):
+            elif get_color_bits(im, y, x) != a:
                 # Write color bits to file
                 f.write(get_color_bits(im, y, x))
                 f.write(";\n")
@@ -107,9 +108,11 @@ def process_verilog_file(file_path):
         file.writelines(processed_lines)
 
 # Driver function
-def generate(name, rem_x=-1, rem_y=-1):
+def generate(name, output_dir="."):
     im = imageio.imread(name)
     print("width: " + str(im.shape[1]) + ", height: " + str(im.shape[0]))
-    rom_12_bit(name, im)
+    rom_12_bit(name, im, output_dir)
 
-generate("c_stick.bmp")  # Update the path to your bitmap file
+# Example usage
+# generate("start_screen.bmp", "C:/path/to/put/output/files")  # looks in current path for bmp file, saves rom files to specified output path
+generate("start_screen.bmp") # looks in current path for bmp file, saves rom files to current path
