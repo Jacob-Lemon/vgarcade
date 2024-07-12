@@ -14,7 +14,7 @@ def generate_verilog_module(name, im, output_dir):
     total_pixels = y_max * x_max
     row_width = math.ceil(math.log2(y_max))
     col_width = math.ceil(math.log2(x_max))
-    max_index_width = len(str(total_pixels - 1))  # Width of the largest index as a string
+    # max_index_width = len(str(total_pixels - 1))  # Width of the largest index as a string
 
     file_name = os.path.join(output_dir, name.split('.')[0] + "_rom.v")
 
@@ -76,7 +76,8 @@ def optimize_verilog_file(file_path):
 
 def generate(name, output_dir="."):
     im = imageio.imread(name)  # Load image
-    print(f"width: {im.shape[1]}, height: {im.shape[0]}")
+    print(name.split('.')[0] + "_rom:\t" + f"width: {im.shape[1]}, height: {im.shape[0]}")
+    # print(f"width: {im.shape[1]}, height: {im.shape[0]}")
     generate_verilog_module(name, im, output_dir)
 
 # Example usage

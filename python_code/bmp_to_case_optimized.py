@@ -47,7 +47,7 @@ def rom_12_bit(name, im, output_dir, mask=False, rem_x=-1, rem_y=-1):
     f.write("input wire clk,\n\t\tinput wire [" + str(row_width-1) + ":0] row,\n\t\t")
     f.write("input wire [" + str(col_width-1) + ":0] col,\n\t\t")
     f.write("output reg [11:0] color_data\n\t);\n\n\t")
-    f.write("(* rom_style = \"block\" *)\n\n\t//signal declaration\n\t")
+    f.write("(* rom_style = \"distributed\" *)\n\n\t//signal declaration\n\t")
     f.write("reg [" + str(row_width-1) + ":0] row_reg;\n\t")
     f.write("reg [" + str(col_width-1) + ":0] col_reg;\n\n\t")
     f.write("always @(posedge clk)\n\t\tbegin\n\t\trow_reg <= row;\n\t\tcol_reg <= col;\n\t\tend\n\n\t")
@@ -92,7 +92,7 @@ def process_verilog_file(file_path):
 
     # Determine the most common color value
     most_common_color = Counter(color_values).most_common(1)[0][0]
-    print(most_common_color)
+    # print(most_common_color)
 
     # Process lines: remove those with the most common color value
     processed_lines = []
@@ -110,7 +110,7 @@ def process_verilog_file(file_path):
 # Driver function
 def generate(name, output_dir="."):
     im = imageio.imread(name)
-    print("width: " + str(im.shape[1]) + ", height: " + str(im.shape[0]))
+    print(name.split('.')[0] + "_rom:\t" + f"width: {im.shape[1]}, height: {im.shape[0]}")
     rom_12_bit(name, im, output_dir)
 
 # Example usage
