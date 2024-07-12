@@ -8,7 +8,7 @@ module pixel_generation(
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
-    input [15:0] sw,                // switches from the basys3 board
+    input [15:0] sw                // switches from the basys3 board
 );
 // create a 60Hz refresh tick at the start of vsync
 // this is the framerate
@@ -242,17 +242,12 @@ player_maker player1 (
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
-// more player data that is needed elsewhere
-wire [9:0] player1_x_center, player1_y_center;
-
-assign player1_x_center = player1_x_wire + (PLAYER_WIDTH / 2);
-assign player1_y_center = player1_y_wire + (PLAYER_WIDTH / 2);
 
 /**************************************************************************************************
 * Here lies the creation of multiple fruits
 * There shall be many fruits
 **************************************************************************************************/
-localparam FRUIT_SIZE = 40;
+localparam FRUIT_SIZE = 40; // height and width
 localparam NUM_FRUITS = 2;  // Number of fruits
 
 // Array definitions for multiple fruits
@@ -267,6 +262,9 @@ wire [NUM_FRUITS:0] fruit_on;
 wire [11:0] fruit_rgb_data [NUM_FRUITS:0];
 wire [7:0] which_fruit[NUM_FRUITS:0];
 
+// each fruit keeps track of how many times it has been caught
+// and how much score that specific fruit contributes to the total
+// the array is summed up later
 reg [15:0] score_array[NUM_FRUITS:0];
 
 // Initializations
@@ -277,8 +275,6 @@ initial begin
         fruit_y_next_reg[j] = 0;
     end
 end
-
-
 
 // LFSR and handling logic for each fruit
 genvar idx;
@@ -305,16 +301,8 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
     );
 
     wire [NUM_FRUITS:0] player_catching;
-    wire [10:0] diff_x, diff_y;
-    wire [9:0] fruit_x_center, fruit_y_center;
     
-
-    assign fruit_x_center = fruit_x[idx] + 20;
-    assign fruit_y_center = fruit_y[idx] + 20;
-    assign diff_x = player1_x_center >= fruit_x_center ? player1_x_center - fruit_x_center : fruit_x_center - player1_x_center;
-    assign diff_y = player1_y_center >= fruit_y_center ? player1_y_center - fruit_y_center : fruit_y_center - player1_y_center;
-    
-    // assign player_catching = (diff_x <= 70) && (diff_y <= 70);
+    // if the player and fruit images overlap, that is collision
     assign player_catching[idx] = (player1_on & fruit_on[idx]);
 
 
@@ -336,52 +324,56 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
             speed_caught[idx] <= 0;
             shield_caught[idx] <= 0;
         end
-        // else if (game_state == GAMEPLAY) begin
         else begin
-            // if (refresh_tick) begin
-                // if hits the ground or is caught
-                speed_caught[idx]   <= 0;
-                shield_caught[idx]  <= 0;
-                if (fruit_y_next_reg[idx] >= 440 || player_catching[idx]) begin
-                    if (player_catching[idx]) begin
-                        if (which_fruit[idx] >= 0 && which_fruit[idx] < 40) begin
-                            // apple
-                            score_array[idx] <= score_array[idx] + 1;
-                        end
-
-                        else if (which_fruit[idx] >= 40 && which_fruit[idx] < 70) begin
-                            // orange
-                            score_array[idx] <= score_array[idx] + 2;
-                        end
-                
-                        else if (which_fruit[idx] >= 70 && which_fruit[idx] < 90) begin
-                            // pineapple
-                            score_array[idx] <= score_array[idx] + 3;
-                        end
-
-                        else if (which_fruit[idx] >= 90 && which_fruit[idx] < 97) begin
-                            // strawberry
-                            score_array[idx] <= score_array[idx] + 4;
-                        end
-
-                        else if (which_fruit[idx] >= 97 && which_fruit[idx] < 99) begin
-                            // speed
-                            speed_caught[idx] <= 1;
-                        end
-                        else if (which_fruit[idx] >= 99 && which_fruit[idx] <= 100) begin
-                            // shield
-                            shield_caught[idx] <= 1;
-                        end
+            // if hits the ground or is caught
+            speed_caught[idx]  <= 0;
+            shield_caught[idx] <= 0;
+            // the fruit respanws when it hits the ground or the player catches it
+            if (fruit_y_next_reg[idx] >= 440 || player_catching[idx]) begin
+                // if the player caught it, add points or obtain powerups
+                if (player_catching[idx]) begin
+                    if (which_fruit[idx] >= 0 && which_fruit[idx] < 40) begin
+                        // apple is worth one point
+                        score_array[idx] <= score_array[idx] + 1;
                     end
-                    fruit_y_next_reg[idx] <= 0; // respawn value
-                    fruit_respawn[idx] <= 1;
-                end else begin
-                    if (refresh_tick) begin
-                        fruit_y_next_reg[idx] <= fruit_y_next_reg[idx] + 1;
+
+                    else if (which_fruit[idx] >= 40 && which_fruit[idx] < 70) begin
+                        // orange is worth two points
+                        score_array[idx] <= score_array[idx] + 2;
                     end
-                    fruit_respawn[idx] <= 0;
+            
+                    else if (which_fruit[idx] >= 70 && which_fruit[idx] < 90) begin
+                        // pineapple is worth three points
+                        score_array[idx] <= score_array[idx] + 3;
+                    end
+
+                    else if (which_fruit[idx] >= 90 && which_fruit[idx] < 97) begin
+                        // strawberry is worth 4 points
+                        score_array[idx] <= score_array[idx] + 4;
+                    end
+
+                    else if (which_fruit[idx] >= 97 && which_fruit[idx] < 99) begin
+                        // speed is caught. this will give the player a speedboost
+                        // this signal is given to and used by the player_powerups module
+                        speed_caught[idx] <= 1;
+                    end
+                    else if (which_fruit[idx] >= 99 && which_fruit[idx] <= 100) begin
+                        // shield is caught. this will give the player a shield
+                        // this signal is given to and used by the player_powerups module
+                        shield_caught[idx] <= 1;
+                    end
                 end
-            // end
+                // respawn by setting y to zero and pushing the respawn signal high
+                fruit_y_next_reg[idx] <= 0;
+                fruit_respawn[idx] <= 1;
+            end else begin  // else if the fruit has not been caught or hit the ground
+                if (refresh_tick) begin
+                    // just keep moving the fruit down
+                    fruit_y_next_reg[idx] <= fruit_y_next_reg[idx] + 1;
+                end
+                // the fruit does not respawn unless it is caught or hit the ground
+                fruit_respawn[idx] <= 0;
+            end
         end
     end
 
@@ -403,6 +395,7 @@ end
 endgenerate
 
 // score thing
+// this sums up the array of scores from each individual fruit
 wire [15:0] score;
 assign score =  score_array[0] +
                 score_array[1];
@@ -416,29 +409,31 @@ assign score =  score_array[0] +
 **************************************************************************************************/
 // data I need
 parameter MAX_LIVES = 3;
+// HEART_SIZE is the height and width of the image in pixels
 parameter HEART_SIZE = 25;
 
 wire [9:0] health_bar_x_location, health_bar_y_location;
-
+// location is fixed to a specific place
 assign health_bar_x_location = 100;
 assign health_bar_y_location = 300;
 
 wire [3:0] health_on;
 wire [11:0] health_rgb_data [11:0];
 
-// actual player lives
+// actual player lives is initialized to be full health
 reg [3:0] player1_lives = MAX_LIVES;
-
+// player is dead when they run out of lives
 assign player_dead = (player1_lives == 0);
 
 genvar i;
 generate
     for (i=0; i < MAX_LIVES; i = i + 1) begin
+        // display each heart
         heart_maker display_lives (
             .clk(clk),
             .x(x),
             .y(y),
-            .start_x(health_bar_x_location + i*HEART_SIZE),
+            .start_x(health_bar_x_location + i*HEART_SIZE), // this displays each heart further to the right to create a health bar
             .start_y(health_bar_y_location),
             .size(HEART_SIZE),
             .heart_on(health_on[i]),
@@ -451,12 +446,12 @@ endgenerate
 * Score board display generation
 **************************************************************************************************/
 // data I need
-localparam DECIMAL_PLACES = 5;
-localparam NUMBER_WIDTH = 25;
+localparam DECIMAL_PLACES = 5;  // this is the number if digits in the score display
+localparam NUMBER_WIDTH = 25;   // dimensions of each digit in pixels
 localparam NUMBER_HEIGHT = 30;
 
 wire [9:0] score_bar_x_location, score_bar_y_location;
-
+// location of the score display is constant
 assign score_bar_x_location = 295;
 assign score_bar_y_location = 50;
 
@@ -467,8 +462,8 @@ wire [11:0] number_rgb_data [11:0];
 
 wire [DECIMAL_PLACES:0] score_in_decimal [4:0];
 
-assign score_in_decimal[0] = score % 10;
-assign score_in_decimal[1] = (score / 10)      % 10;
+assign score_in_decimal[0] = score % 10;                // get the ones place for the score display
+assign score_in_decimal[1] = (score / 10)      % 10;    // tens place, etc.
 assign score_in_decimal[2] = (score / 100)     % 10;
 assign score_in_decimal[3] = (score / 1_000)   % 10;
 assign score_in_decimal[4] = (score / 10_000)  % 10;
@@ -486,7 +481,8 @@ generate
             .y_position(score_bar_y_location),
             .size_x(NUMBER_WIDTH),
             .size_y(NUMBER_HEIGHT),
-            .which_number(score_in_decimal[(DECIMAL_PLACES -1) - iterator1]),
+            // this makes sure that the score reads from left to right, MSB to LSB
+            .which_number(score_in_decimal[(DECIMAL_PLACES - 1) - iterator1]),
             .number_on(number_on[iterator1]),
             .rgb_data(number_rgb_data[iterator1])
         );
@@ -504,6 +500,7 @@ parameter CAR_WIDTH = 150;
 parameter CAR_HEIGHT = 75;
 
 // position and motion data
+// y location is constant
 wire [9:0] car_y_wire;
 assign car_y_wire = 325;
 
@@ -511,46 +508,45 @@ wire [9:0] car_x_wire;
 reg [9:0] car_x_reg  = 700;
 reg [9:0] car_x_next = 700;
 
-
 // car speed is constant in this design
 reg [2:0] car_x_speed;
-initial car_x_speed = 1;    // things break if this is not one. Do not change this.
+initial car_x_speed = 1;
 
 // signals for the moving of the car.
 wire car_in_x_range; //checks whether the car is on screen or not
-
 assign car_in_x_range = (car_x_next >= 0 && car_x_next <= 650);
 
 //----------------------collision variables--------------------------------------------------------
 // player-car collision detection
-wire [9:0] car_center_x, car_center_y;
-assign car_center_x = car_x_wire + (CAR_WIDTH / 2);
-assign car_center_y = car_y_wire + (CAR_HEIGHT / 2);
-
-
 
 reg car_player_collision, prev_car_player_collision;
 wire posedge_car_player_collision;
 assign posedge_car_player_collision = car_player_collision && ~prev_car_player_collision;
 assign posedge_shield_car_player_collision = posedge_car_player_collision; // for powerup earlier in the file
 
-
-
 //----------------------car state machine----------------------------------------------------------
-// these paramaters are counted in 60Hz frames
+// these time paramaters are counted in 60Hz frames.
 // CAR_TIME_DURATION represents the total length of the car time cyle, waiting stage time plus warning time
-localparam CAR_TIME_DURATION    = 1_440; // 24 seconds, car waits for 20 seconds, then 4 more with the warning active
-localparam CAR_WARNING_DURATION = 240;   // 4 seconds
+// each refresh tick is four clock cycles, so they need to be 4 times as many frames as they are
+
+// 10 seconds for the total waiting time, car waits for 8 seconds, then 2 more with the warning active
+// 8 seconds = (60 frames/sec) * (8 seconds) * (4 because of refresh tick rate) = 1920 frames
+// total number of frames is 1920 + 480 = 2400 for a total of 10 seconds
+localparam CAR_TIME_DURATION    = 2_400;
+// 2 seconds = (60 frames/sec) * (2 seconds) * (4 because of refresh tick rate) = 480 frames
+localparam CAR_WARNING_DURATION = 480;
 
 reg car_timer_start = 1;
 
-localparam CAR_WAITING         = 0;
-localparam CAR_WARNING         = 1;
+localparam CAR_WAITING         = 0;     // car is waiting, warning is not active
+localparam CAR_WARNING         = 1;     // car is still waiting, but the warning is active
 localparam CAR_DRIVING_NOT_HIT = 2;     // describes the state where the car has not hit the player
-localparam CAR_DRIVING_HIT     = 3;
-reg [1:0] car_state = CAR_WAITING;
-initial car_state = CAR_WAITING;
+localparam CAR_DRIVING_HIT     = 3;     // car is still driving, but has hit the player; it will not hit the player twice on one drive by
 
+// initially the car is waiting
+reg [1:0] car_state = CAR_WAITING;
+
+// car timer signals
 wire car_timer_active;
 wire [15:0] car_timer_counter;
 reg car_warning_active = 0;
@@ -575,39 +571,37 @@ always @(posedge clk or posedge reset) begin
     else begin
         case (car_state) 
             CAR_WAITING: begin
-                // if (refresh_tick) begin
-                    prev_car_player_collision <= car_player_collision;
-                    car_player_collision <= (player1_on & car_on);
-                    car_x_next <= 700;
-                    car_warning_active <= 0;
-                    // timer should initialize to be active, so deactivate starting the timer
-                    if (car_timer_start) begin
-                        car_timer_start <= 0;
-                    end
-                    // upon timer expiring, move to next state
-                    // else if (~car_timer_active) begin
-                    else if (car_timer_counter == CAR_WARNING_DURATION) begin
-                        car_state <= CAR_WARNING;
-                        // car_x_next <= 645;  // moves the car in range
-                    end
-                // end
+                prev_car_player_collision <= car_player_collision;  // to detect positive edge of collision
+                car_player_collision <= (player1_on & car_on);      // collision is based on overlap of car and player images
+                car_x_next <= 700;
+                car_warning_active <= 0;
+                // timer should initialize to be active, so we don't need to start starting the timer
+                if (car_timer_start) begin
+                    car_timer_start <= 0;
+                end
+                // upon timer expiring, move to next state
+                else if (car_timer_counter == CAR_WARNING_DURATION) begin
+                    car_state <= CAR_WARNING;
+                end
             end
 
             CAR_WARNING: begin
-                // if (refresh_tick) begin
-                    car_warning_active <= 1;
-                    if (~car_timer_active) begin
-                        car_state <= CAR_DRIVING_NOT_HIT;
-                        car_x_next <= 645;
-                    end
-                // end
+                car_warning_active <= 1;    // display the car warning
+                // upon the timer expiring, we move to the next state
+                if (~car_timer_active) begin
+                    car_state <= CAR_DRIVING_NOT_HIT;
+                    car_x_next <= 645;  // this moves the car in range
+                end
             end
 
             CAR_DRIVING_NOT_HIT: begin
                 if (refresh_tick) begin
-                    if (~car_timer_active)
+                    if (~car_timer_active) begin
+                        // if the car timer isn't active, move the car
                         car_x_next <= car_x_next - car_x_speed;
+                    end
                 end
+                // if the car is driving, we don't need to keep displaying the warning
                 car_warning_active <= 0;
                 // detect positive edge of collision
                 prev_car_player_collision <= car_player_collision;
@@ -705,13 +699,16 @@ car_maker car (
 * this displays a slot that will show a lightning bolt if the speed boost is available for 
 * the player to use
 **************************************************************************************************/
-localparam BOOST_DISPLAY_HEIGHT = 59; // dimensions for boost display in pixels
+// dimensions for boost display in pixels
+localparam BOOST_DISPLAY_HEIGHT = 59;
 localparam BOOST_DISPLAY_WIDTH  = 51;
 
-localparam BOOST_DISPLAY_X_POSITION = 579; // location of boost display
+// location of boost display
+localparam BOOST_DISPLAY_X_POSITION = 579;
 localparam BOOST_DISPLAY_Y_POSITION = 20;
 
 wire [11:0] boost_display_rgb_data;
+wire boost_display_on;
 
 boost_display_maker speed_boost_display (
     .clk(clk),

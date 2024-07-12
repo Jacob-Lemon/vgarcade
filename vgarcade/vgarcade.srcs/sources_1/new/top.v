@@ -168,13 +168,13 @@ pixel_generation pg (
     .R_TRIGGER(R_TRIGGER),
     
     // switches
-    .sw(sw_reg),
+    .sw(sw_reg)
     //.score(score),
     // test
-    .not_playing(button_data[7]),
-    .game_state(button_data[6:3]),
-    .car_timer_active(button_data[2]),
-    .car_state(button_data[1:0])
+//    .not_playing(button_data[7]),
+//    .game_state(button_data[6:3]),
+//    .car_timer_active(button_data[2]),
+//    .car_state(button_data[1:0])
 );
 
 
