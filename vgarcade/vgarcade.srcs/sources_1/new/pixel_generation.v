@@ -29,6 +29,7 @@ initial game_state = START_SCREEN;
 
 wire player_dead;
 wire not_playing;
+wire almost_game_over; //assigned on line five hundred something
 assign not_playing = ~(game_state == GAMEPLAY);
 
 // state control
@@ -62,12 +63,14 @@ always @(posedge clk or posedge reset) begin
                 game_state <= INSTRUCTIONS;
         end
         GAMEPLAY: begin
-            if (player_dead)
+            if (player_dead && car_state == CAR_WAITING)
                 game_state <= KILL_SCREEN;
         end
         KILL_SCREEN: begin
             if (L & R)
                 game_state <= START_SCREEN;
+            else if (start_pause)
+                game_state <= GAMEPLAY;
             else
                 game_state <= KILL_SCREEN;
         end
@@ -89,6 +92,14 @@ reg  [9:0] player1_x_next; // pipeline register for x position
 wire [9:0] player1_y_wire;
 reg  [9:0] player1_y_reg;
 reg  [9:0] player1_y_next; // pipeline register for y position
+
+
+// dead player position
+wire [9:0] dead_player_x_wire;
+reg  [9:0] dead_player_x_reg;
+
+wire [9:0] dead_player_y_wire;
+reg  [9:0] dead_player_y_reg;
 
 //------------------------------powerup things------------------------------
 // speed boost signals
@@ -126,6 +137,9 @@ initial begin
     player1_x_next = 380;
     player1_y_reg = 300;
     player1_y_next = 300;
+
+    dead_player_x_reg = player1_x_reg;
+    dead_player_y_reg = player1_y_reg;
 end
 
 // Pipeline stage for calculating next position
@@ -152,6 +166,8 @@ end
 
 reg player_jumping;
 initial player_jumping = 0;
+
+
 
 localparam DEADZONE = 64;
 // player motion
@@ -197,6 +213,16 @@ always @(posedge clk or posedge reset) begin
                 // move right
                 player1_x_next <= player1_x_next + player_x_speed;
             end
+
+            if (!almost_game_over) begin
+                dead_player_x_reg <= player1_x_next;
+                dead_player_y_reg <= player1_y_next;
+            end else begin
+                if (dead_player_y_reg <= 300) begin
+                    dead_player_y_reg <= dead_player_y_reg + 2; // go down
+                end
+            end
+
         end
     end
 end
@@ -219,6 +245,9 @@ end
 assign player1_x_wire = player1_x_reg;
 assign player1_y_wire = player1_y_reg;
 
+assign dead_player_x_wire = dead_player_x_reg;
+assign dead_player_y_wire = dead_player_y_reg;
+
 //----------------------player rgb signals---------------------------------------------------------
 wire player1_on;
 wire [11:0] player1_rgb_data;
@@ -239,6 +268,30 @@ player_maker player1 (
     .player_on(player1_on),
     .rgb_data(player1_rgb_data)
 );
+
+
+//----------------------dead player rgb signals---------------------------------------------------------
+wire dead_player_on;
+wire [11:0] dead_player_rgb_data;
+
+// player dimensions in pixels
+localparam DEAD_PLAYER_HEIGHT = 77;
+localparam DEAD_PLAYER_WIDTH  = 92;
+
+dead_player_maker dead_player (
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .x_position(dead_player_x_wire),
+    .y_position(dead_player_y_wire),
+    .height(DEAD_PLAYER_HEIGHT),
+    .width(DEAD_PLAYER_WIDTH),
+    .dead_player_on(dead_player_on),
+    .rgb_data(dead_player_rgb_data)
+);
+
+
+
 
 /**************************************************************************************************
 * Here lies the creation of multiple fruits
@@ -300,7 +353,7 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
     wire [NUM_FRUITS:0] player_catching;
     
     // if the player and fruit images overlap, that is collision
-    assign player_catching[idx] = (player1_on & fruit_on[idx]);
+    assign player_catching[idx] = (player1_on & fruit_on[idx]) && (!almost_game_over);
 
 
     always @(posedge clk or posedge reset) begin
@@ -420,7 +473,7 @@ wire [11:0] health_rgb_data [11:0];
 // actual player lives is initialized to be full health
 reg [3:0] player1_lives = MAX_LIVES;
 // player is dead when they run out of lives
-assign player_dead = (player1_lives == 0);
+assign player_dead = (player1_lives == 0 && car_state == CAR_WAITING);
 
 genvar i;
 generate
@@ -547,6 +600,8 @@ reg [1:0] car_state = CAR_WAITING;
 wire car_timer_active;
 wire [15:0] car_timer_counter;
 reg car_warning_active = 0;
+
+assign almost_game_over = (player1_lives == 0 && car_state != 0);
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -740,6 +795,7 @@ assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 
 // wire [11:0] background_rgb;
 // assign background_rgb = 12'hF00; // blue
+
 //---------------------------killscreen background-------------------------------------------------
 // wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
 // killscreen_rom killscreen (
@@ -766,8 +822,8 @@ assign killscreen_rgb = 12'hFF0; // cyan
  assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
  assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
  assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
-//wire [11:0] start_screen_rgb;
-//assign start_screen_rgb = 12'h00F;
+// wire [11:0] start_screen_rgb;
+// assign start_screen_rgb = 12'h00F;
 
 
 //---------------------------instructions background-----------------------------------------------
@@ -871,9 +927,9 @@ always @(posedge clk or posedge reset) begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
                 //--------------------fruit------------------------------------------------
-                else if (fruit_on[0])
+                else if (fruit_on[0] && !almost_game_over)
                     intermediate_rgb <= fruit_rgb_data[0];
-                else if (fruit_on[1])
+                else if (fruit_on[1] && !almost_game_over)
                     intermediate_rgb <= fruit_rgb_data[1];
                 // else if (fruit_on[2])
                 //     intermediate_rgb <= fruit_rgb_data[2]; // additional fruits follow in this manner
@@ -881,8 +937,11 @@ always @(posedge clk or posedge reset) begin
                 else if (car_on)
                     intermediate_rgb <= car_rgb_data;
                 //--------------------player-----------------------------------------------
-                else if (player1_on)
+                else if (player1_on && !almost_game_over)
                     intermediate_rgb <= player1_rgb_data;
+                //--------------------dead player-----------------------------------------------
+                else if (dead_player_on && almost_game_over)
+                    intermediate_rgb <= dead_player_rgb_data;
                 //--------------------health-----------------------------------------------
                 else if (health_on[0] && player1_lives >= 1)
                     intermediate_rgb <= health_rgb_data[0];
@@ -902,7 +961,7 @@ always @(posedge clk or posedge reset) begin
                 else if (number_on[4])
                     intermediate_rgb <= number_rgb_data[4];
                 //--------------------boost display-----------------------
-                else if (boost_display_on)
+                else if (boost_display_on && !almost_game_over)
                     intermediate_rgb <= boost_display_rgb_data;
                 //--------------------warning display---------------------
                 else if (warning_on & car_warning_active)   // only display warning when the car is about to come
@@ -916,7 +975,7 @@ always @(posedge clk or posedge reset) begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
                 else
-                    intermediate_rgb <= killscreen_rgb; // static image
+                    intermediate_rgb <= background_rgb; // static image
             end // end case of KILL_SCREEN
 
             default: begin
