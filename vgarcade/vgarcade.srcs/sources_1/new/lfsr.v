@@ -37,15 +37,16 @@ always @(posedge clk or posedge reset) begin
         condition_prev <= 1'b0;  // Initialize previous condition state
     end else begin
         // Update previous condition to check for rising edge of condition
+        condition_prev <= condition;
+
         
-        condition_prev <= condition;  // Update previous condition state
-        // if in range, stop generating
-        // else keep generating
-        
+        // if we need to keep generating
         if (keep_generating) begin
+            // generate a new number
             lfsr_reg <= {lfsr_reg[LFSR_WIDTH-2:0], feedback};
         end
         else begin
+            // else we assign the output and are done
             random_number <= lfsr_reg;
         end
     end

@@ -50,7 +50,7 @@ always @(posedge clk or posedge reset) begin
                 game_state <= START_SCREEN;
         end
         INPUT_DISPLAY: begin
-            if (L & R)
+            if (L & R & D_UP)
                 game_state <= START_SCREEN;
             else
                 game_state <= INPUT_DISPLAY;
@@ -109,9 +109,6 @@ player_powerups get_powers (
     .game_state(game_state),
     // gamecube inputs
     .A(A), .B(B), .X(X), .Y(Y), .start_pause(start_pause), .L(L), .R(R), .Z(Z),
-    .D_UP(D_UP), .D_DOWN(D_DOWN), .D_RIGHT(D_RIGHT), .D_LEFT(D_LEFT),
-    .JOY_X(JOY_X), .JOY_Y(JOY_Y), .C_STICK_X(C_STICK_X), .C_STICK_Y(C_STICK_Y),
-    .L_TRIGGER(L_TRIGGER), .R_TRIGGER(R_TRIGGER),
     // powerup signals
     .speed_caught(speed_caught),
     .shield_caught(shield_caught),

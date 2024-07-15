@@ -1,31 +1,31 @@
-`timescale 1ns / 1ps
+/**************************************************************************************************
+* This module contains the logic regarding player powerups. The output signals determine
+* speed_caught and shield_caught are arrays to account for catching any one fruit.
+**************************************************************************************************/
 
 module player_powerups(
     // system inputs
-    input clk,              // 100Mhz system clock
-    input reset,            // sytem reset
-    input refresh_tick,     // 60Hz refresh tick
-    input [3:0] game_state, // game state for reset purposes
-    // gamecube inputs, each button and joystick
-    input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
-    input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
+    input clk,                          // 100Mhz system clock
+    input reset,                        // sytem reset
+    input refresh_tick,                 // 60Hz refresh tick
+    input [3:0] game_state,             // game state for reset purposes
+    // gamecube inputs, these are the buttons that use powerups
+    input A, B, X, Y, start_pause, L, R, Z,
     // powerup inputs from pixel gen
-    input [3:0] speed_caught,
-    input [3:0] shield_caught,
+    input [3:0] speed_caught,           // signal for whether we have caught a speed boost
+    input [3:0] shield_caught,          // signal for catching a sheild
     input posedge_car_collision,        // the positive edge of car_player_collision
     // outputs
-    output speed_boost_on,
-    output reg speed_boost_available,
-    output reg shield_boost_on
+    output speed_boost_on,              // whether the speed boost is on
+    output reg speed_boost_available,   // whether the speed boost is available, for the boost display
+    output reg shield_boost_on          // whether the shield boost is actually on
 );
 
+// playing, this is for reset purposes
 wire playing;
 assign playing = (game_state == 3);    // GAMEPLAY
 
-
-/**************************************************************************************************
-* speed boost logic
-**************************************************************************************************/
+//----------------------speed bost logic-----------------------------------------------------------
 // speed boost signals
 reg start_boosting;
 // reg speed_boost_available;
@@ -47,9 +47,11 @@ always @(posedge clk or posedge reset) begin
         speed_boost_available <= 0;
         start_boosting <= 0;
     end
-    else // if (refresh_tick) begin
+    else
+        // simple state machine
         if (speed_boost_available == 0) begin
-            speed_boost_available <= (|speed_caught); // whether or not we have caught any pumpkin
+            // if we don't have the speed boost, it goes high upon catching a speed
+            speed_boost_available <= (|speed_caught); // whether or not we have caught any speed
             start_boosting <= 0; // critical change here!!!
         end
         else if (speed_boost_available == 1) begin
@@ -74,11 +76,7 @@ down_counter speed_boost_timer (
     .timer_active(speed_boost_on)   // boost is active for as long as the timer is active
 );
 
-
-/**************************************************************************************************
-* shield logic
-**************************************************************************************************/
-
+//----------------------shield logic---------------------------------------------------------------
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         shield_boost_on <= 0;
@@ -90,12 +88,13 @@ always @(posedge clk or posedge reset) begin
         // this is a super simple state machine
         if (shield_boost_on == 0) begin
             // if we haven't caught a shield, it goes high when we have caught one
-            shield_boost_on <= (|shield_caught);
+            shield_boost_on <= (|shield_caught);    // bitwise or here because we can catch any one fruit
         end
         else if (shield_boost_on == 1) begin
             // if we have a shield, it goes low upon car collision
-            if (posedge_car_collision)
+            if (posedge_car_collision) begin
                 shield_boost_on <= 0;
+            end
         end
     end
 end
