@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module car_maker(
     input clk,
     input [9:0] x, y,
@@ -31,21 +29,13 @@ assign car_on = (x > left_bound) && (x < right_bound) &&
                    (y > up_bound)   && (y < down_bound) &&
                    (rgb_data != 12'hFFF);
 
-
-
-
-//////////
-// instantiate car roms and mux to get the right one
-// do it here
-//////////
+// instantiate car rom to get color data
 car_rom car (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_car_data)
 );
-
-
 
 // this is to get rgb bits in the right order
 // they may originally be in little endian form or something

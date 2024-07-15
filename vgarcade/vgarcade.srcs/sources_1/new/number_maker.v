@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module number_maker(
     input clk,
     input [9:0] x, y,
@@ -10,7 +8,7 @@ module number_maker(
     output number_on,
     output [11:0] rgb_data
 );
-// number size should be 35 pixels wide and 30 pixels tall
+// number size should be 35 pixels wide and 30 pixels tall or something
 
 wire [9:0] row, col;
 
@@ -33,76 +31,75 @@ assign number_on = (x > left_bound) && (x <= right_bound) &&
                   (y >= up_bound)   && (y < down_bound)  &&
                   (rgb_data != 12'hFFF);
 
-
 /******************************************************************************
 * instantiating number roms
 * selecting which number to display based on which number it is
 ******************************************************************************/
 wire [11:0] rom_number_data [9:0];
-//-----------------zero-----------------
+// zero
 zero_rom zero (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[0])
 );
-//-----------------one-----------------
+// one
 one_rom one (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[1])
 );
-//-----------------two-----------------
+// two
 two_rom two (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[2])
 );
-//-----------------three-----------------
+// three
 three_rom three (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[3])
 );
-//-----------------four-----------------
+// four
 four_rom four (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[4])
 );
-//-----------------five-----------------
+// five
 five_rom five (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[5])
 );
-//-----------------six-----------------
+// six
 six_rom six (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[6])
 );
-//-----------------seven-----------------
+// seven
 seven_rom seven (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[7])
 );
-//-----------------eight-----------------
+// eight
 eight_rom eight (
     .clk(clk),
     .row(row),
     .col(col),
     .color_data(rom_number_data[8])
 );
-//-----------------nine-----------------
+// nine
 nine_rom nine (
     .clk(clk),
     .row(row),

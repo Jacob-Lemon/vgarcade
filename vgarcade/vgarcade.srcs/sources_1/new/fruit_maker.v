@@ -7,8 +7,6 @@ module fruit_maker (
     output fruit_on,
     output [11:0] rgb_data
 );
-// fruit size should be 40
-
 
 wire [9:0] row, col;
 
@@ -91,22 +89,22 @@ shield_rom shield (
 reg [11:0] intermediate_rom_fruit_data;
 
 always @(posedge clk) begin
-    if (which_fruit >= 0 && which_fruit < 40)           // apple
+    if (which_fruit >= 0 && which_fruit < 40)           // apple, 40% chance
         intermediate_rom_fruit_data <= rom_apple_data;
 
-    else if (which_fruit >= 40 && which_fruit < 70)     // orange
+    else if (which_fruit >= 40 && which_fruit < 70)     // orange, 30% chance
         intermediate_rom_fruit_data <= rom_orange_data;
     
-    else if (which_fruit >= 70 && which_fruit < 90)     // pineapple
+    else if (which_fruit >= 70 && which_fruit < 90)     // pineapple, 20% chance
         intermediate_rom_fruit_data <= rom_pineapple_data;
 
-    else if (which_fruit >= 90 && which_fruit < 97)     // strawberry
+    else if (which_fruit >= 90 && which_fruit < 97)     // strawberry, 6% chance
         intermediate_rom_fruit_data <= rom_strawberry_data;
     
-    else if (which_fruit >= 97 && which_fruit < 99)     // speed
+    else if (which_fruit >= 97 && which_fruit < 99)     // speed, 2% chance
         intermediate_rom_fruit_data <= rom_speed_data;
     
-    else if (which_fruit >= 99 && which_fruit <= 100)     // shield
+    else if (which_fruit >= 99 && which_fruit <= 100)     // shield, 2% chance
         intermediate_rom_fruit_data <= rom_shield_data;
         
 end
