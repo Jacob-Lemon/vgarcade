@@ -24,7 +24,6 @@ end
 * this is the gamecube input things
 ******************************************************************************/
 
-
 wire A;
 wire B;
 wire X;
@@ -88,9 +87,6 @@ gamecube controller (
 //assign button_data[14] = C_STICK_X[5]; //only tests for movement, not value
 //assign button_data[15] = C_STICK_Y[5]; //only tests for movement, not value
 
-assign button_data[15] = reset;
-
-
 //Section 2: Shows the specific values of the main Joystick
 //assign button_data[7:0] = JOY_X;
 //assign button_data[15:8] = JOY_Y;
@@ -150,15 +146,8 @@ pixel_generation pg (
     .C_STICK_Y(C_STICK_Y),
     .L_TRIGGER(L_TRIGGER),
     .R_TRIGGER(R_TRIGGER),
-    
-    // switches
+    // switches as an input to pixel gen
     .sw(sw_reg)
-    //.score(score),
-    // test
-//    .not_playing(button_data[7]),
-//    .game_state(button_data[6:3]),
-//    .car_timer_active(button_data[2]),
-//    .car_state(button_data[1:0])
 );
 
 

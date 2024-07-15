@@ -52,15 +52,18 @@ always @(posedge clk or posedge reset) begin
         if (speed_boost_available == 0) begin
             // if we don't have the speed boost, it goes high upon catching a speed
             speed_boost_available <= (|speed_caught); // whether or not we have caught any speed
-            start_boosting <= 0; // critical change here!!!
+            start_boosting <= 0; // we aren't starting the boost here, so it needs to be low
         end
         else if (speed_boost_available == 1) begin
+            // if we have the speed boost, it only goes low upon using the powerup (by pressing B)
             if (B) begin
                 speed_boost_available <= 0; // use boost powerup
-                start_boosting <= 1;
+                start_boosting <= 1;    // start the boost timer
             end
-            else 
-                start_boosting <= 0; // this makes it so boost works but can't be boosting and hold
+            else begin
+                // if we aren't using the boost, we aren't starting the timer
+                start_boosting <= 0;
+            end
         end
     // end
 end
@@ -70,7 +73,7 @@ down_counter speed_boost_timer (
     .refresh_tick(refresh_tick),    // 60Hz frame refresh tick
     .reset(reset),                  // game reset
     .timer_start(start_boosting),   // signal to control the start of the down counter
-    .frames_to_count_for(960),      // 4 seconds = 240 frames @ 60Hz, 4 counts per frame
+    .frames_to_count_for(960),      // 960 frames = 4 seconds = 60Hz * 4 seconds * 4 counts per frame
     // outputs
     .counter(),                     // unused port in this case, may be invalid syntax
     .timer_active(speed_boost_on)   // boost is active for as long as the timer is active
