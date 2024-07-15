@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module warning_maker (
     input clk,
     input [9:0] x, y,
@@ -26,12 +24,9 @@ assign down_bound  = y_position + height;
 assign col = x - left_bound;
 assign row = y - up_bound;     
 
-assign warning_on = (x >/*=*/ left_bound) && (x < right_bound) &&
-                   (y >/*=*/ up_bound)   && (y < down_bound) &&
+assign warning_on = (x > left_bound) && (x < right_bound) &&
+                   (y > up_bound)   && (y < down_bound) &&
                    (rgb_data != 12'hFFF);
-
-
-
 
 /**************************************************************************************************
 * get the rom data

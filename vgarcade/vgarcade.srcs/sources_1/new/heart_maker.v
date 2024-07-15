@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module heart_maker(
     input clk,
     input [9:0] x, y,
@@ -23,21 +21,17 @@ assign right_heart = start_x + size;
 assign up_heart = start_y;
 assign down_heart = start_y + size;
 
-/*
-to get the column value,
-subtract left boundary from x
-same for row value
-*/
+// get column of the image by comparing boundaries to the x,y coordinates
 assign col = x - left_heart;
 assign row = y - up_heart;     
 
 // determine whether we need to be writing heart data
-// based on whether we are in its rectangle
+// based on whether we are in its rectangle and it is not white color
 assign heart_on = (x >= left_heart) && (x < right_heart) &&
                   (y >= up_heart)   && (y < down_heart) &&
                   (rgb_data != 12'hFFF);
 
-
+// instantiate heart rom
 heart_rom heart1(
     .clk(clk),
     .row(row),

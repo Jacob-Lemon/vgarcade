@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module player_maker(
     input clk,
     input [9:0] x, y,
@@ -27,12 +25,9 @@ assign down_bound  = y_position + height;
 assign col = x - left_bound;
 assign row = y - up_bound;     
 
-assign player_on = (x >/*=*/ left_bound) && (x < right_bound) &&
-                   (y >/*=*/ up_bound)   && (y < down_bound) &&
+assign player_on = (x > left_bound) && (x < right_bound) &&
+                   (y > up_bound)   && (y < down_bound) &&
                    (rgb_data != 12'hFFF);
-
-
-
 
 /**************************************************************************************************
 * instantiate player roms and mux to get the right one
@@ -55,6 +50,7 @@ player_shielded_rom player1_shielded (
 );
 
 wire [11:0] intermediate_rgb;
+// select the rom based on if we have a shield or not
 assign intermediate_rgb = shield_on ? (rom_player_shielded_data) : (rom_player_data);
 
 // this is to get rgb bits in the right order

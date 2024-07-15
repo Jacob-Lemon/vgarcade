@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module boost_display_maker (
     input clk,
     input [9:0] x, y,
@@ -19,20 +17,21 @@ wire [9:0] right_bound;
 wire [9:0] up_bound;
 wire [9:0] down_bound;
 
+// the position values correspond to the upper left corner
+// so, right bound is position plus width and down bound is position plus height
 assign left_bound  = x_position;
 assign right_bound = x_position + width;
 assign up_bound    = y_position;
 assign down_bound  = y_position + height;
 
+// get the column by comparing the x,y location to the bounds
 assign col = x - left_bound;
 assign row = y - up_bound;     
 
-assign boost_display_on = (x >/*=*/ left_bound) && (x < right_bound) &&
-                   (y >/*=*/ up_bound)   && (y < down_bound) &&
-                   (rgb_data != 12'hFFF);
-
-
-
+// the sprite is on when we are within bounds and color isn't white
+assign boost_display_on = (x > left_bound) && (x < right_bound) &&
+                          (y > up_bound)   && (y < down_bound) &&
+                          (rgb_data != 12'hFFF);
 
 /**************************************************************************************************
 * instantiate boost display roms and mux to get the right one
@@ -57,6 +56,7 @@ boost_display_inactive_rom inactive (
 
 
 wire [11:0] intermediate_rgb;
+// select the rom based on if we have the speed boost available
 assign intermediate_rgb = speed_boost_available ? (rom_boost_display_active_data) : (rom_boost_display_inactive_data);
 
 // this is to get rgb bits in the right order
