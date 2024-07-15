@@ -148,7 +148,7 @@ always @(posedge clk or posedge reset) begin
     end
     else begin
         // speed is determined by if the speed boost is active or not
-        if (speed_boost_on) player_x_speed <= 4;
+        if (speed_boost_on) player_x_speed <= 4;    // speed represents pixels moves per frame
         else player_x_speed <= 2;
     end
 end
@@ -654,7 +654,7 @@ down_counter car_timer (
     .reset(reset),                              // game reset
     .timer_start(car_timer_start),              // starts the counter
     .frames_to_count_for(CAR_TIME_DURATION),    // how long, in 60Hz frames I want to count for
-    .counter(car_timer_counter),
+    .counter(car_timer_counter),                // the counter timer value
     .timer_active(car_timer_active)             // whether the timer is active, or inactive
 );
 //---------------------------------car warning display---------------------------------------------
@@ -799,32 +799,30 @@ wire [11:0] input_background_rgb_data;
 
 //input maker instantiation for displaying background
 input_maker display_background (
-        .clk(clk),
-        .x(x),
-        .y(y),
-        .input_background_on(input_background_on),
-        .rgb_data(input_background_rgb_data),
-        .A(A),
-        .B(B),
-        .X(X),
-        .Y(Y),
-        .start_pause(start_pause),
-        .L(L),
-        .R(R),
-        .Z(Z),
-        .D_UP(D_UP),
-        .D_DOWN(D_DOWN),
-        .D_RIGHT(D_RIGHT),
-        .D_LEFT(D_LEFT),
-        .JOY_X(JOY_X),
-        .JOY_Y(JOY_Y),
-        .C_STICK_X(C_STICK_X),
-        .C_STICK_Y(C_STICK_Y),
-        .L_TRIGGER(L_TRIGGER),
-        .R_TRIGGER(R_TRIGGER)
-    );
-
-
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .input_background_on(input_background_on),
+    .rgb_data(input_background_rgb_data),
+    .A(A),
+    .B(B),
+    .X(X),
+    .Y(Y),
+    .start_pause(start_pause),
+    .L(L),
+    .R(R),
+    .Z(Z),
+    .D_UP(D_UP),
+    .D_DOWN(D_DOWN),
+    .D_RIGHT(D_RIGHT),
+    .D_LEFT(D_LEFT),
+    .JOY_X(JOY_X),
+    .JOY_Y(JOY_Y),
+    .C_STICK_X(C_STICK_X),
+    .C_STICK_Y(C_STICK_Y),
+    .L_TRIGGER(L_TRIGGER),
+    .R_TRIGGER(R_TRIGGER)
+);
 
 /**************************************************************************************************
 * RGB control
