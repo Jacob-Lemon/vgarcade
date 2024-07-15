@@ -14,7 +14,7 @@ module down_counter(
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
-        counter <= 0; // powerup is not on and counting upon reset
+        counter <= 0; // powerup is not on and not counting upon reset
     end
     else begin
         if (timer_start) begin

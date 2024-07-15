@@ -1,26 +1,30 @@
+/**************************************************************************************************
+* This is an lfsr.
+* For this design we want to have the lfsr generate a random number within a specific range, that
+* is given upon instantiation. To achieve this, we have the lfsr generate a number every clock
+* cycle until we get a number in the range we want
+**************************************************************************************************/
+
 module lfsr (
-    input wire clk,
-    input wire reset,
-    input wire condition,
-    input wire [9:0] low_bound,
-    input wire [9:0] up_bound,
-    input wire [9:0] seed,
-    output reg [9:0] random_number
+    input wire clk,                 // system clock, 100Mhz
+    input wire reset,               // system reset
+    input wire condition,           // the condition that triggers the activation of the lfsr
+    input wire [9:0] low_bound,     // lower bound that determines the range of numbers the lfsr can generate
+    input wire [9:0] up_bound,      // upper bound
+    input wire [9:0] seed,          // seed for the lfsr
+    output reg [9:0] random_number  // output, the randomly generated number
 );
 
 // Parameters for the LFSR - change width as needed
 parameter LFSR_WIDTH = 10;
-//parameter SEED = 8'b1010_0101;  // Non-zero seed
 reg [LFSR_WIDTH-1:0] lfsr_reg;
 wire feedback;
 
 // Register to detect rising edge of condition
 reg condition_prev;
 
+// this is the lfsr polynomial
 assign feedback = (lfsr_reg[9] ^ lfsr_reg[6]);
-//assign feedback = (lfsr_reg[3] ^ lfsr_reg[0]);
-
-// reg keep_generating;
 
 wire keep_generating;
 // we keep generating when event happens or we are not in range
@@ -32,8 +36,9 @@ always @(posedge clk or posedge reset) begin
         random_number <= 0;
         condition_prev <= 1'b0;  // Initialize previous condition state
     end else begin
+        // Update previous condition to check for rising edge of condition
+        
         condition_prev <= condition;  // Update previous condition state
-        // Check for rising edge of condition
         // if in range, stop generating
         // else keep generating
         
@@ -43,10 +48,7 @@ always @(posedge clk or posedge reset) begin
         else begin
             random_number <= lfsr_reg;
         end
-        
-
     end
 end
-
 
 endmodule
