@@ -278,17 +278,17 @@ wire [11:0] dead_player_rgb_data;
 localparam DEAD_PLAYER_HEIGHT = 77;
 localparam DEAD_PLAYER_WIDTH  = 92;
 
-//dead_player_maker dead_player (
-//    .clk(clk),
-//    .x(x),
-//    .y(y),
-//    .x_position(dead_player_x_wire),
-//    .y_position(dead_player_y_wire),
-//    .height(DEAD_PLAYER_HEIGHT),
-//    .width(DEAD_PLAYER_WIDTH),
-//    .dead_player_on(dead_player_on),
-//    .rgb_data(dead_player_rgb_data)
-//);
+dead_player_maker dead_player (
+    .clk(clk),
+    .x(x),
+    .y(y),
+    .x_position(dead_player_x_wire),
+    .y_position(dead_player_y_wire),
+    .height(DEAD_PLAYER_HEIGHT),
+    .width(DEAD_PLAYER_WIDTH),
+    .dead_player_on(dead_player_on),
+    .rgb_data(dead_player_rgb_data)
+);
 
 
 
