@@ -152,9 +152,11 @@ pixel_generation pg (
 
 
 // rgb buffer
-always @(posedge clk_100MHz)
-    if(w_p_tick)
+always @(posedge clk_100MHz) begin
+    if (w_p_tick) begin
         rgb_reg <= rgb_next;
+    end
+end
 
 assign rgb = rgb_reg;
 

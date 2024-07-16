@@ -209,7 +209,7 @@ always @(posedge clk or posedge reset) begin
                 // move left
                 player1_x_next <= player1_x_next - player_x_speed;
             end
-            else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < 530) begin
+            else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < (640 - 10 - (PLAYER_WIDTH))) begin
                 // move right
                 player1_x_next <= player1_x_next + player_x_speed;
             end
@@ -278,17 +278,17 @@ wire [11:0] dead_player_rgb_data;
 localparam DEAD_PLAYER_HEIGHT = 77;
 localparam DEAD_PLAYER_WIDTH  = 92;
 
-dead_player_maker dead_player (
-    .clk(clk),
-    .x(x),
-    .y(y),
-    .x_position(dead_player_x_wire),
-    .y_position(dead_player_y_wire),
-    .height(DEAD_PLAYER_HEIGHT),
-    .width(DEAD_PLAYER_WIDTH),
-    .dead_player_on(dead_player_on),
-    .rgb_data(dead_player_rgb_data)
-);
+//dead_player_maker dead_player (
+//    .clk(clk),
+//    .x(x),
+//    .y(y),
+//    .x_position(dead_player_x_wire),
+//    .y_position(dead_player_y_wire),
+//    .height(DEAD_PLAYER_HEIGHT),
+//    .width(DEAD_PLAYER_WIDTH),
+//    .dead_player_on(dead_player_on),
+//    .rgb_data(dead_player_rgb_data)
+//);
 
 
 
@@ -477,7 +477,7 @@ assign player_dead = (player1_lives == 0 && car_state == CAR_WAITING);
 
 genvar i;
 generate
-    for (i=0; i < MAX_LIVES; i = i + 1) begin
+    for (i=0; i < MAX_LIVES; i = i + 1) begin : health_bar
         // display each heart
         heart_maker display_lives (
             .clk(clk),
@@ -522,7 +522,7 @@ assign score_in_decimal[4] = (score / 10_000)  % 10;
 
 genvar iterator1;
 generate
-    for (iterator1=0; iterator1 < DECIMAL_PLACES; iterator1 = iterator1 + 1) begin
+    for (iterator1=0; iterator1 < DECIMAL_PLACES; iterator1 = iterator1 + 1) begin : score_bar
         number_maker display_score (
             .clk(clk),
             .x(x),
