@@ -808,8 +808,8 @@ assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 // assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
 // assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
 
-wire [11:0] killscreen_rgb;
-assign killscreen_rgb = 12'hFF0; // cyan
+// wire [11:0] killscreen_rgb;
+// assign killscreen_rgb = 12'hFF0; // cyan
 
 //---------------------------start screen background-----------------------------------------------
  wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
@@ -840,6 +840,38 @@ assign killscreen_rgb = 12'hFF0; // cyan
 
 wire [11:0] instructions_rgb;
 assign instructions_rgb = 12'h0FF;
+
+
+//---------------------------LRback-----------------------------------------------
+wire [11:0] LRback_rgb, LRback_rgb_reversed;
+wire LRback_on;
+LRback_rom LRback (
+     .clk(clk),
+     .row(y), //drawn in top left corner
+     .col(x),
+     .color_data(LRback_rgb_reversed)
+ );
+assign LRback_rgb[11:8] = LRback_rgb_reversed[3:0];
+assign LRback_rgb[7:4]  = LRback_rgb_reversed[7:4];
+assign LRback_rgb[3:0]  = LRback_rgb_reversed[11:8];
+assign LRback_on = (x < 384) && (y < 46) && (LRback_rgb != 12'hFFF);
+
+
+//---------------------------LRUPback-----------------------------------------------
+wire [11:0] LRUPback_rgb, LRUPback_rgb_reversed;
+wire LRUPback_on;
+LRUPback_rom LRUPback (
+     .clk(clk),
+     .row(y), //drawn in top left corner
+     .col(x),
+     .color_data(LRUPback_rgb_reversed)
+ );
+assign LRUPback_rgb[11:8] = LRUPback_rgb_reversed[3:0];
+assign LRUPback_rgb[7:4]  = LRUPback_rgb_reversed[7:4];
+assign LRUPback_rgb[3:0]  = LRUPback_rgb_reversed[11:8];
+assign LRUPback_on = (x < 481) && (y < 47) && (LRUPback_rgb != 12'h000);
+
+
 
 
 
@@ -912,6 +944,8 @@ always @(posedge clk or posedge reset) begin
                 //--------------------input_background------------------------------------------------
                 else if (input_background_on)
                     intermediate_rgb <= input_background_rgb_data;
+                else if (LRUPback_on)
+                    intermediate_rgb <= LRUPback_rgb;
                 else
                     intermediate_rgb <= 12'h000; // black behind input viewer
             end
@@ -919,6 +953,8 @@ always @(posedge clk or posedge reset) begin
             INSTRUCTIONS: begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
+                else if (LRback_on)
+                    intermediate_rgb <= LRback_rgb;
                 else
                     intermediate_rgb <= instructions_rgb; // static image
             end
@@ -974,6 +1010,8 @@ always @(posedge clk or posedge reset) begin
             KILL_SCREEN: begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
+                else if (LRback_on)
+                    intermediate_rgb <= LRback_rgb;
                 else
                     intermediate_rgb <= background_rgb; // static image
             end // end case of KILL_SCREEN
