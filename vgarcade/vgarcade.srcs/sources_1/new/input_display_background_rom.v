@@ -6,7 +6,7 @@ module input_display_background_rom
 		output reg [11:0] color_data
 	);
 
-	(* rom_style = "block" *)
+	(* rom_style = "distributed" *)
 
 	//signal declaration
 	reg [7:0] row_reg;

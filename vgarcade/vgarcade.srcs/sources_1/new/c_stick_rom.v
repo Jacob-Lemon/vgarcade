@@ -1,5 +1,5 @@
 module c_stick_rom (
-    input wire clk,
+	input wire clk,
     input wire [5:0] row,
     input wire [5:0] col,
     output reg [11:0] color_data

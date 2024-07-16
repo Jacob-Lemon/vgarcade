@@ -1,5 +1,5 @@
 module zero_rom (
-    input wire clk,
+	input wire clk,
     input wire [4:0] row,
     input wire [4:0] col,
     output reg [11:0] color_data

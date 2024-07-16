@@ -1,5 +1,5 @@
 module rfill_rom (
-    input wire clk,
+	input wire clk,
     input wire [7:0] row,
     input wire [9:0] col,
     output reg [11:0] color_data

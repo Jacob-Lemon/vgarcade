@@ -1,5 +1,5 @@
 module joystick_rom (
-    input wire clk,
+	input wire clk,
     input wire [6:0] row,
     input wire [6:0] col,
     output reg [11:0] color_data
