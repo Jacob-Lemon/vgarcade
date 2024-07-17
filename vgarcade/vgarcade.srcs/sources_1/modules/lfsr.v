@@ -9,6 +9,7 @@ module lfsr (
     input wire clk,                 // system clock, 100Mhz
     input wire reset,               // system reset
     input wire condition,           // the condition that triggers the activation of the lfsr
+    input wire [3:0] game_state,
     input wire [9:0] low_bound,     // lower bound that determines the range of numbers the lfsr can generate
     input wire [9:0] up_bound,      // upper bound
     input wire [9:0] seed,          // seed for the lfsr
@@ -34,12 +35,14 @@ always @(posedge clk or posedge reset) begin
     if (reset) begin
         lfsr_reg <= seed;
         random_number <= 0;
-        condition_prev <= 1'b0;  // Initialize previous condition state
+        condition_prev <= 0;  // Initialize previous condition state
+    end else if (game_state != 3) begin // if we are not in game_play mode
+        lfsr_reg <= seed;   // seed the lfsr when not in gameplay
+        random_number <= 0;
+        condition_prev <= 0;
     end else begin
         // Update previous condition to check for rising edge of condition
         condition_prev <= condition;
-
-        
         // if we need to keep generating
         if (keep_generating) begin
             // generate a new number

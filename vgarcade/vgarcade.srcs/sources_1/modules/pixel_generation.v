@@ -326,6 +326,12 @@ initial begin
     end
 end
 
+reg [9:0] lfsr_seed = 0;
+always @(posedge clk) begin
+    lfsr_seed <= lfsr_seed + 1;
+end
+
+
 // LFSR and handling logic for each fruit
 genvar idx;
 generate
@@ -334,9 +340,11 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .clk(clk),                          // system clock, 100 MHz
         .reset(reset),                      // system reset
         .condition(fruit_respawn[idx]),     // the condition that triggers activation of the lfsr
+        .game_state(game_state),            // game state of the game, for reset and re-seeding purposes
         .low_bound(10),                     // lower bounds that determine the numbers the lfsr can generate
         .up_bound(590),                     // upper bound
-        .seed(283*idx+727),                 // seed
+        // .seed(283*idx+727),                 // seed
+        .seed(lfsr_seed >> idx),                 // seed
         .random_number(fruit_x[idx])        // output. this is the x spawn location of the next fruit
     );
 
@@ -344,9 +352,11 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .clk(clk),                          // system clock, 100 MHz
         .reset(reset),                      // system reset
         .condition(fruit_respawn[idx]),     // the condition that triggers activation of the lfsr
+        .game_state(game_state),            // game state of the game, for reset and re-seeding purposes
         .low_bound(1),                      // lower bound of values the lfsr can generate
         .up_bound(100),                     // upper bound
-        .seed(563+256*idx),                 // seed
+        // .seed(563+256*idx),                 // seed
+        .seed(lfsr_seed >> idx),                 // seed
         .random_number(which_fruit[idx])    // output. this determines which fruit. apple, orange, powerup, etc.
     );
 
