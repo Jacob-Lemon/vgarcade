@@ -32,52 +32,57 @@ wire not_playing;
 wire almost_game_over; //assigned on line five hundred something
 assign not_playing = ~(game_state == GAMEPLAY);
 
+reg center_joystick;
+
 // state control
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         // reset behavior of game_state state machine
         game_state <= START_SCREEN;
     end
-    else
-    case (game_state)
-        START_SCREEN: begin
-            if (start_pause)
-                game_state <= GAMEPLAY;
-            else if (Z)
-                game_state <= INSTRUCTIONS;
-            else if (Y)
-                game_state <= INPUT_DISPLAY;
-            else
+    else begin
+        center_joystick <= 0; //used to keep this only high for 1 clock cycle
+        case (game_state)
+            START_SCREEN: begin
+                if (start_pause)
+                    game_state <= GAMEPLAY;
+                else if (Z)
+                    game_state <= INSTRUCTIONS;
+                else if (Y) begin
+                    center_joystick <= 1; //used to center the joysticks in input display
+                    game_state <= INPUT_DISPLAY;
+                end else
+                    game_state <= START_SCREEN;
+            end
+            INPUT_DISPLAY: begin
+                if (L & R & D_UP)
+                    game_state <= START_SCREEN;
+                else
+                    game_state <= INPUT_DISPLAY;
+            end
+            INSTRUCTIONS: begin
+                if (L & R)
+                    game_state <= START_SCREEN;
+                else
+                    game_state <= INSTRUCTIONS;
+            end
+            GAMEPLAY: begin
+                if (player_dead && car_state == CAR_WAITING)
+                    game_state <= KILL_SCREEN;
+            end
+            KILL_SCREEN: begin
+                if (L & R)
+                    game_state <= START_SCREEN;
+                else if (start_pause)
+                    game_state <= GAMEPLAY;
+                else
+                    game_state <= KILL_SCREEN;
+            end
+            default: begin
                 game_state <= START_SCREEN;
-        end
-        INPUT_DISPLAY: begin
-            if (L & R & D_UP)
-                game_state <= START_SCREEN;
-            else
-                game_state <= INPUT_DISPLAY;
-        end
-        INSTRUCTIONS: begin
-            if (L & R)
-                game_state <= START_SCREEN;
-            else
-                game_state <= INSTRUCTIONS;
-        end
-        GAMEPLAY: begin
-            if (player_dead && car_state == CAR_WAITING)
-                game_state <= KILL_SCREEN;
-        end
-        KILL_SCREEN: begin
-            if (L & R)
-                game_state <= START_SCREEN;
-            else if (start_pause)
-                game_state <= GAMEPLAY;
-            else
-                game_state <= KILL_SCREEN;
-        end
-        default: begin
-            game_state <= START_SCREEN;
-        end
-    endcase
+            end
+        endcase
+    end
 end
 
 /**************************************************************************************************
@@ -138,8 +143,8 @@ initial begin
     player1_y_reg = 300;
     player1_y_next = 300;
 
-    dead_player_x_reg = player1_x_reg;
-    dead_player_y_reg = player1_y_reg;
+    dead_player_x_reg = player1_x_reg - 15;
+    dead_player_y_reg = player1_y_reg + 15;
 end
 
 // Pipeline stage for calculating next position
@@ -215,11 +220,15 @@ always @(posedge clk or posedge reset) begin
             end
 
             if (!almost_game_over) begin
-                dead_player_x_reg <= player1_x_next;
-                dead_player_y_reg <= player1_y_next;
+                if (player1_x_next > 25)
+                    dead_player_x_reg <= player1_x_next - 15; // so that dead player "falls" to the left when hit
+                else
+                    dead_player_x_reg <= player1_x_next; // so that dead player doesn't disappear on left side when "falling"
+
+                dead_player_y_reg <= player1_y_next + 15; // so that dead player "falls down" when hit
             end else begin
                 if (dead_player_y_reg <= 300) begin
-                    dead_player_y_reg <= dead_player_y_reg + 2; // go down
+                    dead_player_y_reg <= dead_player_y_reg + 2; // dead player will continue falling from where it got hit
                 end
             end
 
@@ -326,6 +335,8 @@ initial begin
     end
 end
 
+
+// to have the lfsr seed determined by when the game is started
 reg [9:0] lfsr_seed = 0;
 always @(posedge clk) begin
     lfsr_seed <= lfsr_seed + 1;
@@ -343,8 +354,8 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .game_state(game_state),            // game state of the game, for reset and re-seeding purposes
         .low_bound(10),                     // lower bounds that determine the numbers the lfsr can generate
         .up_bound(590),                     // upper bound
-        // .seed(283*idx+727),                 // seed
-        .seed(lfsr_seed >> idx),                 // seed
+        .seed(283*idx+lfsr_seed),                 // seed
+        // .seed(lfsr_seed >> idx),                 // seed
         .random_number(fruit_x[idx])        // output. this is the x spawn location of the next fruit
     );
 
@@ -352,11 +363,9 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .clk(clk),                          // system clock, 100 MHz
         .reset(reset),                      // system reset
         .condition(fruit_respawn[idx]),     // the condition that triggers activation of the lfsr
-        .game_state(game_state),            // game state of the game, for reset and re-seeding purposes
         .low_bound(1),                      // lower bound of values the lfsr can generate
         .up_bound(100),                     // upper bound
-        // .seed(563+256*idx),                 // seed
-        .seed(lfsr_seed >> idx),                 // seed
+        .seed(lfsr_seed+256*idx),                 // seed
         .random_number(which_fruit[idx])    // output. this determines which fruit. apple, orange, powerup, etc.
     );
 
@@ -474,8 +483,8 @@ parameter HEART_SIZE = 25;
 
 wire [9:0] health_bar_x_location, health_bar_y_location;
 // location is fixed to a specific place
-assign health_bar_x_location = 100;
-assign health_bar_y_location = 300;
+assign health_bar_x_location = 20;
+assign health_bar_y_location = 20;
 
 wire [3:0] health_on;
 wire [11:0] health_rgb_data [11:0];
@@ -512,8 +521,8 @@ localparam NUMBER_HEIGHT = 30;
 
 wire [9:0] score_bar_x_location, score_bar_y_location;
 // location of the score display is constant
-assign score_bar_x_location = 295;
-assign score_bar_y_location = 50;
+assign score_bar_x_location = 640 - 10 - (DECIMAL_PLACES * NUMBER_WIDTH);  // 10 pixels from right edge
+assign score_bar_y_location = 20;
 
 wire [DECIMAL_PLACES:0] number_on;
 wire [11:0] number_rgb_data [11:0];
@@ -522,11 +531,18 @@ wire [11:0] number_rgb_data [11:0];
 
 wire [DECIMAL_PLACES:0] score_in_decimal [4:0];
 
-assign score_in_decimal[0] = score % 10;                // get the ones place for the score display
-assign score_in_decimal[1] = (score / 10)      % 10;    // tens place, etc.
-assign score_in_decimal[2] = (score / 100)     % 10;
-assign score_in_decimal[3] = (score / 1_000)   % 10;
-assign score_in_decimal[4] = (score / 10_000)  % 10;
+
+reg [15:0] displayed_score;
+always @(posedge clk) begin
+    if (game_state == GAMEPLAY)
+        displayed_score <= score;
+end
+
+assign score_in_decimal[0] = (displayed_score % 10);                // get the ones place for the score display
+assign score_in_decimal[1] = (displayed_score / 10)      % 10;    // tens place, etc.
+assign score_in_decimal[2] = (displayed_score / 100)     % 10;
+assign score_in_decimal[3] = (displayed_score / 1_000)   % 10;
+assign score_in_decimal[4] = (displayed_score / 10_000)  % 10;
 // assign score_in_decimal[5] = (score / 100_000) % 10;
 
 
@@ -568,9 +584,37 @@ wire [9:0] car_x_wire;
 reg [9:0] car_x_reg  = 700;
 reg [9:0] car_x_next = 700;
 
-// car speed is constant in this design
+// car speed starts at 1
 reg [2:0] car_x_speed;
 initial car_x_speed = 1;
+
+
+// signals and always block to increase car speed based on points
+reg current_8th_bit, previous_8th_bit;
+initial current_8th_bit = 0;
+initial previous_8th_bit = 0;
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        car_x_speed <= 1;
+        current_8th_bit <= 0;
+        previous_8th_bit <= 0;
+    end
+    else if (not_playing) begin
+        car_x_speed <= 1;
+        current_8th_bit <= 0;
+        previous_8th_bit <= 0;
+    end
+    else begin
+        // detects a change in the 256 bit place
+        current_8th_bit <= score[8];
+        previous_8th_bit <= current_8th_bit;
+
+        // increases the car speed every 256 points
+        if (current_8th_bit != previous_8th_bit)
+            car_x_speed <= car_x_speed + 1;
+    end
+end
 
 // signals for the moving of the car.
 wire car_in_x_range; //checks whether the car is on screen or not
@@ -766,7 +810,7 @@ localparam BOOST_DISPLAY_HEIGHT = 59;
 localparam BOOST_DISPLAY_WIDTH  = 51;
 
 // location of boost display
-localparam BOOST_DISPLAY_X_POSITION = 579;
+localparam BOOST_DISPLAY_X_POSITION = 295;
 localparam BOOST_DISPLAY_Y_POSITION = 20;
 
 wire [11:0] boost_display_rgb_data;
@@ -806,34 +850,21 @@ assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 // wire [11:0] background_rgb;
 // assign background_rgb = 12'hF00; // blue
 
-//---------------------------killscreen background-------------------------------------------------
-// wire [11:0] killscreen_rgb, killscreen_rgb_reversed;
-// killscreen_rom killscreen (
-//     .clk(clk),
-//     .row(y),
-//     .col(x),
-//     .color_data(killscreen_rgb_reversed)
-// );
-// assign killscreen_rgb[11:8] = killscreen_rgb_reversed[3:0];
-// assign killscreen_rgb[7:4]  = killscreen_rgb_reversed[7:4];
-// assign killscreen_rgb[3:0]  = killscreen_rgb_reversed[11:8];
-
-// wire [11:0] killscreen_rgb;
-// assign killscreen_rgb = 12'hFF0; // cyan
 
 //---------------------------start screen background-----------------------------------------------
- wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
- start_screen_rom start_screen (
-     .clk(clk),
-     .row(y),
-     .col(x),
-     .color_data(start_screen_rgb_reversed)
- );
- assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
- assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
- assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
-// wire [11:0] start_screen_rgb;
-// assign start_screen_rgb = 12'h00F;
+//  wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
+//  start_screen_rom start_screen (
+//      .clk(clk),
+//      .row(y),
+//      .col(x),
+//      .color_data(start_screen_rgb_reversed)
+//  );
+//  assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
+//  assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
+//  assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
+
+wire [11:0] start_screen_rgb;
+assign start_screen_rgb = 12'h00F;
 
 
 //---------------------------instructions background-----------------------------------------------
@@ -852,7 +883,9 @@ wire [11:0] instructions_rgb;
 assign instructions_rgb = 12'h0FF;
 
 
-//---------------------------LRback-----------------------------------------------
+
+
+//---------------------------LRback rom-----------------------------------------------
 wire [11:0] LRback_rgb, LRback_rgb_reversed;
 wire LRback_on;
 LRback_rom LRback (
@@ -867,7 +900,7 @@ assign LRback_rgb[3:0]  = LRback_rgb_reversed[11:8];
 assign LRback_on = (x < 384) && (y < 46) && (LRback_rgb != 12'hFFF);
 
 
-//---------------------------LRUPback-----------------------------------------------
+//---------------------------LRUPback rom-----------------------------------------------
 wire [11:0] LRUPback_rgb, LRUPback_rgb_reversed;
 wire LRUPback_on;
 LRUPback_rom LRUPback (
@@ -882,8 +915,25 @@ assign LRUPback_rgb[3:0]  = LRUPback_rgb_reversed[11:8];
 assign LRUPback_on = (x < 481) && (y < 47) && (LRUPback_rgb != 12'h000);
 
 
-
-
+//---------------------------Game Over rom-----------------------------------------------
+wire [11:0] game_over_rgb, game_over_rgb_reversed;
+wire game_over_on;
+wire [9:0] game_over_row, game_over_col;
+game_over_rom game_over (
+     .clk(clk),
+     .row(game_over_row),
+     .col(game_over_col),
+     .color_data(game_over_rgb_reversed)
+ );
+assign game_over_rgb[11:8] = game_over_rgb_reversed[3:0];
+assign game_over_rgb[7:4]  = game_over_rgb_reversed[7:4];
+assign game_over_rgb[3:0]  = game_over_rgb_reversed[11:8];
+assign game_over_col = x - 150;
+assign game_over_row = y - 122;
+assign game_over_on = (x > 150) && (x < 496) &&
+                      (y > 122)   && (y < 307)  &&
+                      (game_over_rgb != 12'hFFF);
+                      
 
 
 /******************************************************************************
@@ -916,7 +966,8 @@ input_maker display_background (
     .C_STICK_X(C_STICK_X),
     .C_STICK_Y(C_STICK_Y),
     .L_TRIGGER(L_TRIGGER),
-    .R_TRIGGER(R_TRIGGER)
+    .R_TRIGGER(R_TRIGGER),
+    .center_joystick(center_joystick)
 );
 
 /**************************************************************************************************
@@ -1020,8 +1071,24 @@ always @(posedge clk or posedge reset) begin
             KILL_SCREEN: begin
                 if (~video_active)
                     intermediate_rgb <= 12'h000;
+                //--------------------L + R display-----------------------
                 else if (LRback_on)
                     intermediate_rgb <= LRback_rgb;
+                //--------------------game over screen display-----------------------
+                else if (game_over_on)
+                    intermediate_rgb <= game_over_rgb;
+                //--------------------score display------------------
+                else if (number_on[0])
+                    intermediate_rgb <= number_rgb_data[0];
+                else if (number_on[1])
+                    intermediate_rgb <= number_rgb_data[1];
+                else if (number_on[2])
+                    intermediate_rgb <= number_rgb_data[2];
+                else if (number_on[3])
+                    intermediate_rgb <= number_rgb_data[3];
+                else if (number_on[4])
+                    intermediate_rgb <= number_rgb_data[4];
+                //--------------------background display------------------
                 else
                     intermediate_rgb <= background_rgb; // static image
             end // end case of KILL_SCREEN
