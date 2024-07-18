@@ -19,6 +19,7 @@ module input_maker (
     input [7:0] C_STICK_Y,
     input [7:0] L_TRIGGER,
     input [7:0] R_TRIGGER,
+    input center_joystick,
     output input_background_on,
     output [11:0] rgb_data
 );
@@ -128,7 +129,8 @@ joystick_maker joy (
     .JOY_Y(JOY_Y),
     .C_STICK_X(C_STICK_X),
     .C_STICK_Y(C_STICK_Y),
-    .start_pause(start_pause)
+    .start_pause(start_pause),
+    .center_joystick(center_joystick)
 );
 
 

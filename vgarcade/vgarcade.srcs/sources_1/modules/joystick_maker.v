@@ -6,6 +6,7 @@ module joystick_maker (
     input [7:0] C_STICK_X,
     input [7:0] C_STICK_Y,
     input start_pause, // used to reassign the "center" of the joysticks
+    input center_joystick, // used to reassign the "center" of the joysticks
     output in_center_of_joystick,
     output joystick_on,
     output [11:0] joystick_rgb_data
@@ -197,7 +198,7 @@ end
 // gives the ability to assign the specific controllers manufactured center
 // ex: in theory it should always be 128, but in practice it can be 5ish higher or lower
 always @(posedge clk) begin
-    if (start_pause) begin
+    if (start_pause || center_joystick) begin
         joystick_x_center_reg <= JOY_X;
         joystick_y_center_reg <= JOY_Y;
         c_stick_x_center_reg <= C_STICK_X;
