@@ -231,6 +231,11 @@ reg [8:0] zero_counter;
 reg reg_cur;
 reg reg_prev;
 
+// built in reset function that should trigger if a controller isn't responding (ie not plugged in)
+// this gives the ability to hopefully unplug and replug in a controller without having to reset the entire board
+// also catches some "impossible states" such as DUP and DOWN at the same time or DRIGHT and DLEFT
+reg panic_reset_reg;
+
 
 //intial values
 initial begin
@@ -263,12 +268,17 @@ initial begin
 
     reg_cur <= 0;
     reg_prev <= 0;
+
+    panic_reset_reg <= 0;
     
 end
 
+wire panic_reset;
+assign panic_reset = panic_reset_reg;
+
 //sends request for controller data every 10ms
 always @(posedge clk) begin
-    if (reset) begin
+    if (reset || panic_reset) begin
         // puts it in "receive mode" so line isn't being driven
         packet_timer <= 9800;
         packet_interval <= 0;
@@ -288,7 +298,7 @@ end
 
 
 always @(posedge clk or posedge reset) begin
-    if (reset) begin // does an absolute full reset in case the controller starts giving weird data
+    if (reset || panic_reset) begin // does an absolute full reset in case the controller starts giving weird data
         index <= 25;
 
         reg_byte0 <= 0;
@@ -316,6 +326,8 @@ always @(posedge clk or posedge reset) begin
         reg_prev <= 0;
 
         out_data <= 0;
+
+        panic_reset_reg <= 0;
         
     end else begin
 
@@ -364,15 +376,7 @@ always @(posedge clk or posedge reset) begin
                     delay_counter <= 0;
                     console_send <= 1;
 
-                    //reset all controller data when not connected
-                    reg_byte0 <= 0;
-                    reg_byte1 <= 0;
-                    reg_byte2 <= 128; //center joystick
-                    reg_byte3 <= 128; //center joystick
-                    reg_byte4 <= 128; //center C Stick
-                    reg_byte5 <= 128; //center C Stick
-                    reg_byte6 <= 0;
-                    reg_byte7 <= 0;
+                    panic_reset_reg <= 1;
                 end
 
             //line was pulled low so therefore controller is sending something
@@ -416,6 +420,13 @@ always @(posedge clk or posedge reset) begin
                     done_reading_buffer <= 1;
                     zero_counter <= 0;
                 end
+
+                //panic reset if the dpad is wrong or if data reported is all 1s or all 0s
+                if ((D_UP && D_DOWN) || (D_RIGHT && D_LEFT)
+                    || (&reg_byte0 && &reg_byte1 && &reg_byte2 && &reg_byte3 && &reg_byte4 && &reg_byte5 && &reg_byte6 && &reg_byte7) // all 1s is bad
+                    || ~(|reg_byte0 || |reg_byte1 || |reg_byte2 || |reg_byte3 || |reg_byte4 || |reg_byte5 || |reg_byte6 || &reg_byte7)) //all 0s is bad
+                    panic_reset_reg <= 1;
+
 
                 //logic for handling which byte to put data into
                 if (done_reading_buffer) begin
