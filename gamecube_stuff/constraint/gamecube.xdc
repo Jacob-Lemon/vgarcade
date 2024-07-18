@@ -112,16 +112,16 @@ set_property PACKAGE_PIN L1 [get_ports {button_data[15]}]
 
 
 ##Buttons
-# set_property PACKAGE_PIN U18 [get_ports startgame]						
-# 	set_property IOSTANDARD LVCMOS33 [get_ports startgame]
+set_property PACKAGE_PIN U18 [get_ports reset]						
+	set_property IOSTANDARD LVCMOS33 [get_ports reset]
 # set_property PACKAGE_PIN T18 [get_ports getsend]						
 # 	set_property IOSTANDARD LVCMOS33 [get_ports getsend]
 #set_property PACKAGE_PIN W19 [get_ports btnL]						
 	#set_property IOSTANDARD LVCMOS33 [get_ports btnL]
 #set_property PACKAGE_PIN T17 [get_ports btnR]						
 	#set_property IOSTANDARD LVCMOS33 [get_ports btnR]
-set_property PACKAGE_PIN U17 [get_ports reset]						
-	set_property IOSTANDARD LVCMOS33 [get_ports reset]
+# set_property PACKAGE_PIN U17 [get_ports reset]						
+# 	set_property IOSTANDARD LVCMOS33 [get_ports reset]
  
 
 

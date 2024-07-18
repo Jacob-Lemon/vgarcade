@@ -1,5 +1,3 @@
-`timescale 1ns/1ps
-
 //----------------------------------------------------------------------------
 // This module handles Gamecube Controller inputs using the Gamecube Protocol
 //----------------------------------------------------------------------------
@@ -101,6 +99,12 @@
 
         The Triggers report an 8 bit number, when they are not pressed it is closer to 0 (about 30 realistically) and
         fully pressing the trigger will report closer to 255 (about 230 realistically)
+
+    Reset:
+
+        Every once and a while either due to poor connection when plugging/unplugging the controller or due to the data 
+        line breaking randomly the module will stop reading the controller data correctly. When this happens the reset signal
+        (tied to the center button on the basys board in my design) will fully reset the protocol and hopefully fix any problem.
         
 */
 
@@ -137,7 +141,7 @@ module gamecube (
 
 
 //parameters for case statements
-localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A   sometimes the first 3 bits are 0,0,1 not sure why
+localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A        sometimes the first 3 bits are 0,0,1
                 byte1 = 1,  //1,L,R,Z,D_UP,D_DOWN,D_RIGHT,D_LEFT
                 byte2 = 2,  //8 bit JOY_X value
                 byte3 = 3,  //8 bit JOY_Y value
@@ -232,10 +236,10 @@ reg reg_prev;
 initial begin
     reg_byte0 <= 0;
     reg_byte1 <= 0;
-    reg_byte2 <= 0;
-    reg_byte3 <= 0;
-    reg_byte4 <= 0;
-    reg_byte5 <= 0;
+    reg_byte2 <= 128; //center joystick
+    reg_byte3 <= 128; //center joystick
+    reg_byte4 <= 128; //center C Stick
+    reg_byte5 <= 128; //center C Stick
     reg_byte6 <= 0;
     reg_byte7 <= 0;
     byte_index <= 7; //since bits come in opposite direction
@@ -264,21 +268,55 @@ end
 
 //sends request for controller data every 10ms
 always @(posedge clk) begin
-   if (packet_timer < 9800) begin //PWM where low when receiving
-       packet_interval <= 1;
-   end else begin
-       packet_interval <= 0;
-   end
+    if (reset) begin
+        // puts it in "receive mode" so line isn't being driven
+        packet_timer <= 9800;
+        packet_interval <= 0;
 
-   packet_timer <= packet_timer + 1;
-   if (packet_timer == 1_000_000)  //10ms
-       packet_timer <= 0;
+    end else begin
+        if (packet_timer < 9800) begin //PWM where low when not sending
+            packet_interval <= 1;
+        end else begin
+            packet_interval <= 0;
+        end
+
+        packet_timer <= packet_timer + 1;
+        if (packet_timer == 1_000_000)  //10ms
+            packet_timer <= 0;
+    end
 end
 
 
 always @(posedge clk or posedge reset) begin
-    if (reset) begin
+    if (reset) begin // does an absolute full reset in case the controller starts giving weird data
         index <= 25;
+
+        reg_byte0 <= 0;
+        reg_byte1 <= 0;
+        reg_byte2 <= 128; //center joystick
+        reg_byte3 <= 128; //center joystick
+        reg_byte4 <= 128; //center C Stick
+        reg_byte5 <= 128; //center C Stick
+        reg_byte6 <= 0;
+        reg_byte7 <= 0;
+
+        console_send <= 1;
+        us_timer <= 0;
+
+        byte_index <= 7;
+        done_reading_buffer <= 0;
+        last_byte_assigned <= 0;
+        controller_sending <= 0;
+        state_receive <= byte0;
+
+        delay_counter <= 0;
+        zero_counter <= 0;
+
+        reg_cur <= 0;
+        reg_prev <= 0;
+
+        out_data <= 0;
+        
     end else begin
 
 
