@@ -1,207 +1,798 @@
-`timescale 1ns / 1ps
-module shield_rom (
-    input wire clk,
-    input wire [5:0] row,
-    input wire [5:0] col,
-    output reg [11:0] color_data
-);
+module shield_rom
+	(
+		input wire clk,
+		input wire [5:0] row,
+		input wire [5:0] col,
+		output reg [11:0] color_data
+	);
 
-    always @(posedge clk) begin
-        if ((row * 40 + col) >= 0 && (row * 40 + col) <= 98) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 99 && (row * 40 + col) <= 99) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 100 && (row * 40 + col) <= 136) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 137 && (row * 40 + col) <= 138) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 139 && (row * 40 + col) <= 139) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 140 && (row * 40 + col) <= 141) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 142 && (row * 40 + col) <= 174) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 175 && (row * 40 + col) <= 176) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 177 && (row * 40 + col) <= 181) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 182 && (row * 40 + col) <= 183) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 184 && (row * 40 + col) <= 212) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 213 && (row * 40 + col) <= 214) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 215 && (row * 40 + col) <= 223) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 224 && (row * 40 + col) <= 225) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 226 && (row * 40 + col) <= 250) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 251 && (row * 40 + col) <= 252) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 253 && (row * 40 + col) <= 265) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 266 && (row * 40 + col) <= 267) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 268 && (row * 40 + col) <= 288) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 289 && (row * 40 + col) <= 290) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 291 && (row * 40 + col) <= 307) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 308 && (row * 40 + col) <= 309) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 310 && (row * 40 + col) <= 326) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 327 && (row * 40 + col) <= 328) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 329 && (row * 40 + col) <= 349) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 350 && (row * 40 + col) <= 351) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 352 && (row * 40 + col) <= 364) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 365 && (row * 40 + col) <= 366) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 367 && (row * 40 + col) <= 391) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 392 && (row * 40 + col) <= 393) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 394 && (row * 40 + col) <= 402) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 403 && (row * 40 + col) <= 404) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 405 && (row * 40 + col) <= 418) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 419 && (row * 40 + col) <= 419) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 420 && (row * 40 + col) <= 433) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 434 && (row * 40 + col) <= 435) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 436 && (row * 40 + col) <= 441) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 442 && (row * 40 + col) <= 442) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 443 && (row * 40 + col) <= 458) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 459 && (row * 40 + col) <= 460) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 461 && (row * 40 + col) <= 475) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 476 && (row * 40 + col) <= 476) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 477 && (row * 40 + col) <= 481) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 482 && (row * 40 + col) <= 482) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 483 && (row * 40 + col) <= 498) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 499 && (row * 40 + col) <= 500) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 501 && (row * 40 + col) <= 515) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 516 && (row * 40 + col) <= 516) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 517 && (row * 40 + col) <= 521) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 522 && (row * 40 + col) <= 522) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 523 && (row * 40 + col) <= 538) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 539 && (row * 40 + col) <= 540) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 541 && (row * 40 + col) <= 555) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 556 && (row * 40 + col) <= 556) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 557 && (row * 40 + col) <= 561) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 562 && (row * 40 + col) <= 562) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 563 && (row * 40 + col) <= 577) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 578 && (row * 40 + col) <= 581) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 582 && (row * 40 + col) <= 595) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 596 && (row * 40 + col) <= 596) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 597 && (row * 40 + col) <= 601) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 602 && (row * 40 + col) <= 602) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 603 && (row * 40 + col) <= 617) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 618 && (row * 40 + col) <= 621) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 622 && (row * 40 + col) <= 635) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 636 && (row * 40 + col) <= 636) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 637 && (row * 40 + col) <= 641) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 642 && (row * 40 + col) <= 642) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 643 && (row * 40 + col) <= 657) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 658 && (row * 40 + col) <= 661) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 662 && (row * 40 + col) <= 675) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 676 && (row * 40 + col) <= 676) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 677 && (row * 40 + col) <= 681) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 682 && (row * 40 + col) <= 682) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 683 && (row * 40 + col) <= 696) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 697 && (row * 40 + col) <= 702) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 703 && (row * 40 + col) <= 715) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 716 && (row * 40 + col) <= 716) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 717 && (row * 40 + col) <= 721) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 722 && (row * 40 + col) <= 722) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 723 && (row * 40 + col) <= 729) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 730 && (row * 40 + col) <= 749) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 750 && (row * 40 + col) <= 755) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 756 && (row * 40 + col) <= 756) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 757 && (row * 40 + col) <= 761) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 762 && (row * 40 + col) <= 762) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 763 && (row * 40 + col) <= 770) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 771 && (row * 40 + col) <= 788) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 789 && (row * 40 + col) <= 795) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 796 && (row * 40 + col) <= 796) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 797 && (row * 40 + col) <= 801) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 802 && (row * 40 + col) <= 802) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 803 && (row * 40 + col) <= 812) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 813 && (row * 40 + col) <= 826) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 827 && (row * 40 + col) <= 835) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 836 && (row * 40 + col) <= 836) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 837 && (row * 40 + col) <= 841) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 842 && (row * 40 + col) <= 842) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 843 && (row * 40 + col) <= 853) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 854 && (row * 40 + col) <= 865) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 866 && (row * 40 + col) <= 875) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 876 && (row * 40 + col) <= 876) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 877 && (row * 40 + col) <= 881) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 882 && (row * 40 + col) <= 882) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 883 && (row * 40 + col) <= 894) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 895 && (row * 40 + col) <= 904) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 905 && (row * 40 + col) <= 915) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 916 && (row * 40 + col) <= 916) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 917 && (row * 40 + col) <= 921) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 922 && (row * 40 + col) <= 922) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 923 && (row * 40 + col) <= 935) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 936 && (row * 40 + col) <= 943) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 944 && (row * 40 + col) <= 955) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 956 && (row * 40 + col) <= 956) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 957 && (row * 40 + col) <= 961) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 962 && (row * 40 + col) <= 962) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 963 && (row * 40 + col) <= 974) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 975 && (row * 40 + col) <= 984) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 985 && (row * 40 + col) <= 995) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 996 && (row * 40 + col) <= 996) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 997 && (row * 40 + col) <= 1001) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1002 && (row * 40 + col) <= 1002) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1003 && (row * 40 + col) <= 1014) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1015 && (row * 40 + col) <= 1024) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1025 && (row * 40 + col) <= 1035) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1036 && (row * 40 + col) <= 1036) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1037 && (row * 40 + col) <= 1041) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1042 && (row * 40 + col) <= 1042) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1043 && (row * 40 + col) <= 1054) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1055 && (row * 40 + col) <= 1064) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1065 && (row * 40 + col) <= 1075) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1076 && (row * 40 + col) <= 1076) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1077 && (row * 40 + col) <= 1081) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1082 && (row * 40 + col) <= 1082) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1083 && (row * 40 + col) <= 1093) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1094 && (row * 40 + col) <= 1098) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1099 && (row * 40 + col) <= 1100) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1101 && (row * 40 + col) <= 1105) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1106 && (row * 40 + col) <= 1115) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1116 && (row * 40 + col) <= 1116) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1117 && (row * 40 + col) <= 1121) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1122 && (row * 40 + col) <= 1122) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1123 && (row * 40 + col) <= 1133) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1134 && (row * 40 + col) <= 1136) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1137 && (row * 40 + col) <= 1142) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1143 && (row * 40 + col) <= 1145) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1146 && (row * 40 + col) <= 1155) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1156 && (row * 40 + col) <= 1156) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1157 && (row * 40 + col) <= 1161) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1162 && (row * 40 + col) <= 1162) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1163 && (row * 40 + col) <= 1173) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1174 && (row * 40 + col) <= 1175) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1176 && (row * 40 + col) <= 1183) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1184 && (row * 40 + col) <= 1185) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1186 && (row * 40 + col) <= 1195) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1196 && (row * 40 + col) <= 1196) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1197 && (row * 40 + col) <= 1202) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1203 && (row * 40 + col) <= 1204) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1205 && (row * 40 + col) <= 1213) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1214 && (row * 40 + col) <= 1214) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1215 && (row * 40 + col) <= 1224) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1225 && (row * 40 + col) <= 1225) color_data <= 12'b111111110000; else
-        if ((row * 40 + col) >= 1226 && (row * 40 + col) <= 1233) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1234 && (row * 40 + col) <= 1235) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1236 && (row * 40 + col) <= 1244) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1245 && (row * 40 + col) <= 1246) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1247 && (row * 40 + col) <= 1271) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1272 && (row * 40 + col) <= 1273) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1274 && (row * 40 + col) <= 1286) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1287 && (row * 40 + col) <= 1288) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1289 && (row * 40 + col) <= 1309) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1310 && (row * 40 + col) <= 1311) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1312 && (row * 40 + col) <= 1328) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1329 && (row * 40 + col) <= 1330) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1331 && (row * 40 + col) <= 1347) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1348 && (row * 40 + col) <= 1349) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1350 && (row * 40 + col) <= 1370) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1371 && (row * 40 + col) <= 1372) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1373 && (row * 40 + col) <= 1385) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1386 && (row * 40 + col) <= 1387) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1388 && (row * 40 + col) <= 1412) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1413 && (row * 40 + col) <= 1414) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1415 && (row * 40 + col) <= 1423) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1424 && (row * 40 + col) <= 1425) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1426 && (row * 40 + col) <= 1454) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1455 && (row * 40 + col) <= 1456) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1457 && (row * 40 + col) <= 1461) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1462 && (row * 40 + col) <= 1463) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1464 && (row * 40 + col) <= 1496) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1497 && (row * 40 + col) <= 1498) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1499 && (row * 40 + col) <= 1499) color_data <= 12'b110011001100; else
-        if ((row * 40 + col) >= 1500 && (row * 40 + col) <= 1501) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1502 && (row * 40 + col) <= 1538) color_data <= 12'b111111111111; else
-        if ((row * 40 + col) >= 1539 && (row * 40 + col) <= 1539) color_data <= 12'b011101110111; else
-        if ((row * 40 + col) >= 1540 && (row * 40 + col) < 1600) color_data <= 12'b111111111111; else
-        color_data <= 12'b000000000000;
-    end
+	(* rom_style = "distributed" *)
+
+	//signal declaration
+	reg [5:0] row_reg;
+	reg [5:0] col_reg;
+
+	always @(posedge clk)
+		begin
+		row_reg <= row;
+		col_reg <= col;
+		end
+
+	always @*
+	case ({row_reg, col_reg})
+		12'b000000000000: color_data = 12'b111111111111;
+		12'b000000000001: color_data = 12'b111111111111;
+		12'b000000000010: color_data = 12'b111111111111;
+		12'b000000000011: color_data = 12'b111111111111;
+		12'b000000000100: color_data = 12'b111111111111;
+		12'b000000000101: color_data = 12'b111111111111;
+		12'b000000000110: color_data = 12'b111111111111;
+		12'b000000000111: color_data = 12'b111111111111;
+		12'b000000001000: color_data = 12'b111111111111;
+		12'b000000001001: color_data = 12'b111111111111;
+		12'b000000001010: color_data = 12'b111111111111;
+		12'b000000001011: color_data = 12'b111111111111;
+		12'b000000001100: color_data = 12'b111111111111;
+		12'b000000001101: color_data = 12'b111111111111;
+		12'b000000001110: color_data = 12'b111111111111;
+		12'b000000001111: color_data = 12'b111111111111;
+		12'b000000010000: color_data = 12'b111111111111;
+		12'b000000010001: color_data = 12'b111111111111;
+		12'b000000010010: color_data = 12'b111111111111;
+		12'b000000010011: color_data = 12'b111111111111;
+		12'b000000010100: color_data = 12'b111111111111;
+		12'b000000010101: color_data = 12'b111111111111;
+		12'b000000010110: color_data = 12'b111111111111;
+		12'b000000010111: color_data = 12'b111111111111;
+		12'b000000011000: color_data = 12'b111111111111;
+		12'b000000011001: color_data = 12'b111111111111;
+		12'b000000011010: color_data = 12'b111111111111;
+		12'b000000011011: color_data = 12'b111111111111;
+		12'b000000011100: color_data = 12'b111111111111;
+		12'b000000011101: color_data = 12'b111111111111;
+		12'b000000011110: color_data = 12'b111111111111;
+		12'b000000011111: color_data = 12'b111111111111;
+		12'b000000100000: color_data = 12'b111111111111;
+		12'b000000100001: color_data = 12'b111111111111;
+		12'b000000100010: color_data = 12'b111111111111;
+		12'b000000100011: color_data = 12'b111111111111;
+		12'b000000100100: color_data = 12'b111111111111;
+		12'b000000100101: color_data = 12'b111111111111;
+		12'b000000100110: color_data = 12'b111111111111;
+		12'b000000100111: color_data = 12'b111111111111;
+		12'b000001000000: color_data = 12'b111111111111;
+		12'b000001000001: color_data = 12'b111111111111;
+		12'b000001000010: color_data = 12'b111111111111;
+		12'b000001000011: color_data = 12'b111111111111;
+		12'b000001000100: color_data = 12'b111111111111;
+		12'b000001000101: color_data = 12'b111111111111;
+		12'b000001000110: color_data = 12'b111111111111;
+		12'b000001000111: color_data = 12'b111111111111;
+		12'b000001001000: color_data = 12'b111111111111;
+		12'b000001001001: color_data = 12'b111111111111;
+		12'b000001001010: color_data = 12'b111111111111;
+		12'b000001001011: color_data = 12'b111111111111;
+		12'b000001001100: color_data = 12'b111111111111;
+		12'b000001001101: color_data = 12'b111111111111;
+		12'b000001001110: color_data = 12'b111111111111;
+		12'b000001001111: color_data = 12'b111111111111;
+		12'b000001010000: color_data = 12'b111111111111;
+		12'b000001010001: color_data = 12'b111111111111;
+		12'b000001010010: color_data = 12'b111111111111;
+		12'b000001010011: color_data = 12'b111111111111;
+		12'b000001010100: color_data = 12'b111111111111;
+		12'b000001010101: color_data = 12'b111111111111;
+		12'b000001010110: color_data = 12'b111111111111;
+		12'b000001010111: color_data = 12'b111111111111;
+		12'b000001011000: color_data = 12'b111111111111;
+		12'b000001011001: color_data = 12'b111111111111;
+		12'b000001011010: color_data = 12'b111111111111;
+		12'b000001011011: color_data = 12'b111111111111;
+		12'b000001011100: color_data = 12'b111111111111;
+		12'b000001011101: color_data = 12'b111111111111;
+		12'b000001011110: color_data = 12'b111111111111;
+		12'b000001011111: color_data = 12'b111111111111;
+		12'b000001100000: color_data = 12'b111111111111;
+		12'b000001100001: color_data = 12'b111111111111;
+		12'b000001100010: color_data = 12'b111111111111;
+		12'b000001100011: color_data = 12'b111111111111;
+		12'b000001100100: color_data = 12'b111111111111;
+		12'b000001100101: color_data = 12'b111111111111;
+		12'b000001100110: color_data = 12'b111111111111;
+		12'b000001100111: color_data = 12'b111111111111;
+		12'b000010000000: color_data = 12'b111111111111;
+		12'b000010000001: color_data = 12'b111111111111;
+		12'b000010000010: color_data = 12'b111111111111;
+		12'b000010000011: color_data = 12'b111111111111;
+		12'b000010000100: color_data = 12'b111111111111;
+		12'b000010000101: color_data = 12'b111111111111;
+		12'b000010000110: color_data = 12'b111111111111;
+		12'b000010000111: color_data = 12'b111111111111;
+		12'b000010001000: color_data = 12'b111111111111;
+		12'b000010001001: color_data = 12'b111111111111;
+		12'b000010001010: color_data = 12'b111111111111;
+		12'b000010001011: color_data = 12'b111111111111;
+		12'b000010001100: color_data = 12'b111111111111;
+		12'b000010001101: color_data = 12'b111111111111;
+		12'b000010001110: color_data = 12'b111111111111;
+		12'b000010001111: color_data = 12'b111111111111;
+		12'b000010010000: color_data = 12'b111111111111;
+		12'b000010010001: color_data = 12'b111111111111;
+		12'b000010010010: color_data = 12'b111111111111;
+		12'b000010010011: color_data = 12'b011101110111;
+		12'b000010010100: color_data = 12'b111111111111;
+		12'b000010010101: color_data = 12'b111111111111;
+		12'b000010010110: color_data = 12'b111111111111;
+		12'b000010010111: color_data = 12'b111111111111;
+		12'b000010011000: color_data = 12'b111111111111;
+		12'b000010011001: color_data = 12'b111111111111;
+		12'b000010011010: color_data = 12'b111111111111;
+		12'b000010011011: color_data = 12'b111111111111;
+		12'b000010011100: color_data = 12'b111111111111;
+		12'b000010011101: color_data = 12'b111111111111;
+		12'b000010011110: color_data = 12'b111111111111;
+		12'b000010011111: color_data = 12'b111111111111;
+		12'b000010100000: color_data = 12'b111111111111;
+		12'b000010100001: color_data = 12'b111111111111;
+		12'b000010100010: color_data = 12'b111111111111;
+		12'b000010100011: color_data = 12'b111111111111;
+		12'b000010100100: color_data = 12'b111111111111;
+		12'b000010100101: color_data = 12'b111111111111;
+		12'b000010100110: color_data = 12'b111111111111;
+		12'b000010100111: color_data = 12'b111111111111;
+		12'b000011000000: color_data = 12'b111111111111;
+		12'b000011000001: color_data = 12'b111111111111;
+		12'b000011000010: color_data = 12'b111111111111;
+		12'b000011000011: color_data = 12'b111111111111;
+		12'b000011000100: color_data = 12'b111111111111;
+		12'b000011000101: color_data = 12'b111111111111;
+		12'b000011000110: color_data = 12'b111111111111;
+		12'b000011000111: color_data = 12'b111111111111;
+		12'b000011001000: color_data = 12'b111111111111;
+		12'b000011001001: color_data = 12'b111111111111;
+		12'b000011001010: color_data = 12'b111111111111;
+		12'b000011001011: color_data = 12'b111111111111;
+		12'b000011001100: color_data = 12'b111111111111;
+		12'b000011001101: color_data = 12'b111111111111;
+		12'b000011001110: color_data = 12'b111111111111;
+		12'b000011001111: color_data = 12'b111111111111;
+		12'b000011010000: color_data = 12'b111111111111;
+		12'b000011010001: color_data = 12'b011101110111;
+		12'b000011010010: color_data = 12'b011101110111;
+		12'b000011010100: color_data = 12'b011101110111;
+		12'b000011010101: color_data = 12'b011101110111;
+		12'b000011010110: color_data = 12'b111111111111;
+		12'b000011010111: color_data = 12'b111111111111;
+		12'b000011011000: color_data = 12'b111111111111;
+		12'b000011011001: color_data = 12'b111111111111;
+		12'b000011011010: color_data = 12'b111111111111;
+		12'b000011011011: color_data = 12'b111111111111;
+		12'b000011011100: color_data = 12'b111111111111;
+		12'b000011011101: color_data = 12'b111111111111;
+		12'b000011011110: color_data = 12'b111111111111;
+		12'b000011011111: color_data = 12'b111111111111;
+		12'b000011100000: color_data = 12'b111111111111;
+		12'b000011100001: color_data = 12'b111111111111;
+		12'b000011100010: color_data = 12'b111111111111;
+		12'b000011100011: color_data = 12'b111111111111;
+		12'b000011100100: color_data = 12'b111111111111;
+		12'b000011100101: color_data = 12'b111111111111;
+		12'b000011100110: color_data = 12'b111111111111;
+		12'b000011100111: color_data = 12'b111111111111;
+		12'b000100000000: color_data = 12'b111111111111;
+		12'b000100000001: color_data = 12'b111111111111;
+		12'b000100000010: color_data = 12'b111111111111;
+		12'b000100000011: color_data = 12'b111111111111;
+		12'b000100000100: color_data = 12'b111111111111;
+		12'b000100000101: color_data = 12'b111111111111;
+		12'b000100000110: color_data = 12'b111111111111;
+		12'b000100000111: color_data = 12'b111111111111;
+		12'b000100001000: color_data = 12'b111111111111;
+		12'b000100001001: color_data = 12'b111111111111;
+		12'b000100001010: color_data = 12'b111111111111;
+		12'b000100001011: color_data = 12'b111111111111;
+		12'b000100001100: color_data = 12'b111111111111;
+		12'b000100001101: color_data = 12'b111111111111;
+		12'b000100001110: color_data = 12'b111111111111;
+		12'b000100001111: color_data = 12'b011101110111;
+		12'b000100010000: color_data = 12'b011101110111;
+		12'b000100010110: color_data = 12'b011101110111;
+		12'b000100010111: color_data = 12'b011101110111;
+		12'b000100011000: color_data = 12'b111111111111;
+		12'b000100011001: color_data = 12'b111111111111;
+		12'b000100011010: color_data = 12'b111111111111;
+		12'b000100011011: color_data = 12'b111111111111;
+		12'b000100011100: color_data = 12'b111111111111;
+		12'b000100011101: color_data = 12'b111111111111;
+		12'b000100011110: color_data = 12'b111111111111;
+		12'b000100011111: color_data = 12'b111111111111;
+		12'b000100100000: color_data = 12'b111111111111;
+		12'b000100100001: color_data = 12'b111111111111;
+		12'b000100100010: color_data = 12'b111111111111;
+		12'b000100100011: color_data = 12'b111111111111;
+		12'b000100100100: color_data = 12'b111111111111;
+		12'b000100100101: color_data = 12'b111111111111;
+		12'b000100100110: color_data = 12'b111111111111;
+		12'b000100100111: color_data = 12'b111111111111;
+		12'b000101000000: color_data = 12'b111111111111;
+		12'b000101000001: color_data = 12'b111111111111;
+		12'b000101000010: color_data = 12'b111111111111;
+		12'b000101000011: color_data = 12'b111111111111;
+		12'b000101000100: color_data = 12'b111111111111;
+		12'b000101000101: color_data = 12'b111111111111;
+		12'b000101000110: color_data = 12'b111111111111;
+		12'b000101000111: color_data = 12'b111111111111;
+		12'b000101001000: color_data = 12'b111111111111;
+		12'b000101001001: color_data = 12'b111111111111;
+		12'b000101001010: color_data = 12'b111111111111;
+		12'b000101001011: color_data = 12'b111111111111;
+		12'b000101001100: color_data = 12'b111111111111;
+		12'b000101001101: color_data = 12'b011101110111;
+		12'b000101001110: color_data = 12'b011101110111;
+		12'b000101010011: color_data = 12'b011101110111;
+		12'b000101011000: color_data = 12'b011101110111;
+		12'b000101011001: color_data = 12'b011101110111;
+		12'b000101011010: color_data = 12'b111111111111;
+		12'b000101011011: color_data = 12'b111111111111;
+		12'b000101011100: color_data = 12'b111111111111;
+		12'b000101011101: color_data = 12'b111111111111;
+		12'b000101011110: color_data = 12'b111111111111;
+		12'b000101011111: color_data = 12'b111111111111;
+		12'b000101100000: color_data = 12'b111111111111;
+		12'b000101100001: color_data = 12'b111111111111;
+		12'b000101100010: color_data = 12'b111111111111;
+		12'b000101100011: color_data = 12'b111111111111;
+		12'b000101100100: color_data = 12'b111111111111;
+		12'b000101100101: color_data = 12'b111111111111;
+		12'b000101100110: color_data = 12'b111111111111;
+		12'b000101100111: color_data = 12'b111111111111;
+		12'b000110000000: color_data = 12'b111111111111;
+		12'b000110000001: color_data = 12'b111111111111;
+		12'b000110000010: color_data = 12'b111111111111;
+		12'b000110000011: color_data = 12'b111111111111;
+		12'b000110000100: color_data = 12'b111111111111;
+		12'b000110000101: color_data = 12'b111111111111;
+		12'b000110000110: color_data = 12'b111111111111;
+		12'b000110000111: color_data = 12'b111111111111;
+		12'b000110001000: color_data = 12'b111111111111;
+		12'b000110001001: color_data = 12'b111111111111;
+		12'b000110001010: color_data = 12'b111111111111;
+		12'b000110001011: color_data = 12'b011101110111;
+		12'b000110001100: color_data = 12'b011101110111;
+		12'b000110011010: color_data = 12'b011101110111;
+		12'b000110011011: color_data = 12'b011101110111;
+		12'b000110011100: color_data = 12'b111111111111;
+		12'b000110011101: color_data = 12'b111111111111;
+		12'b000110011110: color_data = 12'b111111111111;
+		12'b000110011111: color_data = 12'b111111111111;
+		12'b000110100000: color_data = 12'b111111111111;
+		12'b000110100001: color_data = 12'b111111111111;
+		12'b000110100010: color_data = 12'b111111111111;
+		12'b000110100011: color_data = 12'b111111111111;
+		12'b000110100100: color_data = 12'b111111111111;
+		12'b000110100101: color_data = 12'b111111111111;
+		12'b000110100110: color_data = 12'b111111111111;
+		12'b000110100111: color_data = 12'b111111111111;
+		12'b000111000000: color_data = 12'b111111111111;
+		12'b000111000001: color_data = 12'b111111111111;
+		12'b000111000010: color_data = 12'b111111111111;
+		12'b000111000011: color_data = 12'b111111111111;
+		12'b000111000100: color_data = 12'b111111111111;
+		12'b000111000101: color_data = 12'b111111111111;
+		12'b000111000110: color_data = 12'b111111111111;
+		12'b000111000111: color_data = 12'b111111111111;
+		12'b000111001000: color_data = 12'b111111111111;
+		12'b000111001001: color_data = 12'b011101110111;
+		12'b000111001010: color_data = 12'b011101110111;
+		12'b000111011100: color_data = 12'b011101110111;
+		12'b000111011101: color_data = 12'b011101110111;
+		12'b000111011110: color_data = 12'b111111111111;
+		12'b000111011111: color_data = 12'b111111111111;
+		12'b000111100000: color_data = 12'b111111111111;
+		12'b000111100001: color_data = 12'b111111111111;
+		12'b000111100010: color_data = 12'b111111111111;
+		12'b000111100011: color_data = 12'b111111111111;
+		12'b000111100100: color_data = 12'b111111111111;
+		12'b000111100101: color_data = 12'b111111111111;
+		12'b000111100110: color_data = 12'b111111111111;
+		12'b000111100111: color_data = 12'b111111111111;
+		12'b001000000000: color_data = 12'b111111111111;
+		12'b001000000001: color_data = 12'b111111111111;
+		12'b001000000010: color_data = 12'b111111111111;
+		12'b001000000011: color_data = 12'b111111111111;
+		12'b001000000100: color_data = 12'b111111111111;
+		12'b001000000101: color_data = 12'b111111111111;
+		12'b001000000110: color_data = 12'b111111111111;
+		12'b001000000111: color_data = 12'b011101110111;
+		12'b001000001000: color_data = 12'b011101110111;
+		12'b001000011110: color_data = 12'b011101110111;
+		12'b001000011111: color_data = 12'b011101110111;
+		12'b001000100000: color_data = 12'b111111111111;
+		12'b001000100001: color_data = 12'b111111111111;
+		12'b001000100010: color_data = 12'b111111111111;
+		12'b001000100011: color_data = 12'b111111111111;
+		12'b001000100100: color_data = 12'b111111111111;
+		12'b001000100101: color_data = 12'b111111111111;
+		12'b001000100110: color_data = 12'b111111111111;
+		12'b001000100111: color_data = 12'b111111111111;
+		12'b001001000000: color_data = 12'b111111111111;
+		12'b001001000001: color_data = 12'b111111111111;
+		12'b001001000010: color_data = 12'b111111111111;
+		12'b001001000011: color_data = 12'b111111111111;
+		12'b001001000100: color_data = 12'b111111111111;
+		12'b001001000101: color_data = 12'b011101110111;
+		12'b001001000110: color_data = 12'b011101110111;
+		12'b001001100000: color_data = 12'b011101110111;
+		12'b001001100001: color_data = 12'b011101110111;
+		12'b001001100010: color_data = 12'b111111111111;
+		12'b001001100011: color_data = 12'b111111111111;
+		12'b001001100100: color_data = 12'b111111111111;
+		12'b001001100101: color_data = 12'b111111111111;
+		12'b001001100110: color_data = 12'b111111111111;
+		12'b001001100111: color_data = 12'b111111111111;
+		12'b001010000000: color_data = 12'b111111111111;
+		12'b001010000001: color_data = 12'b111111111111;
+		12'b001010000010: color_data = 12'b111111111111;
+		12'b001010000011: color_data = 12'b011101110111;
+		12'b001010000100: color_data = 12'b011101110111;
+		12'b001010100010: color_data = 12'b011101110111;
+		12'b001010100011: color_data = 12'b011101110111;
+		12'b001010100100: color_data = 12'b111111111111;
+		12'b001010100101: color_data = 12'b111111111111;
+		12'b001010100110: color_data = 12'b111111111111;
+		12'b001010100111: color_data = 12'b111111111111;
+		12'b001011000000: color_data = 12'b111111111111;
+		12'b001011000001: color_data = 12'b111111111111;
+		12'b001011000010: color_data = 12'b011101110111;
+		12'b001011100100: color_data = 12'b011101110111;
+		12'b001011100101: color_data = 12'b111111111111;
+		12'b001011100110: color_data = 12'b111111111111;
+		12'b001011100111: color_data = 12'b111111111111;
+		12'b001100000000: color_data = 12'b111111111111;
+		12'b001100000001: color_data = 12'b111111111111;
+		12'b001100000010: color_data = 12'b011101110111;
+		12'b001100000100: color_data = 12'b011101110111;
+		12'b001100001110: color_data = 12'b111011101110;
+		12'b001100001111: color_data = 12'b111011101110;
+		12'b001100010000: color_data = 12'b111011101110;
+		12'b001100100010: color_data = 12'b011101110111;
+		12'b001100100100: color_data = 12'b011101110111;
+		12'b001100100101: color_data = 12'b111111111111;
+		12'b001100100110: color_data = 12'b111111111111;
+		12'b001100100111: color_data = 12'b111111111111;
+		12'b001101000000: color_data = 12'b111111111111;
+		12'b001101000001: color_data = 12'b111111111111;
+		12'b001101000010: color_data = 12'b011101110111;
+		12'b001101001100: color_data = 12'b111011101110;
+		12'b001101001101: color_data = 12'b111011101110;
+		12'b001101001110: color_data = 12'b111011101110;
+		12'b001101001111: color_data = 12'b111011101110;
+		12'b001101100100: color_data = 12'b011101110111;
+		12'b001101100101: color_data = 12'b111111111111;
+		12'b001101100110: color_data = 12'b111111111111;
+		12'b001101100111: color_data = 12'b111111111111;
+		12'b001110000000: color_data = 12'b111111111111;
+		12'b001110000001: color_data = 12'b111111111111;
+		12'b001110000010: color_data = 12'b011101110111;
+		12'b001110001010: color_data = 12'b111011101110;
+		12'b001110001011: color_data = 12'b111011101110;
+		12'b001110001100: color_data = 12'b111011101110;
+		12'b001110001101: color_data = 12'b111011101110;
+		12'b001110001110: color_data = 12'b111011101110;
+		12'b001110100100: color_data = 12'b011101110111;
+		12'b001110100101: color_data = 12'b111111111111;
+		12'b001110100110: color_data = 12'b111111111111;
+		12'b001110100111: color_data = 12'b111111111111;
+		12'b001111000000: color_data = 12'b111111111111;
+		12'b001111000001: color_data = 12'b111111111111;
+		12'b001111000010: color_data = 12'b011101110111;
+		12'b001111001001: color_data = 12'b111011101110;
+		12'b001111001010: color_data = 12'b111011101110;
+		12'b001111001011: color_data = 12'b111011101110;
+		12'b001111001100: color_data = 12'b111011101110;
+		12'b001111001101: color_data = 12'b111011101110;
+		12'b001111100100: color_data = 12'b011101110111;
+		12'b001111100101: color_data = 12'b111111111111;
+		12'b001111100110: color_data = 12'b111111111111;
+		12'b001111100111: color_data = 12'b111111111111;
+		12'b010000000000: color_data = 12'b111111111111;
+		12'b010000000001: color_data = 12'b111111111111;
+		12'b010000000010: color_data = 12'b011101110111;
+		12'b010000001001: color_data = 12'b111011101110;
+		12'b010000001010: color_data = 12'b111011101110;
+		12'b010000001011: color_data = 12'b111011101110;
+		12'b010000001100: color_data = 12'b111011101110;
+		12'b010000100100: color_data = 12'b011101110111;
+		12'b010000100101: color_data = 12'b111111111111;
+		12'b010000100110: color_data = 12'b111111111111;
+		12'b010000100111: color_data = 12'b111111111111;
+		12'b010001000000: color_data = 12'b111111111111;
+		12'b010001000001: color_data = 12'b111111111111;
+		12'b010001000010: color_data = 12'b011101110111;
+		12'b010001001000: color_data = 12'b111011101110;
+		12'b010001001001: color_data = 12'b111011101110;
+		12'b010001001010: color_data = 12'b111011101110;
+		12'b010001001011: color_data = 12'b111011101110;
+		12'b010001100100: color_data = 12'b011101110111;
+		12'b010001100101: color_data = 12'b111111111111;
+		12'b010001100110: color_data = 12'b111111111111;
+		12'b010001100111: color_data = 12'b111111111111;
+		12'b010010000000: color_data = 12'b111111111111;
+		12'b010010000001: color_data = 12'b111111111111;
+		12'b010010000010: color_data = 12'b011101110111;
+		12'b010010001000: color_data = 12'b111011101110;
+		12'b010010001001: color_data = 12'b111011101110;
+		12'b010010001010: color_data = 12'b111011101110;
+		12'b010010100100: color_data = 12'b011101110111;
+		12'b010010100101: color_data = 12'b111111111111;
+		12'b010010100110: color_data = 12'b111111111111;
+		12'b010010100111: color_data = 12'b111111111111;
+		12'b010011000000: color_data = 12'b111111111111;
+		12'b010011000001: color_data = 12'b111111111111;
+		12'b010011000010: color_data = 12'b011101110111;
+		12'b010011000111: color_data = 12'b111011101110;
+		12'b010011001000: color_data = 12'b111011101110;
+		12'b010011001001: color_data = 12'b111011101110;
+		12'b010011100100: color_data = 12'b011101110111;
+		12'b010011100101: color_data = 12'b111111111111;
+		12'b010011100110: color_data = 12'b111111111111;
+		12'b010011100111: color_data = 12'b111111111111;
+		12'b010100000000: color_data = 12'b111111111111;
+		12'b010100000001: color_data = 12'b111111111111;
+		12'b010100000010: color_data = 12'b011101110111;
+		12'b010100000111: color_data = 12'b111011101110;
+		12'b010100001000: color_data = 12'b111011101110;
+		12'b010100100100: color_data = 12'b011101110111;
+		12'b010100100101: color_data = 12'b111111111111;
+		12'b010100100110: color_data = 12'b111111111111;
+		12'b010100100111: color_data = 12'b111111111111;
+		12'b010101000000: color_data = 12'b111111111111;
+		12'b010101000001: color_data = 12'b111111111111;
+		12'b010101000010: color_data = 12'b011101110111;
+		12'b010101000111: color_data = 12'b111011101110;
+		12'b010101100100: color_data = 12'b011101110111;
+		12'b010101100101: color_data = 12'b111111111111;
+		12'b010101100110: color_data = 12'b111111111111;
+		12'b010101100111: color_data = 12'b111111111111;
+		12'b010110000000: color_data = 12'b111111111111;
+		12'b010110000001: color_data = 12'b111111111111;
+		12'b010110000010: color_data = 12'b011101110111;
+		12'b010110100100: color_data = 12'b011101110111;
+		12'b010110100101: color_data = 12'b111111111111;
+		12'b010110100110: color_data = 12'b111111111111;
+		12'b010110100111: color_data = 12'b111111111111;
+		12'b010111000000: color_data = 12'b111111111111;
+		12'b010111000001: color_data = 12'b111111111111;
+		12'b010111000010: color_data = 12'b011101110111;
+		12'b010111100100: color_data = 12'b011101110111;
+		12'b010111100101: color_data = 12'b111111111111;
+		12'b010111100110: color_data = 12'b111111111111;
+		12'b010111100111: color_data = 12'b111111111111;
+		12'b011000000000: color_data = 12'b111111111111;
+		12'b011000000001: color_data = 12'b111111111111;
+		12'b011000000010: color_data = 12'b011101110111;
+		12'b011000100100: color_data = 12'b011101110111;
+		12'b011000100101: color_data = 12'b111111111111;
+		12'b011000100110: color_data = 12'b111111111111;
+		12'b011000100111: color_data = 12'b111111111111;
+		12'b011001000000: color_data = 12'b111111111111;
+		12'b011001000001: color_data = 12'b111111111111;
+		12'b011001000010: color_data = 12'b011101110111;
+		12'b011001100100: color_data = 12'b011101110111;
+		12'b011001100101: color_data = 12'b111111111111;
+		12'b011001100110: color_data = 12'b111111111111;
+		12'b011001100111: color_data = 12'b111111111111;
+		12'b011010000000: color_data = 12'b111111111111;
+		12'b011010000001: color_data = 12'b111111111111;
+		12'b011010000010: color_data = 12'b011101110111;
+		12'b011010100100: color_data = 12'b011101110111;
+		12'b011010100101: color_data = 12'b111111111111;
+		12'b011010100110: color_data = 12'b111111111111;
+		12'b011010100111: color_data = 12'b111111111111;
+		12'b011011000000: color_data = 12'b111111111111;
+		12'b011011000001: color_data = 12'b111111111111;
+		12'b011011000010: color_data = 12'b011101110111;
+		12'b011011100100: color_data = 12'b011101110111;
+		12'b011011100101: color_data = 12'b111111111111;
+		12'b011011100110: color_data = 12'b111111111111;
+		12'b011011100111: color_data = 12'b111111111111;
+		12'b011100000000: color_data = 12'b111111111111;
+		12'b011100000001: color_data = 12'b111111111111;
+		12'b011100000010: color_data = 12'b011101110111;
+		12'b011100000100: color_data = 12'b011101110111;
+		12'b011100100010: color_data = 12'b011101110111;
+		12'b011100100100: color_data = 12'b011101110111;
+		12'b011100100101: color_data = 12'b111111111111;
+		12'b011100100110: color_data = 12'b111111111111;
+		12'b011100100111: color_data = 12'b111111111111;
+		12'b011101000000: color_data = 12'b111111111111;
+		12'b011101000001: color_data = 12'b111111111111;
+		12'b011101000010: color_data = 12'b011101110111;
+		12'b011101100100: color_data = 12'b011101110111;
+		12'b011101100101: color_data = 12'b111111111111;
+		12'b011101100110: color_data = 12'b111111111111;
+		12'b011101100111: color_data = 12'b111111111111;
+		12'b011110000000: color_data = 12'b111111111111;
+		12'b011110000001: color_data = 12'b111111111111;
+		12'b011110000010: color_data = 12'b111111111111;
+		12'b011110000011: color_data = 12'b011101110111;
+		12'b011110000100: color_data = 12'b011101110111;
+		12'b011110100010: color_data = 12'b011101110111;
+		12'b011110100011: color_data = 12'b011101110111;
+		12'b011110100100: color_data = 12'b111111111111;
+		12'b011110100101: color_data = 12'b111111111111;
+		12'b011110100110: color_data = 12'b111111111111;
+		12'b011110100111: color_data = 12'b111111111111;
+		12'b011111000000: color_data = 12'b111111111111;
+		12'b011111000001: color_data = 12'b111111111111;
+		12'b011111000010: color_data = 12'b111111111111;
+		12'b011111000011: color_data = 12'b111111111111;
+		12'b011111000100: color_data = 12'b111111111111;
+		12'b011111000101: color_data = 12'b011101110111;
+		12'b011111000110: color_data = 12'b011101110111;
+		12'b011111100000: color_data = 12'b011101110111;
+		12'b011111100001: color_data = 12'b011101110111;
+		12'b011111100010: color_data = 12'b111111111111;
+		12'b011111100011: color_data = 12'b111111111111;
+		12'b011111100100: color_data = 12'b111111111111;
+		12'b011111100101: color_data = 12'b111111111111;
+		12'b011111100110: color_data = 12'b111111111111;
+		12'b011111100111: color_data = 12'b111111111111;
+		12'b100000000000: color_data = 12'b111111111111;
+		12'b100000000001: color_data = 12'b111111111111;
+		12'b100000000010: color_data = 12'b111111111111;
+		12'b100000000011: color_data = 12'b111111111111;
+		12'b100000000100: color_data = 12'b111111111111;
+		12'b100000000101: color_data = 12'b111111111111;
+		12'b100000000110: color_data = 12'b111111111111;
+		12'b100000000111: color_data = 12'b011101110111;
+		12'b100000001000: color_data = 12'b011101110111;
+		12'b100000011110: color_data = 12'b011101110111;
+		12'b100000011111: color_data = 12'b011101110111;
+		12'b100000100000: color_data = 12'b111111111111;
+		12'b100000100001: color_data = 12'b111111111111;
+		12'b100000100010: color_data = 12'b111111111111;
+		12'b100000100011: color_data = 12'b111111111111;
+		12'b100000100100: color_data = 12'b111111111111;
+		12'b100000100101: color_data = 12'b111111111111;
+		12'b100000100110: color_data = 12'b111111111111;
+		12'b100000100111: color_data = 12'b111111111111;
+		12'b100001000000: color_data = 12'b111111111111;
+		12'b100001000001: color_data = 12'b111111111111;
+		12'b100001000010: color_data = 12'b111111111111;
+		12'b100001000011: color_data = 12'b111111111111;
+		12'b100001000100: color_data = 12'b111111111111;
+		12'b100001000101: color_data = 12'b111111111111;
+		12'b100001000110: color_data = 12'b111111111111;
+		12'b100001000111: color_data = 12'b111111111111;
+		12'b100001001000: color_data = 12'b111111111111;
+		12'b100001001001: color_data = 12'b011101110111;
+		12'b100001001010: color_data = 12'b011101110111;
+		12'b100001011100: color_data = 12'b011101110111;
+		12'b100001011101: color_data = 12'b011101110111;
+		12'b100001011110: color_data = 12'b111111111111;
+		12'b100001011111: color_data = 12'b111111111111;
+		12'b100001100000: color_data = 12'b111111111111;
+		12'b100001100001: color_data = 12'b111111111111;
+		12'b100001100010: color_data = 12'b111111111111;
+		12'b100001100011: color_data = 12'b111111111111;
+		12'b100001100100: color_data = 12'b111111111111;
+		12'b100001100101: color_data = 12'b111111111111;
+		12'b100001100110: color_data = 12'b111111111111;
+		12'b100001100111: color_data = 12'b111111111111;
+		12'b100010000000: color_data = 12'b111111111111;
+		12'b100010000001: color_data = 12'b111111111111;
+		12'b100010000010: color_data = 12'b111111111111;
+		12'b100010000011: color_data = 12'b111111111111;
+		12'b100010000100: color_data = 12'b111111111111;
+		12'b100010000101: color_data = 12'b111111111111;
+		12'b100010000110: color_data = 12'b111111111111;
+		12'b100010000111: color_data = 12'b111111111111;
+		12'b100010001000: color_data = 12'b111111111111;
+		12'b100010001001: color_data = 12'b111111111111;
+		12'b100010001010: color_data = 12'b111111111111;
+		12'b100010001011: color_data = 12'b011101110111;
+		12'b100010001100: color_data = 12'b011101110111;
+		12'b100010011010: color_data = 12'b011101110111;
+		12'b100010011011: color_data = 12'b011101110111;
+		12'b100010011100: color_data = 12'b111111111111;
+		12'b100010011101: color_data = 12'b111111111111;
+		12'b100010011110: color_data = 12'b111111111111;
+		12'b100010011111: color_data = 12'b111111111111;
+		12'b100010100000: color_data = 12'b111111111111;
+		12'b100010100001: color_data = 12'b111111111111;
+		12'b100010100010: color_data = 12'b111111111111;
+		12'b100010100011: color_data = 12'b111111111111;
+		12'b100010100100: color_data = 12'b111111111111;
+		12'b100010100101: color_data = 12'b111111111111;
+		12'b100010100110: color_data = 12'b111111111111;
+		12'b100010100111: color_data = 12'b111111111111;
+		12'b100011000000: color_data = 12'b111111111111;
+		12'b100011000001: color_data = 12'b111111111111;
+		12'b100011000010: color_data = 12'b111111111111;
+		12'b100011000011: color_data = 12'b111111111111;
+		12'b100011000100: color_data = 12'b111111111111;
+		12'b100011000101: color_data = 12'b111111111111;
+		12'b100011000110: color_data = 12'b111111111111;
+		12'b100011000111: color_data = 12'b111111111111;
+		12'b100011001000: color_data = 12'b111111111111;
+		12'b100011001001: color_data = 12'b111111111111;
+		12'b100011001010: color_data = 12'b111111111111;
+		12'b100011001011: color_data = 12'b111111111111;
+		12'b100011001100: color_data = 12'b111111111111;
+		12'b100011001101: color_data = 12'b011101110111;
+		12'b100011001110: color_data = 12'b011101110111;
+		12'b100011010011: color_data = 12'b011101110111;
+		12'b100011011000: color_data = 12'b011101110111;
+		12'b100011011001: color_data = 12'b011101110111;
+		12'b100011011010: color_data = 12'b111111111111;
+		12'b100011011011: color_data = 12'b111111111111;
+		12'b100011011100: color_data = 12'b111111111111;
+		12'b100011011101: color_data = 12'b111111111111;
+		12'b100011011110: color_data = 12'b111111111111;
+		12'b100011011111: color_data = 12'b111111111111;
+		12'b100011100000: color_data = 12'b111111111111;
+		12'b100011100001: color_data = 12'b111111111111;
+		12'b100011100010: color_data = 12'b111111111111;
+		12'b100011100011: color_data = 12'b111111111111;
+		12'b100011100100: color_data = 12'b111111111111;
+		12'b100011100101: color_data = 12'b111111111111;
+		12'b100011100110: color_data = 12'b111111111111;
+		12'b100011100111: color_data = 12'b111111111111;
+		12'b100100000000: color_data = 12'b111111111111;
+		12'b100100000001: color_data = 12'b111111111111;
+		12'b100100000010: color_data = 12'b111111111111;
+		12'b100100000011: color_data = 12'b111111111111;
+		12'b100100000100: color_data = 12'b111111111111;
+		12'b100100000101: color_data = 12'b111111111111;
+		12'b100100000110: color_data = 12'b111111111111;
+		12'b100100000111: color_data = 12'b111111111111;
+		12'b100100001000: color_data = 12'b111111111111;
+		12'b100100001001: color_data = 12'b111111111111;
+		12'b100100001010: color_data = 12'b111111111111;
+		12'b100100001011: color_data = 12'b111111111111;
+		12'b100100001100: color_data = 12'b111111111111;
+		12'b100100001101: color_data = 12'b111111111111;
+		12'b100100001110: color_data = 12'b111111111111;
+		12'b100100001111: color_data = 12'b011101110111;
+		12'b100100010000: color_data = 12'b011101110111;
+		12'b100100010110: color_data = 12'b011101110111;
+		12'b100100010111: color_data = 12'b011101110111;
+		12'b100100011000: color_data = 12'b111111111111;
+		12'b100100011001: color_data = 12'b111111111111;
+		12'b100100011010: color_data = 12'b111111111111;
+		12'b100100011011: color_data = 12'b111111111111;
+		12'b100100011100: color_data = 12'b111111111111;
+		12'b100100011101: color_data = 12'b111111111111;
+		12'b100100011110: color_data = 12'b111111111111;
+		12'b100100011111: color_data = 12'b111111111111;
+		12'b100100100000: color_data = 12'b111111111111;
+		12'b100100100001: color_data = 12'b111111111111;
+		12'b100100100010: color_data = 12'b111111111111;
+		12'b100100100011: color_data = 12'b111111111111;
+		12'b100100100100: color_data = 12'b111111111111;
+		12'b100100100101: color_data = 12'b111111111111;
+		12'b100100100110: color_data = 12'b111111111111;
+		12'b100100100111: color_data = 12'b111111111111;
+		12'b100101000000: color_data = 12'b111111111111;
+		12'b100101000001: color_data = 12'b111111111111;
+		12'b100101000010: color_data = 12'b111111111111;
+		12'b100101000011: color_data = 12'b111111111111;
+		12'b100101000100: color_data = 12'b111111111111;
+		12'b100101000101: color_data = 12'b111111111111;
+		12'b100101000110: color_data = 12'b111111111111;
+		12'b100101000111: color_data = 12'b111111111111;
+		12'b100101001000: color_data = 12'b111111111111;
+		12'b100101001001: color_data = 12'b111111111111;
+		12'b100101001010: color_data = 12'b111111111111;
+		12'b100101001011: color_data = 12'b111111111111;
+		12'b100101001100: color_data = 12'b111111111111;
+		12'b100101001101: color_data = 12'b111111111111;
+		12'b100101001110: color_data = 12'b111111111111;
+		12'b100101001111: color_data = 12'b111111111111;
+		12'b100101010000: color_data = 12'b111111111111;
+		12'b100101010001: color_data = 12'b011101110111;
+		12'b100101010010: color_data = 12'b011101110111;
+		12'b100101010100: color_data = 12'b011101110111;
+		12'b100101010101: color_data = 12'b011101110111;
+		12'b100101010110: color_data = 12'b111111111111;
+		12'b100101010111: color_data = 12'b111111111111;
+		12'b100101011000: color_data = 12'b111111111111;
+		12'b100101011001: color_data = 12'b111111111111;
+		12'b100101011010: color_data = 12'b111111111111;
+		12'b100101011011: color_data = 12'b111111111111;
+		12'b100101011100: color_data = 12'b111111111111;
+		12'b100101011101: color_data = 12'b111111111111;
+		12'b100101011110: color_data = 12'b111111111111;
+		12'b100101011111: color_data = 12'b111111111111;
+		12'b100101100000: color_data = 12'b111111111111;
+		12'b100101100001: color_data = 12'b111111111111;
+		12'b100101100010: color_data = 12'b111111111111;
+		12'b100101100011: color_data = 12'b111111111111;
+		12'b100101100100: color_data = 12'b111111111111;
+		12'b100101100101: color_data = 12'b111111111111;
+		12'b100101100110: color_data = 12'b111111111111;
+		12'b100101100111: color_data = 12'b111111111111;
+		12'b100110000000: color_data = 12'b111111111111;
+		12'b100110000001: color_data = 12'b111111111111;
+		12'b100110000010: color_data = 12'b111111111111;
+		12'b100110000011: color_data = 12'b111111111111;
+		12'b100110000100: color_data = 12'b111111111111;
+		12'b100110000101: color_data = 12'b111111111111;
+		12'b100110000110: color_data = 12'b111111111111;
+		12'b100110000111: color_data = 12'b111111111111;
+		12'b100110001000: color_data = 12'b111111111111;
+		12'b100110001001: color_data = 12'b111111111111;
+		12'b100110001010: color_data = 12'b111111111111;
+		12'b100110001011: color_data = 12'b111111111111;
+		12'b100110001100: color_data = 12'b111111111111;
+		12'b100110001101: color_data = 12'b111111111111;
+		12'b100110001110: color_data = 12'b111111111111;
+		12'b100110001111: color_data = 12'b111111111111;
+		12'b100110010000: color_data = 12'b111111111111;
+		12'b100110010001: color_data = 12'b111111111111;
+		12'b100110010010: color_data = 12'b111111111111;
+		12'b100110010011: color_data = 12'b011101110111;
+		12'b100110010100: color_data = 12'b111111111111;
+		12'b100110010101: color_data = 12'b111111111111;
+		12'b100110010110: color_data = 12'b111111111111;
+		12'b100110010111: color_data = 12'b111111111111;
+		12'b100110011000: color_data = 12'b111111111111;
+		12'b100110011001: color_data = 12'b111111111111;
+		12'b100110011010: color_data = 12'b111111111111;
+		12'b100110011011: color_data = 12'b111111111111;
+		12'b100110011100: color_data = 12'b111111111111;
+		12'b100110011101: color_data = 12'b111111111111;
+		12'b100110011110: color_data = 12'b111111111111;
+		12'b100110011111: color_data = 12'b111111111111;
+		12'b100110100000: color_data = 12'b111111111111;
+		12'b100110100001: color_data = 12'b111111111111;
+		12'b100110100010: color_data = 12'b111111111111;
+		12'b100110100011: color_data = 12'b111111111111;
+		12'b100110100100: color_data = 12'b111111111111;
+		12'b100110100101: color_data = 12'b111111111111;
+		12'b100110100110: color_data = 12'b111111111111;
+		12'b100110100111: color_data = 12'b111111111111;
+		12'b100111000000: color_data = 12'b111111111111;
+		12'b100111000001: color_data = 12'b111111111111;
+		12'b100111000010: color_data = 12'b111111111111;
+		12'b100111000011: color_data = 12'b111111111111;
+		12'b100111000100: color_data = 12'b111111111111;
+		12'b100111000101: color_data = 12'b111111111111;
+		12'b100111000110: color_data = 12'b111111111111;
+		12'b100111000111: color_data = 12'b111111111111;
+		12'b100111001000: color_data = 12'b111111111111;
+		12'b100111001001: color_data = 12'b111111111111;
+		12'b100111001010: color_data = 12'b111111111111;
+		12'b100111001011: color_data = 12'b111111111111;
+		12'b100111001100: color_data = 12'b111111111111;
+		12'b100111001101: color_data = 12'b111111111111;
+		12'b100111001110: color_data = 12'b111111111111;
+		12'b100111001111: color_data = 12'b111111111111;
+		12'b100111010000: color_data = 12'b111111111111;
+		12'b100111010001: color_data = 12'b111111111111;
+		12'b100111010010: color_data = 12'b111111111111;
+		12'b100111010011: color_data = 12'b111111111111;
+		12'b100111010100: color_data = 12'b111111111111;
+		12'b100111010101: color_data = 12'b111111111111;
+		12'b100111010110: color_data = 12'b111111111111;
+		12'b100111010111: color_data = 12'b111111111111;
+		12'b100111011000: color_data = 12'b111111111111;
+		12'b100111011001: color_data = 12'b111111111111;
+		12'b100111011010: color_data = 12'b111111111111;
+		12'b100111011011: color_data = 12'b111111111111;
+		12'b100111011100: color_data = 12'b111111111111;
+		12'b100111011101: color_data = 12'b111111111111;
+		12'b100111011110: color_data = 12'b111111111111;
+		12'b100111011111: color_data = 12'b111111111111;
+		12'b100111100000: color_data = 12'b111111111111;
+		12'b100111100001: color_data = 12'b111111111111;
+		12'b100111100010: color_data = 12'b111111111111;
+		12'b100111100011: color_data = 12'b111111111111;
+		12'b100111100100: color_data = 12'b111111111111;
+		12'b100111100101: color_data = 12'b111111111111;
+		12'b100111100110: color_data = 12'b111111111111;
+		12'b100111100111: color_data = 12'b111111111111;
+        default: color_data = 12'b110011001100;
+	endcase
 endmodule
