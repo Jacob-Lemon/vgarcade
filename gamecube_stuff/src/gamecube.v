@@ -231,10 +231,20 @@ reg [8:0] zero_counter;
 reg reg_cur;
 reg reg_prev;
 
-// built in reset function that should trigger if a controller isn't responding (ie not plugged in)
+// built in reset function that should trigger if a controller isn't responding (ie not plugged in or basys isn't sending command)
 // this gives the ability to hopefully unplug and replug in a controller without having to reset the entire board
 // also catches some "impossible states" such as DUP and DOWN at the same time or DRIGHT and DLEFT
 reg panic_reset_reg;
+
+// counts how long it has been between console packet sends
+reg [20:0] panic_console_send_timer;
+
+// this reset catches if the board stops sending the console packet for some reason (typically a short/bad connection when plugging in the controller)
+reg send_panic_reset;
+
+// contains info on when the basys board is currently in the process of sending a data packet
+wire sending_data_packet;
+assign sending_data_packet = (console_send && packet_interval);
 
 
 //intial values
@@ -270,14 +280,18 @@ initial begin
     reg_prev <= 0;
 
     panic_reset_reg <= 0;
+
+    send_panic_reset <= 0;
+    panic_console_send_timer <= 0;
     
 end
 
 wire panic_reset;
-assign panic_reset = panic_reset_reg;
+assign panic_reset = panic_reset_reg || send_panic_reset;
+
 
 //sends request for controller data every 10ms
-always @(posedge clk) begin
+always @(posedge clk or posedge reset) begin
     if (reset || panic_reset) begin
         // puts it in "receive mode" so line isn't being driven
         packet_timer <= 9800;
@@ -333,7 +347,7 @@ always @(posedge clk or posedge reset) begin
 
 
         //sends data packet
-        if (console_send && packet_interval) begin
+        if (sending_data_packet) begin
 
             if (index - 1 == 0) begin   //if the stop bit
                 if (us_timer == 0)
@@ -457,8 +471,25 @@ always @(posedge clk or posedge reset) begin
 end
 
 
+//block for catching if the basys board ever stops sending a packet (stuck state)
+always @(posedge clk or posedge reset) begin
+    if (reset || panic_reset) begin
+        panic_console_send_timer <= 0;
+        send_panic_reset <= 0;
+    end else begin
+        panic_console_send_timer <= panic_console_send_timer + 1;
+
+        if (sending_data_packet)
+            panic_console_send_timer <= 0;
+
+        if (panic_console_send_timer >= 2_000_000) //20ms have gone by without the basys board sending a packet
+            send_panic_reset <= 1;
+    end  
+end
+
+
 //bidirectional line logic
-assign data = (console_send && packet_interval) ? out_data : 1'bz;
+assign data = (sending_data_packet) ? out_data : 1'bz;
 assign in_data = data;
 
 endmodule
