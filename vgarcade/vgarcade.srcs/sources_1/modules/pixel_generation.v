@@ -841,52 +841,52 @@ boost_display_maker speed_boost_display (
 * as well as the game_state backgrounds
 **************************************************************************************************/
 //---------------------------gameplay background---------------------------------------------------
-//wire [11:0] background_rgb, background_rom_data_endian;
-//background_rom background_getter (
-//    .clk(clk),
-//    .row(y),
-//    .col(x),
-//    .color_data(background_rom_data_endian)
-//);
+wire [11:0] background_rgb, background_rom_data_endian;
+background_rom background_getter (
+   .clk(clk),
+   .row(y),
+   .col(x),
+   .color_data(background_rom_data_endian)
+);
 
-//assign background_rgb[11:8] = background_rom_data_endian[3:0];
-//assign background_rgb[7:4]  = background_rom_data_endian[7:4];
-//assign background_rgb[3:0]  = background_rom_data_endian[11:8];
+assign background_rgb[11:8] = background_rom_data_endian[3:0];
+assign background_rgb[7:4]  = background_rom_data_endian[7:4];
+assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 
- wire [11:0] background_rgb;
- assign background_rgb = 12'hF00; // blue
+//  wire [11:0] background_rgb;
+//  assign background_rgb = 12'hF00; // blue
 
 
 //---------------------------start screen background-----------------------------------------------
-//  wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
-//  start_screen_rom start_screen (
-//      .clk(clk),
-//      .row(y),
-//      .col(x),
-//      .color_data(start_screen_rgb_reversed)
-//  );
-//  assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
-//  assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
-//  assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
+ wire [11:0] start_screen_rgb, start_screen_rgb_reversed;
+ start_screen_rom start_screen (
+     .clk(clk),
+     .row(y),
+     .col(x),
+     .color_data(start_screen_rgb_reversed)
+ );
+ assign start_screen_rgb[11:8] = start_screen_rgb_reversed[3:0];
+ assign start_screen_rgb[7:4]  = start_screen_rgb_reversed[7:4];
+ assign start_screen_rgb[3:0]  = start_screen_rgb_reversed[11:8];
 
-wire [11:0] start_screen_rgb;
-assign start_screen_rgb = 12'h00F;
+// wire [11:0] start_screen_rgb;
+// assign start_screen_rgb = 12'h00F;
 
 
 //---------------------------instructions background-----------------------------------------------
-// wire [11:0] instructions_rgb, instructions_rgb_reversed;
-// instructions_rom instructions (
-//      .clk(clk),
-//      .row(y),
-//      .col(x),
-//      .color_data(instructions_rgb_reversed)
-//  );
-//  assign instructions_rgb[11:8] = instructions_rgb_reversed[3:0];
-//  assign instructions_rgb[7:4]  = instructions_rgb_reversed[7:4];
-//  assign instructions_rgb[3:0]  = instructions_rgb_reversed[11:8];
+wire [11:0] instructions_rgb, instructions_rgb_reversed;
+instructions_rom instructions (
+     .clk(clk),
+     .row(y),
+     .col(x),
+     .color_data(instructions_rgb_reversed)
+ );
+ assign instructions_rgb[11:8] = instructions_rgb_reversed[3:0];
+ assign instructions_rgb[7:4]  = instructions_rgb_reversed[7:4];
+ assign instructions_rgb[3:0]  = instructions_rgb_reversed[11:8];
 
-wire [11:0] instructions_rgb;
-assign instructions_rgb = 12'h0FF;
+// wire [11:0] instructions_rgb;
+// assign instructions_rgb = 12'h0FF;
 
 
 
