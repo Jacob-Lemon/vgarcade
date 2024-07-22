@@ -591,7 +591,7 @@ reg [9:0] car_x_reg  = 700;
 reg [9:0] car_x_next = 700;
 
 // car speed starts at 1
-reg [2:0] car_x_speed;
+reg [3:0] car_x_speed;
 initial car_x_speed = 1;
 
 
@@ -617,7 +617,7 @@ always @(posedge clk or posedge reset) begin
         previous_8th_bit <= current_8th_bit;
 
         // increases the car speed every 256 points
-        if (current_8th_bit != previous_8th_bit)
+        if (current_8th_bit != previous_8th_bit && car_x_speed != 15) // cap the car speed at 15
             car_x_speed <= car_x_speed + 1;
     end
 end
