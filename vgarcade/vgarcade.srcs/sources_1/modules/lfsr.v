@@ -29,18 +29,20 @@ assign feedback = (lfsr_reg[9] ^ lfsr_reg[6]);
 
 wire keep_generating;
 // we keep generating when event happens or we are not in range
-assign keep_generating = ( (condition && !condition_prev) || ~(lfsr_reg >= low_bound && lfsr_reg <= up_bound) );
+assign keep_generating = ((condition && !condition_prev) || ~(lfsr_reg >= low_bound && lfsr_reg <= up_bound) || (game_state != 3));
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         lfsr_reg <= seed;
         random_number <= 0;
         condition_prev <= 0;  // Initialize previous condition state
-    end else if (game_state != 3) begin // if we are not in game_play mode
+    end
+    else if (game_state != 3) begin // if we are not in game_play mode
         lfsr_reg <= seed;   // seed the lfsr when not in gameplay
         random_number <= 0;
         condition_prev <= 0;
-    end else begin
+    end 
+    else begin
         // Update previous condition to check for rising edge of condition
         condition_prev <= condition;
         // if we need to keep generating

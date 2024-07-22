@@ -8,7 +8,8 @@ module pixel_generation(
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
-    input [15:0] sw                // switches from the basys3 board
+    input [15:0] sw,                // switches from the basys3 board
+    output [15:0] which_fruit_leds
 );
 // create a 60Hz refresh tick at the start of vsync
 // this is the framerate
@@ -321,6 +322,9 @@ wire [NUM_FRUITS:0] fruit_on;
 wire [11:0] fruit_rgb_data [NUM_FRUITS:0];
 wire [7:0] which_fruit[NUM_FRUITS:0];
 
+assign which_fruit_leds[15:8] = which_fruit[1];
+assign which_fruit_leds[7:0] = which_fruit[0];
+
 // each fruit keeps track of how many times it has been caught
 // and how much score that specific fruit contributes to the total
 // the array is summed up later
@@ -354,7 +358,7 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .game_state(game_state),            // game state of the game, for reset and re-seeding purposes
         .low_bound(10),                     // lower bounds that determine the numbers the lfsr can generate
         .up_bound(590),                     // upper bound
-        .seed(283*idx+lfsr_seed),                 // seed
+        .seed(lfsr_seed + 283*idx),                 // seed
         // .seed(lfsr_seed >> idx),                 // seed
         .random_number(fruit_x[idx])        // output. this is the x spawn location of the next fruit
     );
@@ -363,9 +367,11 @@ for (idx = 0; idx < NUM_FRUITS; idx = idx + 1) begin : fruit_generation
         .clk(clk),                          // system clock, 100 MHz
         .reset(reset),                      // system reset
         .condition(fruit_respawn[idx]),     // the condition that triggers activation of the lfsr
+        .game_state(game_state),
         .low_bound(1),                      // lower bound of values the lfsr can generate
         .up_bound(100),                     // upper bound
-        .seed(lfsr_seed+256*idx),                 // seed
+        // .seed(lfsr_seed + 256*idx),                 // seed
+        .seed(lfsr_seed + 283*idx),                 // seed
         .random_number(which_fruit[idx])    // output. this determines which fruit. apple, orange, powerup, etc.
     );
 
@@ -835,20 +841,20 @@ boost_display_maker speed_boost_display (
 * as well as the game_state backgrounds
 **************************************************************************************************/
 //---------------------------gameplay background---------------------------------------------------
-wire [11:0] background_rgb, background_rom_data_endian;
-background_rom background_getter (
-    .clk(clk),
-    .row(y),
-    .col(x),
-    .color_data(background_rom_data_endian)
-);
+//wire [11:0] background_rgb, background_rom_data_endian;
+//background_rom background_getter (
+//    .clk(clk),
+//    .row(y),
+//    .col(x),
+//    .color_data(background_rom_data_endian)
+//);
 
-assign background_rgb[11:8] = background_rom_data_endian[3:0];
-assign background_rgb[7:4]  = background_rom_data_endian[7:4];
-assign background_rgb[3:0]  = background_rom_data_endian[11:8];
+//assign background_rgb[11:8] = background_rom_data_endian[3:0];
+//assign background_rgb[7:4]  = background_rom_data_endian[7:4];
+//assign background_rgb[3:0]  = background_rom_data_endian[11:8];
 
-// wire [11:0] background_rgb;
-// assign background_rgb = 12'hF00; // blue
+ wire [11:0] background_rgb;
+ assign background_rgb = 12'hF00; // blue
 
 
 //---------------------------start screen background-----------------------------------------------
