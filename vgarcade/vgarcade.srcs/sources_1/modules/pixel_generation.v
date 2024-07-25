@@ -8,7 +8,7 @@ module pixel_generation(
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
-    input [15:0] sw,                // switches from the basys3 board
+    input [15:0] sw                // switches from the basys3 board
 );
 // create a 60Hz refresh tick at the start of vsync
 // this is the framerate
