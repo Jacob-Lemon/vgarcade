@@ -10,6 +10,43 @@ module pixel_generation(
     // switches for test purposes
     input [15:0] sw                // switches from the basys3 board
 );
+
+// Section 1: Tests all buttons and some joystick movement
+assign A_sw = sw[0];
+assign B_sw = sw[1];
+assign X_sw = sw[2];
+assign Y_sw = sw[3];
+assign start_pause_sw = sw[4];
+assign L_sw = sw[5];
+assign R_sw = sw[6];
+assign Z_sw = sw[7];
+assign D_UP_sw = sw[8];
+assign D_DOWN_sw = sw[9];
+assign D_RIGHT_sw = sw[10];
+assign D_LEFT_sw = sw[11];
+
+// neglect joysticks
+
+/*
+assign sw[0] = A;
+assign sw[1] = B;
+assign sw[2] = X;
+assign sw[3] = Y;
+assign sw[4] = start_pause;
+assign sw[5] = L;
+assign sw[6] = R;
+assign sw[7] = Z;
+assign sw[8] = D_UP;
+assign sw[9] = D_DOWN;
+assign sw[10] = D_RIGHT;
+assign sw[11] = D_LEFT;
+assign sw[12] = JOY_X[5];
+assign sw[13] = JOY_Y[5];
+assign sw[14] = C_STICK_X[5];
+assign sw[15] = C_STICK_Y[5];
+*/
+
+
 // create a 60Hz refresh tick at the start of vsync
 // this is the framerate
 wire refresh_tick;
@@ -44,24 +81,24 @@ always @(posedge clk or posedge reset) begin
         center_joystick <= 0; //used to keep this only high for 1 clock cycle
         case (game_state)
             START_SCREEN: begin
-                if (start_pause)
+                if (start_pause || start_pause_sw)
                     game_state <= GAMEPLAY;
-                else if (Z)
+                else if (Z || Z_sw)
                     game_state <= INSTRUCTIONS;
-                else if (Y) begin
+                else if (Y || Y_sw) begin
                     center_joystick <= 1; //used to center the joysticks in input display
                     game_state <= INPUT_DISPLAY;
                 end else
                     game_state <= START_SCREEN;
             end
             INPUT_DISPLAY: begin
-                if (L & R & D_UP)
+                if ((L || L_sw) & (R || R_sw) & (D_UP || D_UP_sw))
                     game_state <= START_SCREEN;
                 else
                     game_state <= INPUT_DISPLAY;
             end
             INSTRUCTIONS: begin
-                if (L & R)
+                if ((L || L_sw) & (R || R_sw))
                     game_state <= START_SCREEN;
                 else
                     game_state <= INSTRUCTIONS;
@@ -71,9 +108,9 @@ always @(posedge clk or posedge reset) begin
                     game_state <= KILL_SCREEN;
             end
             KILL_SCREEN: begin
-                if (L & R)
+                if ((L || L_sw) & (R || R_sw))
                     game_state <= START_SCREEN;
-                else if (start_pause)
+                else if (start_pause || start_pause_sw)
                     game_state <= GAMEPLAY;
                 else
                     game_state <= KILL_SCREEN;
@@ -124,7 +161,7 @@ player_powerups get_powers (
     .refresh_tick(refresh_tick),
     .game_state(game_state),
     // gamecube inputs
-    .A(A), .B(B), .X(X), .Y(Y), .start_pause(start_pause), .L(L), .R(R), .Z(Z),
+    .B(B || B_sw),
     // powerup signals
     .speed_caught(speed_caught),
     .shield_caught(shield_caught),
@@ -191,7 +228,7 @@ always @(posedge clk or posedge reset) begin
         if (refresh_tick) begin
             //--------------------vertical motion--------------------
             // if jumping and touching the ground, cause jumping
-            if (A && player1_y_next >= 299 && !player_jumping) begin // 299 was 300
+            if ((A || A_sw) && player1_y_next >= 299 && !player_jumping) begin // 299 was 300
                 player_jumping <= 1;
             end else
             if (player_jumping) begin
@@ -200,7 +237,7 @@ always @(posedge clk or posedge reset) begin
                     player1_y_next <= player1_y_next - 2; // go up
                 end
                 // if we stop holding A, or reach max jump height
-                if (~A || player1_y_next <= 100) begin
+                if (~(A || A_sw) || player1_y_next <= 100) begin
                     player_jumping <= 0;
                 end
             end else begin
@@ -210,11 +247,11 @@ always @(posedge clk or posedge reset) begin
             //--------------------horizontal motion--------------------
             // if left, move left
             // left is 0, middle is 128, right is higher: 256? - on the joystick
-            if ((sw[15] || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin
+            if ((D_LEFT || D_LEFT_sw || (JOY_X <= 128-DEADZONE)) && player1_x_next > 10) begin  // motion is controlled by joystick, dpad or dpad via switches
                 // move left
                 player1_x_next <= player1_x_next - player_x_speed;
             end
-            else if ((sw[14] || (JOY_X >= 128+DEADZONE)) && player1_x_next < (640 - 10 - (PLAYER_WIDTH))) begin
+            else if ((D_RIGHT || D_RIGHT_sw || (JOY_X >= 128+DEADZONE)) && player1_x_next < (640 - 10 - (PLAYER_WIDTH))) begin
                 // move right
                 player1_x_next <= player1_x_next + player_x_speed;
             end

@@ -10,7 +10,7 @@ module player_powerups(
     input refresh_tick,                 // 60Hz refresh tick
     input [3:0] game_state,             // game state for reset purposes
     // gamecube inputs, these are the buttons that use powerups
-    input A, B, X, Y, start_pause, L, R, Z,
+    input B,
     // powerup inputs from pixel gen
     input [3:0] speed_caught,           // signal for whether we have caught a speed boost
     input [3:0] shield_caught,          // signal for catching a sheild
