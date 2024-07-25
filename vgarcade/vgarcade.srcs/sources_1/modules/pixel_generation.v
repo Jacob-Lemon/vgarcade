@@ -9,7 +9,6 @@ module pixel_generation(
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
     input [15:0] sw,                // switches from the basys3 board
-    output [15:0] which_fruit_leds
 );
 // create a 60Hz refresh tick at the start of vsync
 // this is the framerate
@@ -322,8 +321,6 @@ wire [NUM_FRUITS:0] fruit_on;
 wire [11:0] fruit_rgb_data [NUM_FRUITS:0];
 wire [7:0] which_fruit[NUM_FRUITS:0];
 
-assign which_fruit_leds[15:8] = which_fruit[1];
-assign which_fruit_leds[7:0] = which_fruit[0];
 
 // each fruit keeps track of how many times it has been caught
 // and how much score that specific fruit contributes to the total

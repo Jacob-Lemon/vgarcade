@@ -147,8 +147,7 @@ pixel_generation pg (
     .L_TRIGGER(L_TRIGGER),
     .R_TRIGGER(R_TRIGGER),
     // switches as an input to pixel gen
-    .sw(sw_reg),
-    .which_fruit_leds(button_data)
+    .sw(sw_reg)
 );
 
 
