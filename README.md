@@ -1,4 +1,20 @@
 # vgarcade
+
+## Description
+This is an arcade style game created using verilog and stuff
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [more](#more-stuff)
+
+
+
+
+
+# vgarcade
 We will make a vga arcade
 this is an edit, to test pushing
 ## more stuff
