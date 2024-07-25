@@ -1,9 +1,5 @@
 # vgarcade
 
-
-
-
-
 ## Description
 This is an arcade style game created using verilog and stuff
 
@@ -21,6 +17,15 @@ If you want to generate your own bitsream, you can download or install this howe
 If you just want to program your own basys3, you can just download the top.bit bitstream and use vivado to program your board.
 
 ## usage
+Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable.
+
+
+### gamecube controller
+You can connect a gamecube controller directly to the basys3 board using a home-made connection
+SHOW THE IMAGE HERE (if we want)
+
+
+### basys3 switches
 If you don't have a controller, you can use these switches to play the game anyway
 - sw[0] = A;
 - sw[1] = B;
@@ -34,6 +39,13 @@ If you don't have a controller, you can use these switches to play the game anyw
 - sw[9] = D_DOWN;
 - sw[10] = D_RIGHT;
 - sw[11] = D_LEFT;
+
+
+## features
+This game is super cool.
+## authors
+
+
 
 
 ## more stuff
