@@ -8,7 +8,7 @@ module pixel_generation(
     input A, B, X, Y, start_pause, L, R, Z, D_UP, D_DOWN, D_RIGHT, D_LEFT,
     input [7:0] JOY_X, JOY_Y, C_STICK_X, C_STICK_Y, L_TRIGGER, R_TRIGGER,
     // switches for test purposes
-    input [15:0] sw                // switches from the basys3 board
+    input [15:0] sw                 // switches from the basys3 board
 );
 
 // Section 1: Tests all buttons and some joystick movement
@@ -24,9 +24,7 @@ assign D_UP_sw = sw[8];
 assign D_DOWN_sw = sw[9];
 assign D_RIGHT_sw = sw[10];
 assign D_LEFT_sw = sw[11];
-
 // neglect joysticks
-
 /*
 assign sw[0] = A;
 assign sw[1] = B;
@@ -45,6 +43,8 @@ assign sw[13] = JOY_Y[5];
 assign sw[14] = C_STICK_X[5];
 assign sw[15] = C_STICK_Y[5];
 */
+
+
 
 
 // create a 60Hz refresh tick at the start of vsync
@@ -66,7 +66,7 @@ initial game_state = START_SCREEN;
 
 wire player_dead;
 wire not_playing;
-wire almost_game_over; //assigned on line five hundred something
+wire almost_game_over;
 assign not_playing = ~(game_state == GAMEPLAY);
 
 reg center_joystick;
@@ -359,6 +359,7 @@ wire [11:0] fruit_rgb_data [NUM_FRUITS:0];
 wire [7:0] which_fruit[NUM_FRUITS:0];
 
 
+
 // each fruit keeps track of how many times it has been caught
 // and how much score that specific fruit contributes to the total
 // the array is summed up later
@@ -628,13 +629,19 @@ reg [9:0] car_x_next = 700;
 reg [3:0] car_x_speed;
 initial car_x_speed = 1;
 
+reg decrease_car_timer;
+initial decrease_car_timer = 0;
+
 
 // signals and always block to increase car speed based on points
 reg current_8th_bit, previous_8th_bit;
 initial current_8th_bit = 0;
 initial previous_8th_bit = 0;
 
+
+// always block to increase the car speed
 always @(posedge clk or posedge reset) begin
+    decrease_car_timer <= 0; // makes sure this only is high for 1 clock cycle
     if (reset) begin
         car_x_speed <= 1;
         current_8th_bit <= 0;
@@ -651,8 +658,10 @@ always @(posedge clk or posedge reset) begin
         previous_8th_bit <= current_8th_bit;
 
         // increases the car speed every 256 points
-        if (current_8th_bit != previous_8th_bit && car_x_speed != 15) // cap the car speed at 15
+        if (current_8th_bit != previous_8th_bit && car_x_speed != 15) begin // cap the car speed at 15
             car_x_speed <= car_x_speed + 1;
+            decrease_car_timer <= 1;
+        end
     end
 end
 
@@ -676,7 +685,7 @@ assign posedge_shield_car_player_collision = posedge_car_player_collision; // fo
 // 10 seconds for the total waiting time, car waits for 8 seconds, then 2 more with the warning active
 // 8 seconds = (60 frames/sec) * (8 seconds) * (4 because of refresh tick rate) = 1920 frames
 // total number of frames is 1920 + 480 = 2400 for a total of 10 seconds
-localparam CAR_TIME_DURATION    = 2_400;
+reg [11:0] CAR_TIME_DURATION  = 2_400;
 // 2 seconds = (60 frames/sec) * (2 seconds) * (4 because of refresh tick rate) = 480 frames
 localparam CAR_WARNING_DURATION = 480;
 
@@ -695,7 +704,26 @@ wire car_timer_active;
 wire [15:0] car_timer_counter;
 reg car_warning_active = 0;
 
+// defines the state where the player got hit but the car is still moving across the screen
 assign almost_game_over = (player1_lives == 0 && car_state != 0);
+
+
+// always block to decrease the car timer
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        CAR_TIME_DURATION <= 2400;
+    end
+    else if (not_playing) begin
+        CAR_TIME_DURATION <= 2400;
+    end
+    else begin
+        if (decrease_car_timer && CAR_TIME_DURATION > 960) begin //stop decreasing car timer when it is at 4 seconds total
+            CAR_TIME_DURATION <= CAR_TIME_DURATION - 240; // decrease car timer by 1 second (60 frames/sec) * (1 second) * (4 for refresh tick rate)
+        end
+    end
+end
+
+
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
