@@ -23,6 +23,7 @@ Visual output is done through a vga monitor. Connect the basys3 to the monitor u
 ### gamecube controller
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
 SHOW THE IMAGE HERE (if we want)
+Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html)
 
 
 ### basys3 switches
@@ -72,7 +73,7 @@ If you don't have a controller, you can use these switches to play the game anyw
 
 ## Look into Later?
 
-- Gives suggestions on how to solve [timing issues](https://support.xilinx.com/s/article/9417?language=en_US)
+- This AMD Forum gives suggestions on how to solve timing issues: [https://support.xilinx.com/s/article/9417?language=en_US](https://support.xilinx.com/s/article/9417?language=en_US)
 - Add Bombs/anvil/avoidable that takes a life away
 - implement a high score system (either uart or sd card)
 - Make a pong multiplayer game
