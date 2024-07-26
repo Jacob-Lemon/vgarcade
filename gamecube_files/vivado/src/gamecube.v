@@ -1,5 +1,3 @@
-`timescale 1ns/1ps
-
 //----------------------------------------------------------------------------
 // This module handles Gamecube Controller inputs using the Gamecube Protocol
 //----------------------------------------------------------------------------
@@ -101,6 +99,12 @@
 
         The Triggers report an 8 bit number, when they are not pressed it is closer to 0 (about 30 realistically) and
         fully pressing the trigger will report closer to 255 (about 230 realistically)
+
+    Reset:
+
+        Every once and a while either due to poor connection when plugging/unplugging the controller or due to the data 
+        line breaking randomly the module will stop reading the controller data correctly. When this happens the reset signal
+        (tied to the center button on the basys board in my design) will fully reset the protocol and hopefully fix any problem.
         
 */
 
@@ -137,7 +141,7 @@ module gamecube (
 
 
 //parameters for case statements
-localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A   sometimes the first 3 bits are 0,0,1 not sure why
+localparam [2:0] byte0 = 0,  //0,0,0,start_pause,Y,X,B,A        sometimes the first 3 bits are 0,0,1
                 byte1 = 1,  //1,L,R,Z,D_UP,D_DOWN,D_RIGHT,D_LEFT
                 byte2 = 2,  //8 bit JOY_X value
                 byte3 = 3,  //8 bit JOY_Y value
@@ -227,15 +231,30 @@ reg [8:0] zero_counter;
 reg reg_cur;
 reg reg_prev;
 
+// built in reset function that should trigger if a controller isn't responding (ie not plugged in or basys isn't sending command)
+// this gives the ability to hopefully unplug and replug in a controller without having to reset the entire board
+// also catches some "impossible states" such as DUP and DOWN at the same time or DRIGHT and DLEFT
+reg panic_reset_reg;
+
+// counts how long it has been between console packet sends
+reg [20:0] panic_console_send_timer;
+
+// this reset catches if the board stops sending the console packet for some reason (typically a short/bad connection when plugging in the controller)
+reg send_panic_reset;
+
+// contains info on when the basys board is currently in the process of sending a data packet
+wire sending_data_packet;
+assign sending_data_packet = (console_send && packet_interval);
+
 
 //intial values
 initial begin
     reg_byte0 <= 0;
     reg_byte1 <= 0;
-    reg_byte2 <= 0;
-    reg_byte3 <= 0;
-    reg_byte4 <= 0;
-    reg_byte5 <= 0;
+    reg_byte2 <= 128; //center joystick
+    reg_byte3 <= 128; //center joystick
+    reg_byte4 <= 128; //center C Stick
+    reg_byte5 <= 128; //center C Stick
     reg_byte6 <= 0;
     reg_byte7 <= 0;
     byte_index <= 7; //since bits come in opposite direction
@@ -259,31 +278,76 @@ initial begin
 
     reg_cur <= 0;
     reg_prev <= 0;
+
+    panic_reset_reg <= 0;
+
+    send_panic_reset <= 0;
+    panic_console_send_timer <= 0;
     
 end
 
-//sends request for controller data every 10ms
-always @(posedge clk) begin
-   if (packet_timer < 9800) begin //PWM where low when receiving
-       packet_interval <= 1;
-   end else begin
-       packet_interval <= 0;
-   end
+wire panic_reset;
+assign panic_reset = panic_reset_reg || send_panic_reset;
 
-   packet_timer <= packet_timer + 1;
-   if (packet_timer == 1_000_000)  //10ms
-       packet_timer <= 0;
+
+//sends request for controller data every 10ms
+always @(posedge clk or posedge reset) begin
+    if (reset || panic_reset) begin
+        // puts it in "receive mode" so line isn't being driven
+        packet_timer <= 9800;
+        packet_interval <= 0;
+
+    end else begin
+        if (packet_timer < 9800) begin //PWM where low when not sending
+            packet_interval <= 1;
+        end else begin
+            packet_interval <= 0;
+        end
+
+        packet_timer <= packet_timer + 1;
+        if (packet_timer == 1_000_000)  //10ms
+            packet_timer <= 0;
+    end
 end
 
 
 always @(posedge clk or posedge reset) begin
-    if (reset) begin
+    if (reset || panic_reset) begin // does an absolute full reset in case the controller starts giving weird data
         index <= 25;
+
+        reg_byte0 <= 0;
+        reg_byte1 <= 0;
+        reg_byte2 <= 128; //center joystick
+        reg_byte3 <= 128; //center joystick
+        reg_byte4 <= 128; //center C Stick
+        reg_byte5 <= 128; //center C Stick
+        reg_byte6 <= 0;
+        reg_byte7 <= 0;
+
+        console_send <= 1;
+        us_timer <= 0;
+
+        byte_index <= 7;
+        done_reading_buffer <= 0;
+        last_byte_assigned <= 0;
+        controller_sending <= 0;
+        state_receive <= byte0;
+
+        delay_counter <= 0;
+        zero_counter <= 0;
+
+        reg_cur <= 0;
+        reg_prev <= 0;
+
+        out_data <= 0;
+
+        panic_reset_reg <= 0;
+        
     end else begin
 
 
         //sends data packet
-        if (console_send && packet_interval) begin
+        if (sending_data_packet) begin
 
             if (index - 1 == 0) begin   //if the stop bit
                 if (us_timer == 0)
@@ -326,15 +390,7 @@ always @(posedge clk or posedge reset) begin
                     delay_counter <= 0;
                     console_send <= 1;
 
-                    //reset all controller data when not connected
-                    reg_byte0 <= 0;
-                    reg_byte1 <= 0;
-                    reg_byte2 <= 128; //center joystick
-                    reg_byte3 <= 128; //center joystick
-                    reg_byte4 <= 128; //center C Stick
-                    reg_byte5 <= 128; //center C Stick
-                    reg_byte6 <= 0;
-                    reg_byte7 <= 0;
+                    panic_reset_reg <= 1;
                 end
 
             //line was pulled low so therefore controller is sending something
@@ -379,6 +435,13 @@ always @(posedge clk or posedge reset) begin
                     zero_counter <= 0;
                 end
 
+                //panic reset if the dpad is wrong or if data reported is all 1s or all 0s
+                if ((D_UP && D_DOWN) || (D_RIGHT && D_LEFT)
+                    || (&reg_byte0 && &reg_byte1 && &reg_byte2 && &reg_byte3 && &reg_byte4 && &reg_byte5 && &reg_byte6 && &reg_byte7) // all 1s is bad
+                    || ~(|reg_byte0 || |reg_byte1 || |reg_byte2 || |reg_byte3 || |reg_byte4 || |reg_byte5 || |reg_byte6 || &reg_byte7)) //all 0s is bad
+                    panic_reset_reg <= 1;
+
+
                 //logic for handling which byte to put data into
                 if (done_reading_buffer) begin
                     if (byte_index == 0) begin
@@ -408,8 +471,25 @@ always @(posedge clk or posedge reset) begin
 end
 
 
+//block for catching if the basys board ever stops sending a packet (stuck state)
+always @(posedge clk or posedge reset) begin
+    if (reset || panic_reset) begin
+        panic_console_send_timer <= 0;
+        send_panic_reset <= 0;
+    end else begin
+        panic_console_send_timer <= panic_console_send_timer + 1;
+
+        if (sending_data_packet)
+            panic_console_send_timer <= 0;
+
+        if (panic_console_send_timer >= 2_000_000) //20ms have gone by without the basys board sending a packet
+            send_panic_reset <= 1;
+    end  
+end
+
+
 //bidirectional line logic
-assign data = (console_send && packet_interval) ? out_data : 1'bz;
+assign data = (sending_data_packet) ? out_data : 1'bz;
 assign in_data = data;
 
 endmodule
