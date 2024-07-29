@@ -3,6 +3,8 @@
 ## Description
 This is an arcade style game created using verilog and stuff
 
+![Picture of Game](https://github.com/Jacob-Lemon/vgarcade/blob/main/all_bmp_files/game_bmps/start_screen.bmp)
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
