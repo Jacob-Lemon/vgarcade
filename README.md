@@ -3,7 +3,7 @@
 ## Description
 This is an arcade style game created using verilog and stuff
 
-![Picture of Game](https://github.com/Jacob-Lemon/vgarcade/blob/main/all_bmp_files/game_bmps/start_screen.bmp)
+![picture of Game](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
 
 ## Table of Contents
 - [Installation](#installation)
@@ -24,8 +24,10 @@ Use with a gamecube controller or the basys3 switches.
 
 ### gamecube controller
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
-SHOW THE IMAGE HERE (if we want)
+![picture of connection](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
 Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html)
+Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq)
+
 
 
 ### basys3 switches
