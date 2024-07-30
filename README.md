@@ -6,12 +6,12 @@ This is an arcade style game created using verilog and stuff
 ![picture of Game](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
 
 ## Table of Contents
-- [Installation and Usage](#Installation and Usage)
-- [Features](#features)
+- [Installation and Usage](#installation-and-usage)
+- [Connecting a Controller](#connecting-a-controller)
+- [Playing Without a Controller](#playing-without-a-controller)
+- [Rules and Gameplay](#rules-and-gameplay)
 - [Authors](#authors)
-- [Contributing](#contributing)
-- [License](#license)
-- [more](#more-stuff)
+- [Future Plans](#future-plans)
 
 ## Installation and Usage
 If you want to generate your own bitstream, you can download or install this however you want. Keep in mind that a bitstream may take an hour or longer to complete. \
@@ -20,7 +20,7 @@ If you just want to program your own basys3, you can just download the vgarcade.
 Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable. \
 Use with a gamecube controller or the basys3 switches.
 
-### gamecube controller
+## Connecting a Controller
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
 
 Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html) \
@@ -47,7 +47,7 @@ This home-made connection only uses the 3.3v supply pin, ground pins (tied toget
 
 
 
-### basys3 switches
+## Playing Without a Controller
 If you don't have a gamecube controller or a method to connect one, you can use the Basys 3 board switches to play the game as listed below:
 - sw[0] = A;
 - sw[1] = B;
@@ -63,16 +63,16 @@ If you don't have a gamecube controller or a method to connect one, you can use 
 - sw[11] = D_LEFT;
 
 
-## features
-This game is super cool.
+## Rules and Gameplay
+play
+
 
 ## Authors
 Jacob Lemon: [https://github.com/Jacob-Lemon](https://github.com/Jacob-Lemon) \
 Easton McBeth: [https://github.com/easton-mcbeth](https://github.com/easton-mcbeth)
 
-## Look into Later?
+## Future Plans
 
 - This AMD Forum gives suggestions on how to solve timing issues: [https://support.xilinx.com/s/article/9417?language=en_US](https://support.xilinx.com/s/article/9417?language=en_US)
 - Add Bombs/anvil/avoidable that takes a life away
 - implement a high score system (either uart or sd card)
-- Make a pong multiplayer game
