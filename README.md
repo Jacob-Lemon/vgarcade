@@ -55,7 +55,7 @@ If you don't have a gamecube controller or a method to connect one, you can use 
 This game is super cool.
 
 ## Authors
-Jacob Lemon: [https://github.com/Jacob-Lemon](https://github.com/Jacob-Lemon)
+Jacob Lemon: [https://github.com/Jacob-Lemon](https://github.com/Jacob-Lemon) \
 Easton McBeth: [https://github.com/easton-mcbeth](https://github.com/easton-mcbeth)
 
 ## Look into Later?
