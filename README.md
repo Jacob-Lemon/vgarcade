@@ -27,11 +27,13 @@ You can connect a gamecube controller directly to the basys3 board using a home-
 
 Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html) \
 Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq) \
-Similar header pins: [Link to Amazon](https://a.co/d/1t0p9pt) \
+Similar header pins: [Link to Amazon](https://a.co/d/1t0p9pt)
 
 This home-made connection only uses the 3.3v supply pin, ground pins (tied together), and the data pin. 
 
-![picture of connection](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
+![picture of cord pins](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
+
+![picture of connection to board](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png)
 
 
 
