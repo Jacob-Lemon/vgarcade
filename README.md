@@ -15,13 +15,9 @@ This is a fruit catching arcade style game made entirely with verilog. It is imp
 - [Future Plans](#future-plans)
 
 ## Installation and Usage
-If you want to generate your own bitstream, you can download or install this however you want. Keep in mind that a bitstream may take an hour or longer to complete. 
+To generate your own bitstream you can download the source files and constraints from the `vgarcade.srcs` folder and include them in a vivado project. Keep in mind that generating a bitstream may take an hour or longer to complete. You can also program your Basys3 board directly by downloading the `vgarcade.bit` bitstream from the `game_bitstream` folder and use Vivado to program your board.
 
-If you just want to program your own basys3, you can just download the vgarcade.bit bitstream from the game_bitstream folder and use vivado to program your board. 
-
-Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable.
-
-Use with a gamecube controller or the basys3 switches.
+For visual output, connect the Basys3 to a VGA monitor using a VGA cable. To control the game you can use either a GameCube controller (see [Connecting a Controller](#connecting-a-controller) for more details) or the Basys3 switches for input (see [Playing Without a Controller](#playing-without-a-controller) for more details).
 
 ## Connecting a Controller
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
