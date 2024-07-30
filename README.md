@@ -19,15 +19,15 @@ If you want to generate your own bitstream, you can download or install this how
 If you just want to program your own basys3, you can just download the vgarcade.bit bitstream from the game_bitstream folder and use vivado to program your board.
 
 ## usage
-Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable.
+Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable. \
 Use with a gamecube controller or the basys3 switches.
 
 ### gamecube controller
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
 
-Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html)
-Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq)
-Similar header pins: [Link to Amazon](https://a.co/d/1t0p9pt)
+Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html) \
+Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq) \
+Similar header pins: [Link to Amazon](https://a.co/d/1t0p9pt) \
 
 This home-made connection only uses the 3.3v supply pin, ground pins (tied together), and the data pin. 
 
