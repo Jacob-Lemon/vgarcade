@@ -50,7 +50,6 @@ This home-made connection only uses the 3.3v supply pin, ground pins (tied toget
 ## Playing Without a Controller
 If you don't have a gamecube controller or a method to connect one, you can use the Basys 3 board switches to play the game as listed below:
 
-```
 - sw[0] = A
 - sw[1] = B
 - sw[2] = X
@@ -63,7 +62,7 @@ If you don't have a gamecube controller or a method to connect one, you can use 
 - sw[9] = D_DOWN
 - sw[10] = D_RIGHT
 - sw[11] = D_LEFT
-```
+
 
 ## Rules and Gameplay
 ![instructions picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/instructions.bmp)
