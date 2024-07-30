@@ -3,7 +3,7 @@
 ## Description
 This is an arcade style game created using verilog and stuff
 
-![picture of Game](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
+![start screen picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
 
 ## Table of Contents
 - [Installation and Usage](#installation-and-usage)
@@ -24,7 +24,7 @@ Use with a gamecube controller or the basys3 switches.
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
 
 Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html) \
-Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq)
+Extension cord used: [Amazon Link](https://a.co/d/5di0RBq)
 
 Extension cord pinout (colors may differ, use a multimeter to ensure accuracy): 
 
@@ -37,13 +37,13 @@ Extension cord pinout (colors may differ, use a multimeter to ensure accuracy):
 | 5        | None      | Unused                  |
 | 6        | Green     | 3.3V Controller Power   |
 
-Similar header pins: [Link to Amazon](https://a.co/d/1t0p9pt)
+Similar header pins: [Amazon Link](https://a.co/d/1t0p9pt)
 
 This home-made connection only uses the 3.3v supply pin, ground pins (tied together), and the data pin. 
 
-![picture of cord pins](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
+![cord pins picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
 
-![picture of connection to board](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png)
+![connection to board picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png)
 
 
 
@@ -64,15 +64,15 @@ If you don't have a gamecube controller or a method to connect one, you can use 
 
 
 ## Rules and Gameplay
-play
+![instructions picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/instructions.bmp)
 
 
 ## Authors
-Jacob Lemon: [https://github.com/Jacob-Lemon](https://github.com/Jacob-Lemon) \
-Easton McBeth: [https://github.com/easton-mcbeth](https://github.com/easton-mcbeth)
+Jacob Lemon: [Github](https://github.com/Jacob-Lemon) \
+Easton McBeth: [Github](https://github.com/easton-mcbeth)
 
 ## Future Plans
 
-- This AMD Forum gives suggestions on how to solve timing issues: [https://support.xilinx.com/s/article/9417?language=en_US](https://support.xilinx.com/s/article/9417?language=en_US)
+- This AMD Forum gives suggestions on how to solve timing issues: [AMD Forum Link](https://support.xilinx.com/s/article/9417?language=en_US)
 - Add Bombs/anvil/avoidable that takes a life away
 - implement a high score system (either uart or sd card)
