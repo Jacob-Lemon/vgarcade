@@ -26,14 +26,18 @@ Use with a gamecube controller or the basys3 switches.
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
 
 Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html) \
-Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq) \
+Extension cord used: [Link to Amazon](https://a.co/d/5di0RBq)
 
-Extension cord pinout: 
+Extension cord pinout (colors may differ, use a multimeter to ensure accuracy): 
 
-| Pin      | Color    | Function |
-| :---:    | :----:   |  :---:   |
-| 1        | Blue     | Ground   |
-| 2        | Green    | Power    |
+| Pin      | Color     | Function                |
+| :---:    | :----:    |  :---:                  |
+| 1        | White     | 5V Rumble Motor Power   |
+| 2        | Red       | Data Line               |
+| 3        | Black     | Ground                  |
+| 4        | Yellow    | Ground                  |
+| 5        | None      | Unused                  |
+| 6        | Green     | 3.3V Controller Power   |
 
 Similar header pins: [Link to Amazon](https://a.co/d/1t0p9pt)
 
