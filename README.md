@@ -11,20 +11,23 @@ This is a fruit catching arcade style game made entirely with verilog. It is imp
 - [Playing Without a Controller](#playing-without-a-controller)
 - [Rules and Gameplay](#rules-and-gameplay)
 - [Authors](#authors)
-- [Python Code Used](#python-code-used)
+- [Python Scripts Used](#python-scripts-used)
 - [Future Plans](#future-plans)
 
 ## Installation and Usage
-If you want to generate your own bitstream, you can download or install this however you want. Keep in mind that a bitstream may take an hour or longer to complete. \
-If you just want to program your own basys3, you can just download the vgarcade.bit bitstream from the game_bitstream folder and use vivado to program your board. \
+If you want to generate your own bitstream, you can download or install this however you want. Keep in mind that a bitstream may take an hour or longer to complete. 
 
-Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable. \
+If you just want to program your own basys3, you can just download the vgarcade.bit bitstream from the game_bitstream folder and use vivado to program your board. 
+
+Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable.
+
 Use with a gamecube controller or the basys3 switches.
 
 ## Connecting a Controller
 You can connect a gamecube controller directly to the basys3 board using a home-made connection
 
-Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html) \
+Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html)
+
 Extension cord used: [Amazon Link](https://a.co/d/5di0RBq)
 
 Extension cord pinout (colors may differ, use a multimeter to ensure accuracy): 
@@ -68,11 +71,13 @@ If you don't have a gamecube controller or a method to connect one, you can use 
 
 ## Rules and Gameplay
 ![instructions picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/instructions.bmp)
+
 The goal of the game is to catch the falling fruit and to avoid the car that periodically comes through. Every so often powerups will fall, the shield is activated until hit whereas the speed boost is actived for 4 seconds when you press B. 
 
 
 ## Authors
-Jacob Lemon: [Github](https://github.com/Jacob-Lemon) \
+Jacob Lemon: [Github](https://github.com/Jacob-Lemon)
+
 Easton McBeth: [Github](https://github.com/easton-mcbeth)
 
 
