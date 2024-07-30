@@ -1,4 +1,4 @@
-# vgarcade
+# Vgarcade
 
 ## Description
 This is an arcade style game created using verilog and stuff
@@ -6,19 +6,17 @@ This is an arcade style game created using verilog and stuff
 ![picture of Game](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
 
 ## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
+- [Installation and Usage](#Installation and Usage)
 - [Features](#features)
 - [Authors](#authors)
 - [Contributing](#contributing)
 - [License](#license)
 - [more](#more-stuff)
 
-## installation
-If you want to generate your own bitstream, you can download or install this however you want. Keep in mind that a bitstream may take an hour or longer to complete.
-If you just want to program your own basys3, you can just download the vgarcade.bit bitstream from the game_bitstream folder and use vivado to program your board.
+## Installation and Usage
+If you want to generate your own bitstream, you can download or install this however you want. Keep in mind that a bitstream may take an hour or longer to complete. \
+If you just want to program your own basys3, you can just download the vgarcade.bit bitstream from the game_bitstream folder and use vivado to program your board. \
 
-## usage
 Visual output is done through a vga monitor. Connect the basys3 to the monitor using a vga cable. \
 Use with a gamecube controller or the basys3 switches.
 
