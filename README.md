@@ -15,8 +15,8 @@ This is a fruit catching game made entirely with verilog. It is implemented on t
 - [Connecting a Controller](#connecting-a-controller)
 - [Playing Without a Controller](#playing-without-a-controller)
 - [Rules and Gameplay](#rules-and-gameplay)
-- [Authors](#authors)
 - [Python Scripts](#python-scripts)
+- [Authors](#authors)
 - [Future Plans](#future-plans)
 
 
@@ -68,7 +68,9 @@ We soldered these connections to header pins, similar to the ones linked above, 
 
 | ![cord pins picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png) |
 | :-------------------------------: |
-| *Homemade Connection Pin Numbers* |
+| *Homemade Connection and Pin Numbers* |
+
+With the current bitstream the homemade connection must be connected to the top row of header JA in the correct orientation to function properly.
 
 | ![connection to board picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png) |
 | :-------------------------------: |
@@ -113,14 +115,6 @@ The goal of the game is to catch the falling fruit and to avoid the car that per
 
 
 
-## Authors
-
-Jacob Lemon: [Github](https://github.com/Jacob-Lemon)
-
-Easton McBeth: [Github](https://github.com/easton-mcbeth)
-
-
-
 ## Python Scripts
 
 Python scripts were used to convert bmp images into rom files that verilog could understand. The scripts that we used are listed below: 
@@ -134,6 +128,14 @@ Python scripts were used to convert bmp images into rom files that verilog could
 - `batch_bmp_files.py`: Applies the case statement or if else rom maker method to all bmp files within a single directory. Follow the instructions within the script to use. 
 
 There is a trade off for using each type of rom maker. The case statement method will use less LUTs but take longer to generate a bitstream and cause Vivado to be more unstable. The if else method will make storing less complex images faster and result in faster bitstreams but will crash when the if else chain is longer than 10,000 lines. We found that it was best practice to try different combinations of the two when working with big projects in order to find the best balance between LUT usage and bitstream generation time. 
+
+
+
+## Authors
+
+Jacob Lemon: [Github](https://github.com/Jacob-Lemon)
+
+Easton McBeth: [Github](https://github.com/easton-mcbeth)
 
 
 
