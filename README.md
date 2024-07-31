@@ -50,7 +50,7 @@ This home-made connection only uses the 3.3v supply pin, ground pins (tied toget
 ## Playing Without a Controller
 If you don't have a gamecube controller or a method to connect one, you can use the Basys 3 board switches to play the game as listed below:
 
-```markdown
+```cpp
 sw[0] = A
 sw[1] = B
 sw[2] = X
