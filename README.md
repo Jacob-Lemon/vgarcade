@@ -1,54 +1,89 @@
 # Vgarcade
 
+
 ## Description
-This is a fruit catching arcade style game made entirely with verilog. It is implemented on the Basys3 FPGA board and has gamecube controller support.
+
+This is a fruit catching game made entirely with verilog. It is implemented on the Basys3 FPGA board and has Gamecube controller support.
 
 ![start screen picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
 
+
+
 ## Table of Contents
+
 - [Installation and Usage](#installation-and-usage)
 - [Connecting a Controller](#connecting-a-controller)
 - [Playing Without a Controller](#playing-without-a-controller)
 - [Rules and Gameplay](#rules-and-gameplay)
 - [Authors](#authors)
-- [Python Scripts Used](#python-scripts-used)
+- [Python Scripts](#python-scripts)
 - [Future Plans](#future-plans)
 
+
+
 ## Installation and Usage
+
 To generate your own bitstream you can download the source files and constraints from the `vgarcade.srcs` folder and include them in a vivado project. Keep in mind that generating a bitstream may take an hour or longer to complete. You can also program your Basys3 board directly by downloading the `vgarcade.bit` bitstream from the `game_bitstream` folder and use Vivado to program your board.
 
-For visual output, connect the Basys3 to a VGA monitor using a VGA cable. To control the game you can use either a GameCube controller (see [Connecting a Controller](#connecting-a-controller) for more details) or the Basys3 switches for input (see [Playing Without a Controller](#playing-without-a-controller) for more details).
+For visual output, connect the Basys3 to a VGA monitor using a VGA cable. To control the game you can use either a Gamecube controller (see [Connecting a Controller](#connecting-a-controller) for more details) or the Basys3 switches for input (see [Playing Without a Controller](#playing-without-a-controller) for more details).
+
+
 
 ## Connecting a Controller
-You can connect a gamecube controller directly to the basys3 board using a home-made connection
 
-Gamecube Protocol we implemented is described here: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html)
+### Gamecube Controller Protocol in Verilog
 
-Extension cord used: [Amazon Link](https://a.co/d/5di0RBq)
+We have implemented a simple version of the Gamecube controller protocol in Verilog. It's **very important** to connect your controller correctly to avoid damaging or shorting your controller or the Basys3 board.
 
-Extension cord pinout (colors may differ, use a multimeter to ensure accuracy): 
 
-| Pin      | Color     | Function                |
-| :---:    | :----:    |  :---:                  |
-| 1        | White     | 5V Rumble Motor Power   |
-| 2        | Red       | Data Line               |
-| 3        | Black     | Ground                  |
-| 4        | Yellow    | Ground                  |
-| 5        | None      | Unused                  |
-| 6        | Green     | 3.3V Controller Power   |
+### Recommended Materials
 
-Similar header pins: [Amazon Link](https://a.co/d/1t0p9pt)
+- **Gamecube Extension Cord:** [Amazon Link](https://a.co/d/5di0RBq)
+- **Similar Header Pins:** [Amazon Link](https://a.co/d/1t0p9pt)
 
-This home-made connection only uses the 3.3v supply pin, ground pins (tied together), and the data pin. 
+
+### Extension Cord Pinout
+
+Note: Colors may differ, use a multimeter to ensure accuracy.
+
+| Pin | Color  | Function                |
+| :-: | :----: | :---------------------- |
+| 1   | White  | 5V Rumble Motor Power   |
+| 2   | Red    | Data Line               |
+| 3   | Black  | Ground                  |
+| 4   | Yellow | Ground                  |
+| 5   | None   | Unused                  |
+| 6   | Green  | 3.3V Controller Power   |
+
+
+### Connecting the Extension Cord to the Basys3 Board
+
+We used the extension cord mentioned above and here is how we tied the extension cord pinout to the header pin cord we made:
+1. **Pin 6 of the extension cord** (3.3V Controller Power) is connected to **Pin 1 of the homemade connection**.
+2. **Pins 3 and 4 of the extension cord** (Ground) are soldered together and connected to **Pin 2 of the homemade connection**.
+3. **Pin 2 of the extension cord** (Data Line) is connected to **Pin 6 of the homemade connection**.
+4. **Pin 1 of the extension cord** (5V Rumble Motor Power) is not used and left inside the extension cord.
+
+We soldered these connections to header pins, similar to the ones linked above, and shrink-wrapped it all together.
 
 ![cord pins picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
 
 ![connection to board picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png)
 
 
+### Important Considerations
+
+- **Different Extension Cord:** If you have a different extension cord, you can use a multimeter to figure out your respective pinout.
+- **Correct Connection:** It is very important that you connect the pins correctly to avoid shorting the controller or the Basys3 board.
+- **Pull-up Resistor:** Some Gamecube protocol explanations mention connecting a pull-up resistor between the data line and the 3.3V power supply. We found that this wasn't necessary, but if you have connected everything correctly and are getting incorrect results, try using a 1k ohm pull-up resistor.
+
+For more details on the Gamecube protocol we implemented, visit: [https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html](https://www.int03.co.uk/crema/hardware/gamecube/gc-control.html)
+
+
 
 ## Playing Without a Controller
-If you don't have a gamecube controller or a method to connect one, you can use the Basys 3 board switches to play the game as listed below:
+
+If you don't have a Gamecube controller or a method to connect one, you can use the Basys3 switches to play the game as listed below:
 
 ```cpp
 sw[0] = A
@@ -65,19 +100,25 @@ sw[10] = D_RIGHT
 sw[11] = D_LEFT
 ```
 
+
 ## Rules and Gameplay
+
 ![instructions picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/instructions.bmp)
 
 The goal of the game is to catch the falling fruit and to avoid the car that periodically comes through. Every so often powerups will fall, the shield is activated until hit whereas the speed boost is actived for 4 seconds when you press B. 
 
 
+
 ## Authors
+
 Jacob Lemon: [Github](https://github.com/Jacob-Lemon)
 
 Easton McBeth: [Github](https://github.com/easton-mcbeth)
 
 
-## Python Scripts Used
+
+## Python Scripts
+
 Python scripts were used to convert bmp images into rom files that verilog could understand. The scripts that we used are listed below: 
 
 - `python_image2verilog.py`: Used as a template and was created by embedded thoughts and modified by David J. Marion aka FPGA Dude. We modified this file to create 2 different styles of rom generators.
@@ -89,6 +130,8 @@ Python scripts were used to convert bmp images into rom files that verilog could
 - `batch_bmp_files.py`: Applies the case statement or if else rom maker method to all bmp files within a single directory. Follow the instructions within the script to use. 
 
 There is a trade off for using each type of rom maker. The case statement method will use less LUTs but take longer to generate a bitstream and cause Vivado to be more unstable. The if else method will make storing less complex images faster and result in faster bitstreams but will crash when the if else chain is longer than 10,000 lines. We found that it was best practice to try different combinations of the two when working with big projects in order to find the best balance between LUT usage and bitstream generation time. 
+
+
 
 ## Future Plans
 
