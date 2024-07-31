@@ -66,9 +66,13 @@ We used the extension cord mentioned above and here is how we tied the extension
 
 We soldered these connections to header pins, similar to the ones linked above, and shrink-wrapped it all together.
 
-![cord pins picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png)
+| ![cord pins picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png) |
+| :-------------------------------: |
+| *Homemade Connection Pin Numbers* |
 
-![connection to board picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png)
+| ![connection to board picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/connection_to_board.png) |
+| :-------------------------------: |
+| *Connections to the Basys3 Board* |
 
 
 ### Important Considerations
