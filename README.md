@@ -3,7 +3,7 @@
 
 ## Description
 
-This is a fruit catching game made entirely with verilog. It is implemented on the Basys3 FPGA board and has Gamecube controller support.
+This is a fruit catching game made entirely with Verilog. It is implemented on the Basys3 FPGA board and has Gamecube controller support.
 
 ![start screen picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/start_screen.bmp)
 
@@ -13,7 +13,7 @@ This is a fruit catching game made entirely with verilog. It is implemented on t
 
 - [Installation and Usage](#installation-and-usage)
 - [Connecting a Controller](#connecting-a-controller)
-- [Playing Without a Controller](#playing-without-a-controller)
+- [Playing without a Controller](#playing-without-a-controller)
 - [Rules and Gameplay](#rules-and-gameplay)
 - [Python Scripts](#python-scripts)
 - [Authors](#authors)
@@ -23,9 +23,9 @@ This is a fruit catching game made entirely with verilog. It is implemented on t
 
 ## Installation and Usage
 
-To generate your own bitstream you can download the source files and constraints from the `vgarcade.srcs` folder and include them in a vivado project. Keep in mind that generating a bitstream may take an hour or longer to complete. You can also program your Basys3 board directly by downloading the `vgarcade.bit` bitstream from the `game_bitstream` folder and use Vivado to program your board.
+To generate your own bitstream, download the source files and constraints from the `vgarcade.srcs` folder and include them in a Vivado project. Keep in mind that generating a bitstream may take an hour or longer to complete. You can also program your Basys3 board directly by downloading the `vgarcade.bit` bitstream from the `game_bitstream` folder and using Vivado to program your board.
 
-For visual output, connect the Basys3 to a VGA monitor using a VGA cable. To control the game you can use either a Gamecube controller (see [Connecting a Controller](#connecting-a-controller) for more details) or the Basys3 switches for input (see [Playing Without a Controller](#playing-without-a-controller) for more details).
+For visual output, connect the Basys3 to a VGA monitor using a VGA cable. To control the game, you can use either a Gamecube controller (see [Connecting a Controller](#connecting-a-controller) for more details) or the Basys3 switches for input (see [Playing Without a Controller](#playing-without-a-controller) for more details).
 
 
 
@@ -44,7 +44,7 @@ We have implemented a simple version of the Gamecube controller protocol in Veri
 
 ### Extension Cord Pinout
 
-Note: Colors may differ, use a multimeter to ensure accuracy.
+Note: Colors may differ, use a multimeter to ensure accuracy:
 
 | Pin | Color  | Function                |
 | :-: | :----: | :---------------------- |
@@ -58,13 +58,13 @@ Note: Colors may differ, use a multimeter to ensure accuracy.
 
 ### Connecting the Extension Cord to the Basys3 Board
 
-We used the extension cord mentioned above and here is how we tied the extension cord pinout to the header pin cord we made:
+We used the extension cord linked above and tied the extension cord pinout to the header pin cord we made as follows:
 1. **Pin 6 of the extension cord** (3.3V Controller Power) is connected to **Pin 1 of the homemade connection**.
 2. **Pins 3 and 4 of the extension cord** (Ground) are soldered together and connected to **Pin 2 of the homemade connection**.
 3. **Pin 2 of the extension cord** (Data Line) is connected to **Pin 6 of the homemade connection**.
 4. **Pin 1 of the extension cord** (5V Rumble Motor Power) is not used and left inside the extension cord.
 
-We soldered these connections to header pins, similar to the ones linked above, and shrink-wrapped it all together.
+We soldered these connections to the header pins, similar to the ones linked above, and shrink-wrapped it all together.
 
 | ![cord pins picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/gamecube_connection.png) |
 | :-------------------------------: |
@@ -87,7 +87,7 @@ For more details on the Gamecube protocol we implemented, visit: [https://www.in
 
 
 
-## Playing Without a Controller
+## Playing without a Controller
 
 If you don't have a Gamecube controller or a method to connect one, you can use the Basys3 switches to play the game as listed below:
 
@@ -111,36 +111,36 @@ sw[11] = D_LEFT
 
 ![instructions picture](https://github.com/Jacob-Lemon/vgarcade/blob/main/readme_images/instructions.bmp)
 
-The goal of the game is to catch the falling fruit and to avoid the car that periodically comes through. Every so often powerups will fall, the shield is activated until hit whereas the speed boost is actived for 4 seconds when you press B. 
+The goal of the game is to catch the falling fruit and to avoid the car that periodically comes through. Every so often power-ups will fall, the shield is activated until hit whereas the speed boost is active for 4 seconds when you press B. 
 
 
 
 ## Python Scripts
 
-Python scripts were used to convert bmp images into rom files that verilog could understand. The scripts that we used are listed below: 
+Python scripts were used to convert bmp images into rom files that Verilog could understand. The scripts that we used are listed below: 
 
-- `python_image2verilog.py`: Used as a template and was created by embedded thoughts and modified by David J. Marion aka FPGA Dude. We modified this file to create 2 different styles of rom generators.
+- `python_image2verilog.py`: Used as a template and was created by Embedded Thoughts and modified by David J. Marion aka FPGA Dude. We modified this file to create 2 different styles of rom generators.
 
-- `bmp_to_case_optimized.py`: Similar to the template but with an optimizing function that was added to remove the lines of the most commonly referenced color and catch it in the default statement instead.
+- `bmp_to_case_optimized.py`: Similar to the template but with an optimizing function that removes the lines of the most commonly referenced color and catch it in the default statement instead.
 
-- `bmp_to_if_else_optimized.py`: A different approach to storing rom data in verilog. We wrote the code to specify ranges of color and put them into an if else style. This code also optimizes the file and removes lines containing the most commonly referenced color and catches it in the last else statement.
+- `bmp_to_if_else_optimized.py`: A different approach to storing rom data in Verilog. We wrote the code to specify ranges of color and put them into an if else style. This code also optimizes the file and removes lines containing the most commonly referenced color and catches it in the last else statement.
 
 - `batch_bmp_files.py`: Applies the case statement or if else rom maker method to all bmp files within a single directory. Follow the instructions within the script to use. 
 
-There is a trade off for using each type of rom maker. The case statement method will use less LUTs but take longer to generate a bitstream and cause Vivado to be more unstable. The if else method will make storing less complex images faster and result in faster bitstreams but will crash when the if else chain is longer than 10,000 lines. We found that it was best practice to try different combinations of the two when working with big projects in order to find the best balance between LUT usage and bitstream generation time. 
+There is a trade off for using each type of rom maker. The case statement method will use less LUTs but take longer to generate a bitstream and cause Vivado to be more unstable. The if else method will make storing less complex images faster and result in faster bitstreams but will crash when the if else chain is longer than 10,000 lines. We found that it was best practice to try different combinations of the two when working with big projects to find the best balance between LUT usage and bitstream generation time. 
 
 
 
 ## Authors
 
-Jacob Lemon: [Github](https://github.com/Jacob-Lemon)
+Jacob Lemon: [GitHub](https://github.com/Jacob-Lemon)
 
-Easton McBeth: [Github](https://github.com/easton-mcbeth)
+Easton McBeth: [GitHub](https://github.com/easton-mcbeth)
 
 
 
 ## Future Plans
 
 - We currently have around -5 WNS, we want to go through this article and try to fix this: [AMD Forum Link](https://support.xilinx.com/s/article/9417?language=en_US)
-- Add bombs/anvil/avoidable that takes a life away
-- Implement a high score system (either UART or SD card)
+- Add bombs/anvil/avoidable that takes a life away.
+- Implement a high score system (either UART or SD card).
